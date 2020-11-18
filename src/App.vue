@@ -13,19 +13,24 @@
       <hr class="sidebar-divider my-0">
 
       <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
-          <router-link to="/">
-          <a class="nav-link">
+      <li class="nav-item">
+          <router-link to="/" class="nav-link">
               <i class="fas fa-fw fa-tachometer-alt"></i>
-              <span>Home</span></a>
+              <span>Home</span>
           </router-link>
       </li>
 
       <li class="nav-item">
-          <router-link to="/about">
-          <a class="nav-link pad-0">
+          <router-link to="/about" class="nav-link pad-0">
               <i class="fas fa-fw fa-tachometer-alt"></i>
-              <span>About</span></a>
+              <span>About</span>
+          </router-link>
+      </li>
+
+      <li class="nav-item">
+          <router-link to="/project" class="nav-link pad-0">
+              <i class="fas fa-fw fa-tachometer-alt"></i>
+              <span>Project</span>
           </router-link>
       </li>
 

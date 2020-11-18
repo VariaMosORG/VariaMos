@@ -33,6 +33,7 @@
     "lint-staged": "^9.5.0",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
+    "ts-mxgraph": "^1.0.0",
     "typescript": "~3.9.3"
   },
   "gitHooks": {
