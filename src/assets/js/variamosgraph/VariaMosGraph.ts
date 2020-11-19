@@ -1,9 +1,18 @@
 import { mxgraph, mxgraphFactory } from "ts-mxgraph";
+import { Button } from './Button';
 
 export class VariaMosGraph {
 
     public graph:any; //mxGraph
     public model:any; //mxGraphModel
+    public static buttons: Button[] = [ new Button("save","Save","save"),
+            new Button("pdf","PDF","print"),
+            new Button("img","Img","print"),
+            new Button("delete","Delete","eraser"),
+            new Button("resetall","Reset All","eraser"),
+            new Button("export","Export","upload"),
+            new Button("xml","View XML","code"),
+         ]
 
     public constructor() {
         const { mxGraphModel } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});

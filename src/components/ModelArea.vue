@@ -1,14 +1,27 @@
 <template>
   <div class="row main_area">
     <div id="left-draw" class="col-sm-9 left-area">
-      <div class="card bg-light text-black shadow">
+
+      <div class="card bg-light text-white shadow font13">
+        <div class="card-body pad10">
+          <div id="vgraph-buttons" class="buttons">
+              <button class="btn btn-info" v-for="button in buttons" :key="button" :id="button.id">
+                <i :class="'fas fa-'+button.icon"></i>
+                {{ button.label }}
+              </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-light text-black shadow mtop">
         <div class="card-body">
           <div id="vgraph-container" class="model-area"></div>
         </div>
       </div>
+
     </div>
 
-    <div id="right-draw" class="col-sm-3 right-area" style="font-size:13px">
+    <div id="right-draw" class="col-sm-3 right-area font13">
       <div class="card bg-primary text-white shadow">
         <div class="card-body">
           Elements
@@ -32,6 +45,7 @@ import { VariaMosGraph } from "@/assets/js/variamosgraph/VariaMosGraph";
 
 export default class ModelArea extends Vue {
   public variaMosGraph = new VariaMosGraph();
+  public buttons = VariaMosGraph.buttons;
 
   public mounted() {
     const container = document.getElementById("vgraph-container");
@@ -39,6 +53,7 @@ export default class ModelArea extends Vue {
     this.variaMosGraph.initializeGraph(container, navigator);
     this.variaMosGraph.createModel();
   }
+
 }
 </script>
 
@@ -88,4 +103,33 @@ export default class ModelArea extends Vue {
   margin-bottom: -30px;
   margin-top: 10px;
 }
+
+.font13{
+  font-size:13px;
+}
+
+.pad10{
+  padding: 15px !important;
+}
+
+/* buttons */
+.buttons {
+  display: flex;
+  margin: auto;
+  justify-content: space-between;
+}
+
+.buttons button {
+  /*flex: 0 0 18%;*/
+  height: 30px;
+  padding: 0px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
+}
+
+.pad10{
+  padding: 15px !important;
+}
+/* buttons */
 </style>
