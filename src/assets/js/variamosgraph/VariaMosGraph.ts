@@ -20,7 +20,6 @@ export class VariaMosGraph {
     public constructor() {
         const { mxGraphModel } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
         this.model = new mxGraphModel();
-        this.buttonActions = null;
     }
 
     public initializeGraph(container:any, navigator:any){
