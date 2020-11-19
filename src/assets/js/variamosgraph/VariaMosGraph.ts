@@ -1,10 +1,13 @@
 import { mxgraph, mxgraphFactory } from "ts-mxgraph";
 import { Button } from './Button';
+import { ButtonActions } from './ButtonActions';
 
 export class VariaMosGraph {
 
     public graph:any; //mxGraph
     public model:any; //mxGraphModel
+    public buttonActions:any;
+
     public static buttons: Button[] = [ new Button("save","Save","save"),
             new Button("pdf","PDF","print"),
             new Button("img","Img","print"),
@@ -17,11 +20,13 @@ export class VariaMosGraph {
     public constructor() {
         const { mxGraphModel } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
         this.model = new mxGraphModel();
+        this.buttonActions = null;
     }
 
     public initializeGraph(container:any, navigator:any){
         this.setGraph(container);
         this.setNavigator(navigator);
+        this.setButtonActions();
         this.configModel();
     }
 
@@ -30,12 +35,17 @@ export class VariaMosGraph {
         if (container) {
             this.graph = new mxGraph(container, this.model);
         }
+        this.buttonActions = new ButtonActions(this.graph, this.model, VariaMosGraph.buttons);
     }
 
     public setNavigator(navigator:any){
         const { mxOutline } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
         let outline = new mxOutline(this.graph, navigator);
         outline.refresh();
+    }
+
+    public setButtonActions(){
+        this.buttonActions.initilizeActions();
     }
 
     public configModel() : void {
