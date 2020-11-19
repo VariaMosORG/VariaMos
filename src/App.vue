@@ -15,21 +15,28 @@
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
           <router-link to="/" class="nav-link">
-              <i class="fas fa-fw fa-tachometer-alt"></i>
+              <i class="fas fa-fw fa-home"></i>
               <span>Home</span>
           </router-link>
       </li>
 
       <li class="nav-item">
           <router-link to="/about" class="nav-link pad-0">
-              <i class="fas fa-fw fa-tachometer-alt"></i>
+              <i class="fas fa-fw fa-info-circle"></i>
               <span>About</span>
           </router-link>
       </li>
 
       <li class="nav-item">
+          <router-link to="/config" class="nav-link pad-0">
+              <i class="fas fa-fw fa-cog"></i>
+              <span>Config</span>
+          </router-link>
+      </li>
+
+      <li class="nav-item">
           <router-link to="/project" class="nav-link pad-0">
-              <i class="fas fa-fw fa-tachometer-alt"></i>
+              <i class="fas fa-fw fa-folder"></i>
               <span>Project</span>
           </router-link>
       </li>

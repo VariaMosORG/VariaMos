@@ -16,7 +16,7 @@
               to represent and reason over different models by means of different solvers 
               (e.g., GNU and SWI Prolog). </p>
 
-          <p><img alt="VariaMos logo" id="logo" src="@/assets/logo.png"></p>
+          <p><img alt="VariaMos logo" id="logo" src="@/assets/img/logo.png"></p>
       </div>
   </div>
 </template>

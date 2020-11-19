@@ -8,7 +8,7 @@ import { Vue } from 'vue-class-component';
 import { mxgraph, mxgraphFactory } from "ts-mxgraph";
 
 export default class ModelArea extends Vue {
-  mounted() {
+  public mounted() {
     const { mxGraph, mxGraphModel } = mxgraphFactory({
       mxLoadResources: false,
       mxLoadStylesheets: false,
