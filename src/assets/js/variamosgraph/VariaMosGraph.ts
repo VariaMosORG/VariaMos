@@ -10,8 +10,9 @@ export class VariaMosGraph {
         this.model = new mxGraphModel();
     }
 
-    public initializeGraph(container:any){
+    public initializeGraph(container:any, navigator:any){
         this.setGraph(container);
+        this.setNavigator(navigator);
         this.configModel();
     }
 
@@ -20,6 +21,12 @@ export class VariaMosGraph {
         if (container) {
             this.graph = new mxGraph(container, this.model);
         }
+    }
+
+    public setNavigator(navigator:any){
+        const { mxOutline } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
+        let outline = new mxOutline(this.graph, navigator);
+        outline.refresh();
     }
 
     public configModel() : void {
