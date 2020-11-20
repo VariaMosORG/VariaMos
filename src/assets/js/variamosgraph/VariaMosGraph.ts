@@ -15,7 +15,8 @@ export class VariaMosGraph {
 
     public graph:any; //mxGraph (mxGraph)
     public model:any; //mxGraphModel (mxGraphModel)
-    public modelType:string = ""; //current model type 
+    public modelType:string = ""; //current model type - example feature
+    public className:string = ""; //current className - example FeatureModel
     public currentModel:any; //current loaded model (FeatureModel)
     public divContainer:any; //div container (HTMLElement)
     public divNavigator:any; //div navigator (HTMLElement)
@@ -38,6 +39,7 @@ export class VariaMosGraph {
 
     public initializeGraph(modelType:string, divContainer:any, divNavigator:any, divElements:any){
         this.modelType = modelType;
+        this.className = this.modelType.charAt(0).toUpperCase() + this.modelType.slice(1) + "Model";
         this.divElements = divElements;
         this.divContainer = divContainer;
         this.divNavigator = divNavigator;
@@ -64,7 +66,7 @@ export class VariaMosGraph {
         this.configButtonActions.initializeActions();
     }
 
-    public setConfigModel() : void {
+    public setConfigModel(){
         this.graph.dropEnabled = true;
 		this.graph.setConnectable(true); // Enables new connections in the graph
 		this.graph.setMultigraph(false);
@@ -77,13 +79,30 @@ export class VariaMosGraph {
 		this.graph.maximumGraphBounds = new mxRectangle(0, 0, 4000, 4000);
     }
 
-    public setElements() : void{
-        this.currentModel = new FeatureModel([new RootElement(),new AbstractElement()]); 
+    public async setElements(){
+        const modelModule = await import('../'+"custom_models/"+this.modelType+"/"+this.className); //load current model Class
+        this.currentModel = new modelModule[this.className]();
+
+        for (let i = 0; i < this.currentModel.elementClassNames.length; i++) {
+            //load current model element classes
+            const elementModule = await import('../'+"custom_models/"+this.modelType+"/elements/"+this.currentModel.elementClassNames[i]);
+            this.currentModel.addElement(new elementModule[this.currentModel.elementClassNames[i]]);
+        }
+
         this.configElements = new configElements(this.graph, this.model, this.currentModel, this.divElements);
         this.configElements.initializeElements();
     }
 
-    /*public createModel() : void{
+    /*
+    import('./dialogBox.js')
+    .then(dialogBox => {
+        dialogBox.open();
+    })
+    .catch(error => {
+        
+    })
+    
+    public createModel() : void{
         let parent = this.graph.getDefaultParent();
         let vertex = this.graph.insertVertex(parent, null, 'Hello, World!', 20, 20, 180, 60,'boxstyle');
     }*/

@@ -3,8 +3,10 @@ import { MElement } from '../../model/MElement';
 
 export class FeatureModel extends Model {
 
-    public constructor(elements: MElement[]) {
-        super("feature",elements);
+    public constructor() {
+        super("feature",
+            ["RootElement", "AbstractElement", "ConcreteElement", "BundleElement"]
+        );
     }
     
 }
