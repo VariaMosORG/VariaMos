@@ -1,6 +1,6 @@
-import { Element } from "../../../model/Element";
+import { MElement } from "../../../model/MElement";
 
-export class ConcreteElement extends Element {
+export class ConcreteElement extends MElement {
     public constructor(){
         super("rectangle.png",
             "concrete",

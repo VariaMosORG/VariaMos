@@ -1,12 +1,26 @@
 import { mxgraph, mxgraphFactory } from "ts-mxgraph";
 import { Button } from './Button';
-import { ButtonActions } from './ButtonActions';
+import { configButtonActions } from './configButtonActions';
+import { configElements } from './configElements';
+
+/* */
+import { MElement } from '../model/MElement';
+import { FeatureModel } from '../custom_models/feature/FeatureModel';
+import { AbstractElement } from '../custom_models/feature/elements/AbstractElement';
+import { RootElement } from '../custom_models/feature/elements/RootElement';
+/* */
 
 export class VariaMosGraph {
 
-    public graph:any; //mxGraph
-    public model:any; //mxGraphModel
-    public buttonActions:any;
+    public graph:any; //mxGraph (mxGraph)
+    public model:any; //mxGraphModel (mxGraphModel)
+    public modelType:string = ""; //current model type 
+    public currentModel:any; //current loaded model (FeatureModel)
+    public divContainer:any; //div container (HTMLElement)
+    public divNavigator:any; //div navigator (HTMLElement)
+    public divElements:any; //div elements (HTMLElement)
+    public configButtonActions:any; //buttons (configButtonActions)
+    public configElements:any; //buttons (configElements)
 
     public static buttons: Button[] = [ new Button("save","Save","save"),
             new Button("pdf","PDF","print"),
@@ -22,32 +36,37 @@ export class VariaMosGraph {
         this.model = new mxGraphModel();
     }
 
-    public initializeGraph(container:any, navigator:any){
-        this.setGraph(container);
-        this.setNavigator(navigator);
+    public initializeGraph(modelType:string, divContainer:any, divNavigator:any, divElements:any){
+        this.modelType = modelType;
+        this.divElements = divElements;
+        this.divContainer = divContainer;
+        this.divNavigator = divNavigator;
+        this.setGraph();
+        this.setNavigator();
+        this.setConfigModel();
         this.setButtonActions();
-        this.configModel();
+        this.setElements();
     }
 
-    public setGraph(container:any){
+    public setGraph(){
         const { mxGraph } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
-        if (container) {
-            this.graph = new mxGraph(container, this.model);
+        if (this.divContainer) {
+            this.graph = new mxGraph(this.divContainer, this.model);
         }
-        this.buttonActions = new ButtonActions(this.graph, this.model, VariaMosGraph.buttons);
     }
 
-    public setNavigator(navigator:any){
+    public setNavigator(){
         const { mxOutline } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
-        let outline = new mxOutline(this.graph, navigator);
+        let outline = new mxOutline(this.graph, this.divNavigator);
         outline.refresh();
     }
 
     public setButtonActions(){
-        this.buttonActions.initilizeActions();
+        this.configButtonActions = new configButtonActions(this.graph, this.model, VariaMosGraph.buttons);
+        this.configButtonActions.initializeActions();
     }
 
-    public configModel() : void {
+    public setConfigModel() : void {
         const { mxRubberband, mxRectangle } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
         this.graph.dropEnabled = true;
 		this.graph.setConnectable(true); // Enables new connections in the graph
@@ -61,9 +80,15 @@ export class VariaMosGraph {
 		this.graph.maximumGraphBounds = new mxRectangle(0, 0, 4000, 4000);
     }
 
-    public createModel() : void{
+    public setElements() : void{
+        this.currentModel = new FeatureModel([new RootElement(),new AbstractElement()]); 
+        this.configElements = new configElements(this.graph, this.model, this.currentModel, this.divElements);
+        this.configElements.initializeElements();
+    }
+
+    /*public createModel() : void{
         let parent = this.graph.getDefaultParent();
         let vertex = this.graph.insertVertex(parent, null, 'Hello, World!', 20, 20, 180, 60,'boxstyle');
-    }
+    }*/
 
 }

@@ -1,7 +1,7 @@
 import { Button } from './Button';
 import { mxgraphFactory } from "ts-mxgraph";
 
-export class ButtonActions {
+export class configButtonActions {
 
     public buttons: Button[];
     public graph: any;
@@ -13,7 +13,7 @@ export class ButtonActions {
         this.model = model;
     }
 
-    public initilizeActions(){
+    public initializeActions(){
         for (let i = 0; i < this.buttons.length; i++) {
             const functionToExecute = this.buttons[i].id;
             if((this as any)[functionToExecute]){ // Verify if the function exists

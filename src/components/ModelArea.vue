@@ -25,6 +25,7 @@
       <div class="card bg-primary text-white shadow">
         <div class="card-body">
           Elements
+          <div id="vgraph-elements" class="elements"></div>
         </div>
       </div>
 
@@ -48,10 +49,12 @@ export default class ModelArea extends Vue {
   public buttons = VariaMosGraph.buttons;
 
   public mounted() {
-    const container = document.getElementById("vgraph-container");
-    const navigator = document.getElementById("vgraph-navigator");
-    this.variaMosGraph.initializeGraph(container, navigator);
-    this.variaMosGraph.createModel();
+    const divContainer = document.getElementById("vgraph-container");
+    const divNavigator = document.getElementById("vgraph-navigator");
+    const divElements = document.getElementById("vgraph-elements");
+    const modelType = "feature";
+    this.variaMosGraph.initializeGraph(modelType, divContainer, divNavigator, divElements);
+    //this.variaMosGraph.createModel("feature");
   }
 
 }

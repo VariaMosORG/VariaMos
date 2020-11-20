@@ -1,4 +1,4 @@
-export class Element { 
+export class MElement { 
     public icon: string;
     public type: string; 
     public width: number; 

@@ -1,10 +1,10 @@
+import { MElement } from "./MElement";
+
 export class Model {
-    public id: number;
     public type: string;
-    public elements: Element[];
+    public elements: MElement[];
     
-    public constructor(id:number, type:string, elements: Element[]) {
-        this.id = id;
+    public constructor(type:string, elements: MElement[]) {
         this.type = type;
         this.elements = elements;
     }
