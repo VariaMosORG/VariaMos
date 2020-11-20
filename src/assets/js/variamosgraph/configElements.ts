@@ -51,7 +51,7 @@ export class configElements {
         let mdiv = document.createElement('div');
         let span = document.createElement('span');
         span.innerHTML = element.label + "<br />";
-        mdiv.appendChild(span);
+        //mdiv.appendChild(span);
 
         let img = this.toolbar.addMode(element.label, "/img/custom_models/"+this.currentModel.type+"/"+element.icon, drapAndDropCreation);
         mxUtils.makeDraggable(img, graph, drapAndDropCreation);

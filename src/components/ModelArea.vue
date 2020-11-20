@@ -22,7 +22,7 @@
     </div>
 
     <div id="right-draw" class="col-sm-3 right-area font13">
-      <div class="card bg-primary text-white shadow">
+      <div class="card bg-white text-black shadow">
         <div class="card-body">
           Elements
           <div id="vgraph-elements" class="elements"></div>
@@ -134,4 +134,27 @@ export default class ModelArea extends Vue {
   padding: 15px !important;
 }
 /* buttons */
+
+/* elements */
+.elements{
+  touch-action: none;
+  display: block;
+  padding: 6px;
+  padding-left: 10px;
+  padding-bottom: 6px;
+  overflow: hidden;
+}
+
+.elements .pallete-div{
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 40px;
+  height: 32px;
+  padding: 1px;
+}
+
+/* elements */
 </style>
