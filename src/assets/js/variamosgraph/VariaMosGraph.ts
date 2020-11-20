@@ -1,7 +1,8 @@
-import { mxgraph, mxgraphFactory } from "ts-mxgraph";
+import { mxgraphFactory } from "ts-mxgraph";
 import { Button } from './Button';
 import { configButtonActions } from './configButtonActions';
 import { configElements } from './configElements';
+const { mxGraphModel, mxGraph, mxOutline, mxRubberband, mxRectangle } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
 
 /* */
 import { MElement } from '../model/MElement';
@@ -19,8 +20,8 @@ export class VariaMosGraph {
     public divContainer:any; //div container (HTMLElement)
     public divNavigator:any; //div navigator (HTMLElement)
     public divElements:any; //div elements (HTMLElement)
-    public configButtonActions:any; //buttons (configButtonActions)
-    public configElements:any; //buttons (configElements)
+    public configButtonActions:any; //configButtons (configButtonActions)
+    public configElements:any; //configElements (configElements)
 
     public static buttons: Button[] = [ new Button("save","Save","save"),
             new Button("pdf","PDF","print"),
@@ -29,10 +30,9 @@ export class VariaMosGraph {
             new Button("resetall","Reset All","eraser"),
             new Button("export","Export","upload"),
             new Button("xml","View XML","code"),
-         ]
+        ]
 
     public constructor() {
-        const { mxGraphModel } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
         this.model = new mxGraphModel();
     }
 
@@ -49,14 +49,12 @@ export class VariaMosGraph {
     }
 
     public setGraph(){
-        const { mxGraph } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
         if (this.divContainer) {
             this.graph = new mxGraph(this.divContainer, this.model);
         }
     }
 
     public setNavigator(){
-        const { mxOutline } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
         let outline = new mxOutline(this.graph, this.divNavigator);
         outline.refresh();
     }
@@ -67,7 +65,6 @@ export class VariaMosGraph {
     }
 
     public setConfigModel() : void {
-        const { mxRubberband, mxRectangle } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
         this.graph.dropEnabled = true;
 		this.graph.setConnectable(true); // Enables new connections in the graph
 		this.graph.setMultigraph(false);
