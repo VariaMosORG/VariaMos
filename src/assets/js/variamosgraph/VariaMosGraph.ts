@@ -2,14 +2,17 @@ import { mxgraphFactory } from "ts-mxgraph";
 import { Button } from './Button';
 import { configButtonActions } from './configButtonActions';
 import { configElements } from './configElements';
-const { mxGraphModel, mxGraph, mxOutline, mxRubberband, mxRectangle } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
-
-/* */
-import { MElement } from '../model/MElement';
-import { FeatureModel } from '../custom_models/feature/FeatureModel';
-import { AbstractElement } from '../custom_models/feature/elements/AbstractElement';
-import { RootElement } from '../custom_models/feature/elements/RootElement';
-/* */
+const { mxGraphModel, 
+    mxGraph, 
+    mxOutline, 
+    mxRubberband, 
+    mxRectangle, 
+    mxShape, 
+    mxUtils, 
+    mxCellRenderer,
+    mxConstants,
+    mxStencilRegistry,
+    mxStencil } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
 
 export class VariaMosGraph {
 
@@ -48,6 +51,7 @@ export class VariaMosGraph {
         this.setConfigModel();
         this.setButtonActions();
         this.setElements();
+        this.setCustomShapes();
     }
 
     public setGraph(){
@@ -93,18 +97,27 @@ export class VariaMosGraph {
         this.configElements.initializeElements();
     }
 
-    /*
-    import('./dialogBox.js')
-    .then(dialogBox => {
-        dialogBox.open();
-    })
-    .catch(error => {
-        
-    })
-    
-    public createModel() : void{
-        let parent = this.graph.getDefaultParent();
-        let vertex = this.graph.insertVertex(parent, null, 'Hello, World!', 20, 20, 180, 60,'boxstyle');
-    }*/
+    public setCustomShapes(){
 
+        function CustomShape()
+		{
+			mxShape.call(null);
+        };
+        
+        mxUtils.extend(CustomShape, mxShape);
+        mxCellRenderer.registerShape('customShape', CustomShape);
+
+        let req = mxUtils.load('/xml/MX/' + this.modelType + '/custom_shapes.xml');
+		let root = req.getDocumentElement();
+        let shape = root.firstChild;
+        
+        while (shape != null)
+		{
+			if (shape.nodeType == mxConstants.NODETYPE_ELEMENT)
+			{
+				mxStencilRegistry.addStencil(shape.getAttribute('name'), new mxStencil(shape));
+			}
+			shape = shape.nextSibling;
+		}
+    }
 }
