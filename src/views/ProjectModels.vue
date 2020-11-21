@@ -36,8 +36,10 @@
           <div id="right-draw" class="col-sm-3 right-area font13">
             <!-- Begin Elements Section -->
             <div class="card bg-white text-black shadow">
+              <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Elements</h6>
+              </div>
               <div class="card-body">
-                Elements
                 <div id="vgraph-elements" class="elements"></div>
               </div>
             </div>
@@ -45,8 +47,10 @@
 
             <!-- Begin Properties Section -->
             <div class="card bg-info text-white shadow mtop">
+              <div class="card-header bg-info py-3">
+                <h6 class="m-0 font-weight-bold text-white">Properties</h6>
+              </div>
               <div class="card-body">
-                Properties
                 <div id="vgraph-properties" class="properties"></div>
               </div>
             </div>
@@ -54,8 +58,10 @@
 
             <!-- Begin Navigation Section -->
             <div class="card bg-light text-black shadow mtop">
+              <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Navigation</h6>
+              </div>
               <div class="card-body">
-                Navigation
                 <div id="vgraph-navigator" class="navigator"></div>
               </div>
             </div>
