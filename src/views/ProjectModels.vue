@@ -91,26 +91,26 @@ export default class ProjectModels extends Vue {
 
   public mounted(){
     this.variaMosGraph.initTreeModel(this.availableModels);
-    this.initGraph();
+    this.initGraph(1);
   }
 
   public updated(){
-    this.divContainer.innerHTML = "";
+    //this.divContainer.innerHTML = "";
     this.divElements.innerHTML = "";
     this.divNavigator.innerHTML = "";
     this.divProperties.innerHTML = "";
     this.variaMosGraph.removeAllButtonEventListeners();
-    this.initGraph();
+    this.initGraph(2);
   }
 
-  public initGraph(){
+  public initGraph(caseLoad:number){
     this.modelType = String(this.$route.params.modelType);
     this.modelTypeLabel = this.modelType.charAt(0).toUpperCase() + this.modelType.slice(1) + "Model";
     this.divContainer = document.getElementById("vgraph-container");
     this.divNavigator = document.getElementById("vgraph-navigator");
     this.divElements = document.getElementById("vgraph-elements");
     this.divProperties = document.getElementById("vgraph-properties");
-    this.variaMosGraph.initializeGraph(this.modelType, this.divContainer, this.divNavigator, this.divElements, this.divProperties);
+    this.variaMosGraph.initializeGraph(this.modelType, this.divContainer, this.divNavigator, this.divElements, this.divProperties, caseLoad);
   }
 }
 </script>

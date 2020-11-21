@@ -49,14 +49,17 @@ export class VariaMosGraph {
         this.model.setRoot(root);
     }
 
-    public async initializeGraph(modelType:string, divContainer:any, divNavigator:any, divElements:any, divProperties:any){
+    public async initializeGraph(modelType:string, divContainer:any, divNavigator:any, divElements:any, divProperties:any, caseLoad:any){
         this.modelType = modelType;
         this.className = this.modelType.charAt(0).toUpperCase() + this.modelType.slice(1) + "Model";
         this.divElements = divElements;
         this.divContainer = divContainer;
         this.divNavigator = divNavigator;
         this.divProperties = divProperties;
-        this.setGraph(); //create mxGraph object
+        if(caseLoad==1){
+            this.setGraph(); //create mxGraph object    
+        }
+        //this.setGraph(); //create mxGraph object
         this.setCurrentLayer(); //specific current layer to be shown
         this.setNavigator(); //define the div navigator
         this.setConfigModel(); //some graph configs
@@ -65,7 +68,7 @@ export class VariaMosGraph {
         this.setElements(); //load model elements (palette)
         this.setConstraints(); //set model elements constraints
         this.setProperties(); //set model element properties
-        this.setMainTextChanged();
+        this.setMainCellText(); //set the main text to be displayed for cells
         this.setCustomShapes(); //set custom shapes
     }
 
@@ -75,7 +78,7 @@ export class VariaMosGraph {
         }
     }
 
-    public setMainTextChanged(){
+    public setMainCellText(){
         this.graph.convertValueToString = function(cell:any){
             if(cell.isEdge()){
                 return cell.getAttribute('relType', ''); //default attribute showed in drawing area for edges is relType

@@ -20,6 +20,11 @@ export class configProperties {
         let configPropertiesObject = this;
         let selChanges = this.selectionChanged;
 
+        if(this.graph.getSelectionModel().eventListeners.length > 3){ //remove previous listeners
+            this.graph.getSelectionModel().eventListeners.pop();
+            this.graph.getSelectionModel().eventListeners.pop();
+        }
+
         this.graph.getSelectionModel().addListener(mxEvent.CHANGE, function(sender:any, evt:any){
             selChanges(configPropertiesObject);
         });
