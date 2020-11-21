@@ -3,6 +3,7 @@ import Home from '@/views/Home.vue';
 import About from '@/views/About.vue';
 import Config from '@/views/Config.vue';
 import Project from '@/views/Project.vue';
+import ProjectModels from '@/views/ProjectModels.vue';
 
 const routes = [
   {
@@ -21,10 +22,15 @@ const routes = [
     component: Config,
   },
   {
+    path: '/project/:modelType',
+    name: 'ProjectModel',
+    component: ProjectModels,
+  },
+  {
     path: '/project',
     name: 'Project',
     component: Project,
-  },
+  }
 ];
 
 const router = createRouter({

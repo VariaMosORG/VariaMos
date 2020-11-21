@@ -52,7 +52,7 @@ export default class ModelArea extends Vue {
     const divContainer = document.getElementById("vgraph-container");
     const divNavigator = document.getElementById("vgraph-navigator");
     const divElements = document.getElementById("vgraph-elements");
-    const modelType = "component";
+    const modelType = String(this.$route.params.modelType); //get modelType from URL
     this.variaMosGraph.initializeGraph(modelType, divContainer, divNavigator, divElements);
   }
 
