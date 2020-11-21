@@ -10,34 +10,97 @@
           </ul>
       </div>
       <div class="card-body">
-        <ModelArea :key="$route.params.modelType" />
+        <!-- Begin Model Area -->
+        <div class="row main_area">
+          <div id="left-draw" class="col-sm-9 left-area">
+
+            <div class="card bg-light text-white shadow font13">
+              <div class="card-body pad10">
+                <div id="vgraph-buttons" class="buttons">
+                    <button class="btn btn-info" v-for="button in buttons" :key="button" :id="button.id">
+                      <i :class="'fas fa-'+button.icon"></i>
+                      {{ button.label }}
+                    </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="card bg-light text-black shadow mtop">
+              <div class="card-body">
+                <div id="vgraph-container" class="model-area"></div>
+              </div>
+            </div>
+
+          </div>
+
+          <div id="right-draw" class="col-sm-3 right-area font13">
+            <!-- Begin Elements Section -->
+            <div class="card bg-white text-black shadow">
+              <div class="card-body">
+                Elements
+                <div id="vgraph-elements" class="elements"></div>
+              </div>
+            </div>
+            <!-- End Elements Section -->
+
+            <!-- Begin Properties Section -->
+            <div class="card bg-info text-white shadow mtop">
+              <div class="card-body">
+                Properties
+                <div id="vgraph-properties" class="properties"></div>
+              </div>
+            </div>
+            <!-- End Properties Section -->
+
+            <!-- Begin Navigation Section -->
+            <div class="card bg-light text-black shadow mtop">
+              <div class="card-body">
+                Navigation
+                <div id="vgraph-navigator" class="navigator"></div>
+              </div>
+            </div>
+            <!-- End Navigation Section -->
+
+          </div>
+        </div>
+        <!-- End Model Area -->
       </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Options } from 'vue-class-component'
-import ModelArea from '@/components/ModelArea.vue';
+import { Vue, Options } from 'vue-class-component';
+import { VariaMosGraph } from "@/assets/js/variamosgraph/VariaMosGraph";
 
-Vue.registerHooks(['beforeRouteUpdate']);
-
-@Options({
-  components: {
-    ModelArea
-  }
-})
 export default class ProjectModels extends Vue {
   public modelType:any = "";
+  public modelTypeLabel:any = "";
   public availableModels:any = [{"name":"FeatureModel","link":"feature"},{"name":"ComponentModel","link":"component"}];
+  public variaMosGraph = new VariaMosGraph();
+  public buttons = VariaMosGraph.buttons;
+  public divContainer:any; //div container (HTMLElement)
+  public divNavigator:any; //div navigator (HTMLElement)
+  public divElements:any; //div elements (HTMLElement)
 
   public mounted(){
-    this.modelType = String(this.$route.params.modelType);
-    this.modelType = this.modelType.charAt(0).toUpperCase() + this.modelType.slice(1) + "Model";
+    this.initGraph();
   }
 
-  public beforeRouteUpdate(to:any, from:any, next:any) {
-    console.log('beforeRouteUpdate');
-    next();
+  public updated(){
+    this.divContainer.innerHTML = "";
+    this.divElements.innerHTML = "";
+    this.divNavigator.innerHTML = "";
+    this.variaMosGraph.removeAllButtonEventListeners();
+    this.initGraph();
+  }
+
+  public initGraph(){
+    this.modelType = String(this.$route.params.modelType);
+    this.modelTypeLabel = this.modelType.charAt(0).toUpperCase() + this.modelType.slice(1) + "Model";
+    this.divContainer = document.getElementById("vgraph-container");
+    this.divNavigator = document.getElementById("vgraph-navigator");
+    this.divElements = document.getElementById("vgraph-elements");
+    this.variaMosGraph.initializeGraph(this.modelType, this.divContainer, this.divNavigator, this.divElements);
   }
 }
 </script>
@@ -74,4 +137,102 @@ ul.tab li a:hover {
 ul.tab li a:focus, .active {
     background-color: lavender;
 }
+
+@media (max-width: 992px){
+  .right-area, .left-area{
+    flex: 100%;
+    max-width: 100%;
+  }
+  .right-area{
+    margin-top: 10px;
+    padding-left: 0px !important;
+  }
+}
+
+.model-area{
+  overflow-block: scroll;
+  overflow-x: auto;
+  overflow-y: auto;
+  height:55vh;
+  background:url("../assets/img/grid.gif");
+  cursor:default;
+  padding-right: 0px; 
+  padding-left: 0px;
+}
+
+.main_area{
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
+.left-area{
+  padding-right: 0px;
+  padding-left: 0px;
+}
+
+.mtop{
+  margin-top: 10px;
+}
+
+.right-area{
+  padding-right: 0px;
+  padding-left: 10px;
+}
+
+.navigator{
+  margin-bottom: -30px;
+  margin-top: 10px;
+}
+
+.font13{
+  font-size:13px;
+}
+
+.pad10{
+  padding: 15px !important;
+}
+
+/* buttons */
+.buttons {
+  display: flex;
+  margin: auto;
+  justify-content: space-between;
+}
+
+.buttons button {
+  /*flex: 0 0 18%;*/
+  height: 30px;
+  padding: 0px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
+}
+
+.pad10{
+  padding: 15px !important;
+}
+/* buttons */
+
+/* elements */
+.elements{
+  touch-action: none;
+  display: block;
+  padding: 6px;
+  padding-left: 10px;
+  padding-bottom: 6px;
+  overflow: hidden;
+}
+
+.elements .pallete-div{
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 40px;
+  height: 32px;
+  padding: 1px;
+}
+
+/* elements */
 </style>

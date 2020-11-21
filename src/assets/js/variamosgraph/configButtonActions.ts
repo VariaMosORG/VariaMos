@@ -13,6 +13,19 @@ export class configButtonActions {
         this.model = model;
     }
 
+    public removeAllEventListeners(){
+        for (let i = 0; i < this.buttons.length; i++) {
+            const buttonId = this.buttons[i].id;
+            const oldButton = document.getElementById(buttonId);
+            if(oldButton){
+                let newButton = oldButton.cloneNode(true);
+                if(newButton !=null && oldButton.parentNode != null){
+                    oldButton.parentNode.replaceChild(newButton, oldButton);
+                }
+            }
+        }
+    }
+
     public initializeActions(){
         for (let i = 0; i < this.buttons.length; i++) {
             const functionToExecute = this.buttons[i].id;

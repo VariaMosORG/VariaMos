@@ -70,6 +70,10 @@ export class VariaMosGraph {
         this.configButtonActions.initializeActions();
     }
 
+    public removeAllButtonEventListeners(){
+        this.configButtonActions.removeAllEventListeners();
+    }
+
     public setConfigModel(){
         this.graph.dropEnabled = true;
 		this.graph.setConnectable(true); // Enables new connections in the graph
