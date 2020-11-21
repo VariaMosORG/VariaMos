@@ -14,7 +14,7 @@ export class VariaMosGraph {
     public model:any; //mxGraphModel (mxGraphModel)
     public modelType:string = ""; //current model type - example feature
     public className:string = ""; //current className - example FeatureModel
-    public currentModel:any; //current loaded model (FeatureModel)
+    public currentModel:any; //current loaded model (example FeatureModel)
     public divContainer:any; //div container (HTMLElement)
     public divNavigator:any; //div navigator (HTMLElement)
     public divElements:any; //div elements (HTMLElement)
@@ -23,13 +23,13 @@ export class VariaMosGraph {
     public layers:any; //availble layers of the current model
 
     public static buttons: Button[] = [ new Button("save","Save","save"),
-            new Button("pdf","PDF","print"),
-            new Button("img","Img","print"),
-            new Button("delete","Delete","eraser"),
-            new Button("resetall","Reset All","eraser"),
-            new Button("export","Export","upload"),
-            new Button("xml","View XML","code"),
-        ]
+        new Button("pdf","PDF","print"),
+        new Button("img","Img","print"),
+        new Button("delete","Delete","eraser"),
+        new Button("resetall","Reset All","eraser"),
+        new Button("export","Export","upload"),
+        new Button("xml","View XML","code"),
+    ]
 
     public constructor() {
         this.model = new mxGraphModel();
@@ -57,7 +57,8 @@ export class VariaMosGraph {
         this.setNavigator(); //define the div navigator
         this.setConfigModel(); //some graph configs
         this.setButtonActions(); //implement button actions
-        await this.setElements(); //wait to load model class and model elements, and then continue
+        await this.loadCurrentModelClasses(); //wait to load model class and model elements, and then continue
+        this.setElements(); //load model elements (palette)
         this.setConstraints(); //set model elements constraints
         this.setCustomShapes(); //set custom shapes
     }
@@ -104,7 +105,8 @@ export class VariaMosGraph {
 		this.graph.maximumGraphBounds = new mxRectangle(0, 0, 4000, 4000);
     }
 
-    public async setElements(){
+    public async loadCurrentModelClasses(){
+        //load current model class
         const modelModule = await import('../'+"custom_models/"+this.modelType+"/"+this.className); //load current model Class
         this.currentModel = new modelModule[this.className]();
 
@@ -113,7 +115,9 @@ export class VariaMosGraph {
             const elementModule = await import('../'+"custom_models/"+this.modelType+"/elements/"+this.currentModel.elementClassNames[i]);
             this.currentModel.addElement(new elementModule[this.currentModel.elementClassNames[i]]);
         }
+    }
 
+    public setElements(){
         this.configElements = new configElements(this.graph, this.model, this.currentModel, this.divElements);
         this.configElements.initializeElements();
     }
