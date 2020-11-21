@@ -16,8 +16,8 @@ export class MElement {
         this.style = style; 
         this.label = label;
         this.properties = [
-            { "id":"label", "label": "Label", "defValue":this.type, "inputType":"text"},
-            { "id":"type", "label": "Type", "defValue":this.type, "inputType":"text"},
+            { "id":"label", "label": "Label", "defValue":this.type, "inputType":"text", "disabled":"false"},
+            { "id":"type", "label": "Type", "defValue":this.type, "inputType":"text", "disabled":"true"},
         ]
     }
 }
