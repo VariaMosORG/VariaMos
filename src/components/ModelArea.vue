@@ -29,6 +29,13 @@
         </div>
       </div>
 
+      <div class="card bg-info text-white shadow mtop">
+        <div class="card-body">
+          Properties
+          <div id="vgraph-elements" class="elements"></div>
+        </div>
+      </div>
+
       <div class="card bg-light text-black shadow mtop">
         <div class="card-body">
           Navigation

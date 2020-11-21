@@ -68,10 +68,10 @@ ul.tab li a {
 }
 
 ul.tab li a:hover {
-    background-color: #ddd;
+    background-color: lavender;
 }
 
 ul.tab li a:focus, .active {
-    background-color: #ddd;
+    background-color: lavender;
 }
 </style>
