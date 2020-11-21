@@ -2,6 +2,7 @@ import { mxgraphFactory } from "ts-mxgraph";
 import { Button } from './Button';
 import { configButtonActions } from './configButtonActions';
 import { configElements } from './configElements';
+import { configProperties } from './configProperties';
 const { mxGraphModel, mxGraph, mxOutline, 
     mxRubberband, mxRectangle, mxShape, 
     mxUtils, mxCellRenderer, mxConstants,
@@ -18,8 +19,10 @@ export class VariaMosGraph {
     public divContainer:any; //div container (HTMLElement)
     public divNavigator:any; //div navigator (HTMLElement)
     public divElements:any; //div elements (HTMLElement)
+    public divProperties:any; //div properties (HTMLElement)
     public configButtonActions:any; //configButtons (configButtonActions)
     public configElements:any; //configElements (configElements)
+    public configProperties:any; //configProperties (configProperties)
     public layers:any; //availble layers of the current model
 
     public static buttons: Button[] = [ new Button("save","Save","save"),
@@ -46,12 +49,13 @@ export class VariaMosGraph {
         this.model.setRoot(root);
     }
 
-    public async initializeGraph(modelType:string, divContainer:any, divNavigator:any, divElements:any){
+    public async initializeGraph(modelType:string, divContainer:any, divNavigator:any, divElements:any, divProperties:any){
         this.modelType = modelType;
         this.className = this.modelType.charAt(0).toUpperCase() + this.modelType.slice(1) + "Model";
         this.divElements = divElements;
         this.divContainer = divContainer;
         this.divNavigator = divNavigator;
+        this.divProperties = divProperties;
         this.setGraph(); //create mxGraph object
         this.setCurrentLayer(); //specific current layer to be shown
         this.setNavigator(); //define the div navigator
@@ -60,6 +64,7 @@ export class VariaMosGraph {
         await this.loadCurrentModelClasses(); //wait to load model class and model elements, and then continue
         this.setElements(); //load model elements (palette)
         this.setConstraints(); //set model elements constraints
+        this.setProperties();
         this.setCustomShapes(); //set custom shapes
     }
 
@@ -86,6 +91,11 @@ export class VariaMosGraph {
     public setButtonActions(){
         this.configButtonActions = new configButtonActions(this.graph, this.model, VariaMosGraph.buttons);
         this.configButtonActions.initializeActions();
+    }
+
+    public setProperties(){
+        this.configProperties = new configProperties(this.graph, this.model, this.currentModel, this.divProperties);
+        this.configProperties.initializeProperties();
     }
 
     public removeAllButtonEventListeners(){

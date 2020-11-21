@@ -81,6 +81,7 @@ export default class ProjectModels extends Vue {
   public divContainer:any; //div container (HTMLElement)
   public divNavigator:any; //div navigator (HTMLElement)
   public divElements:any; //div elements (HTMLElement)
+  public divProperties:any; //div properties (HTMLElement)
 
   public mounted(){
     this.variaMosGraph.initTreeModel(this.availableModels);
@@ -91,6 +92,7 @@ export default class ProjectModels extends Vue {
     this.divContainer.innerHTML = "";
     this.divElements.innerHTML = "";
     this.divNavigator.innerHTML = "";
+    this.divProperties.innerHTML = "";
     this.variaMosGraph.removeAllButtonEventListeners();
     this.initGraph();
   }
@@ -101,7 +103,8 @@ export default class ProjectModels extends Vue {
     this.divContainer = document.getElementById("vgraph-container");
     this.divNavigator = document.getElementById("vgraph-navigator");
     this.divElements = document.getElementById("vgraph-elements");
-    this.variaMosGraph.initializeGraph(this.modelType, this.divContainer, this.divNavigator, this.divElements);
+    this.divProperties = document.getElementById("vgraph-properties");
+    this.variaMosGraph.initializeGraph(this.modelType, this.divContainer, this.divNavigator, this.divElements, this.divProperties);
   }
 }
 </script>
@@ -235,4 +238,10 @@ ul.tab li a:focus, .active {
   padding: 1px;
 }
 /* elements */
+
+/* properties */
+.tr-unique{
+  padding-bottom: 5px;
+}
+/* properties */
 </style>

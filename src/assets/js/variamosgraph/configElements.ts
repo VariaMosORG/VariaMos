@@ -27,8 +27,12 @@ export class configElements {
     public addVertex(element:any){
         let doc = mxUtils.createXmlDocument();
         let node = doc.createElement(element.type);
-        node.setAttribute('label', element.type);
-        node.setAttribute('type', element.type);
+        
+        if(element.properties.length > 0){
+            for (let i = 0; i < element.properties.length; i++) {
+                node.setAttribute(element.properties[i].id, element.properties[i].defValue);
+            }
+        }
 
         let vertex = new mxCell(node, new mxGeometry(0, 0, element.width, element.height), element.style);
         vertex.setConnectable(true);

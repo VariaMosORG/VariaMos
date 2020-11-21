@@ -5,6 +5,7 @@ export class MElement {
     public height: number;
     public style: string;
     public label: string;
+    public properties: any = Array();
 
     public constructor(icon:string, type:string, width:number, height:number, 
         style:string, label:string) {
@@ -14,5 +15,9 @@ export class MElement {
         this.height = height;
         this.style = style; 
         this.label = label;
+        this.properties = [
+            { "id":"label", "label": "Label", "defValue":this.type, "inputType":"text"},
+            { "id":"type", "label": "Type", "defValue":this.type, "inputType":"text"},
+        ]
     }
 }

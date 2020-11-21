@@ -8,5 +8,8 @@ export class ConcreteElement extends MElement {
             35,
             "",
             "Concrete Feature");
+        this.properties.push(
+            { "id":"selected", "label": "Selected", "defValue":"false", "inputType":"text"}
+        );
     }
 }
