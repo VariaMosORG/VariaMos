@@ -2,18 +2,11 @@ import { mxgraphFactory } from "ts-mxgraph";
 import { Button } from './Button';
 import { configButtonActions } from './configButtonActions';
 import { configElements } from './configElements';
-const { mxGraphModel, 
-    mxGraph, 
-    mxOutline, 
-    mxRubberband, 
-    mxRectangle, 
-    mxShape, 
-    mxUtils, 
-    mxCellRenderer,
-    mxConstants,
-    mxStencilRegistry,
-    mxStencil,
-    mxCell } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
+const { mxGraphModel, mxGraph, mxOutline, 
+    mxRubberband, mxRectangle, mxShape, 
+    mxUtils, mxCellRenderer, mxConstants,
+    mxStencilRegistry, mxStencil, mxCell, 
+    mxMultiplicity } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
 
 export class VariaMosGraph {
 
@@ -53,7 +46,7 @@ export class VariaMosGraph {
         this.model.setRoot(root);
     }
 
-    public initializeGraph(modelType:string, divContainer:any, divNavigator:any, divElements:any){
+    public async initializeGraph(modelType:string, divContainer:any, divNavigator:any, divElements:any){
         this.modelType = modelType;
         this.className = this.modelType.charAt(0).toUpperCase() + this.modelType.slice(1) + "Model";
         this.divElements = divElements;
@@ -64,7 +57,8 @@ export class VariaMosGraph {
         this.setNavigator();
         this.setConfigModel();
         this.setButtonActions();
-        this.setElements();
+        await this.setElements(); //wait to load model class and model elements, and then continue
+        this.setConstraints();
         this.setCustomShapes();
     }
 
@@ -122,6 +116,23 @@ export class VariaMosGraph {
 
         this.configElements = new configElements(this.graph, this.model, this.currentModel, this.divElements);
         this.configElements.initializeElements();
+    }
+
+    public setConstraints(){
+        this.graph.multiplicities = [];
+        for (let i = 0; i < this.currentModel.constraints.length; i++) {
+            this.graph.multiplicities.push(new mxMultiplicity(
+                this.currentModel.constraints[i].source,
+                this.currentModel.constraints[i].type,
+                this.currentModel.constraints[i].attr,
+                this.currentModel.constraints[i].value,
+                this.currentModel.constraints[i].min,
+                this.currentModel.constraints[i].max,
+                this.currentModel.constraints[i].validNeighbors,
+                this.currentModel.constraints[i].countError,
+                this.currentModel.constraints[i].typeError
+            ));
+        }
     }
 
     public setCustomShapes(){

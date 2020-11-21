@@ -2,6 +2,7 @@ export class Model {
     public type: string;
     public elementClassNames: string[];
     public elements: any = Array(); // MElement[]
+    public constraints: any = Array();
     
     public constructor(type:string, elementClassNames:string[]) {
         this.type = type;
