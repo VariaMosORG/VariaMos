@@ -64,7 +64,8 @@ export class VariaMosGraph {
         await this.loadCurrentModelClasses(); //wait to load model class and model elements, and then continue
         this.setElements(); //load model elements (palette)
         this.setConstraints(); //set model elements constraints
-        this.setProperties();
+        this.setProperties(); //set model element properties
+        this.setMainTextChanged();
         this.setCustomShapes(); //set custom shapes
     }
 
@@ -72,6 +73,16 @@ export class VariaMosGraph {
         if (this.divContainer) {
             this.graph = new mxGraph(this.divContainer, this.model);
         }
+    }
+
+    public setMainTextChanged(){
+        this.graph.convertValueToString = function(cell:any){
+            if(cell.isEdge()){
+                return cell.getAttribute('relType', ''); //default attribute showed in drawing area for edges is relType
+            }else{
+                return cell.getAttribute('label', ''); //default attribute showed in drawing area for vertex is label
+            }
+        };
     }
 
     public setCurrentLayer(){
