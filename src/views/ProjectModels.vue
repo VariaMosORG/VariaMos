@@ -69,7 +69,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Options } from 'vue-class-component';
+import { Vue } from 'vue-class-component';
 import { VariaMosGraph } from "@/assets/js/variamosgraph/VariaMosGraph";
 
 export default class ProjectModels extends Vue {
@@ -81,8 +81,10 @@ export default class ProjectModels extends Vue {
   public divContainer:any; //div container (HTMLElement)
   public divNavigator:any; //div navigator (HTMLElement)
   public divElements:any; //div elements (HTMLElement)
+  public layers:any; //availble layers of the current model
 
   public mounted(){
+    this.layers = this.variaMosGraph.initTreeModel(this.availableModels);
     this.initGraph();
   }
 
@@ -100,7 +102,7 @@ export default class ProjectModels extends Vue {
     this.divContainer = document.getElementById("vgraph-container");
     this.divNavigator = document.getElementById("vgraph-navigator");
     this.divElements = document.getElementById("vgraph-elements");
-    this.variaMosGraph.initializeGraph(this.modelType, this.divContainer, this.divNavigator, this.divElements);
+    this.variaMosGraph.initializeGraph(this.modelType, this.layers, this.divContainer, this.divNavigator, this.divElements);
   }
 }
 </script>
@@ -233,6 +235,5 @@ ul.tab li a:focus, .active {
   height: 32px;
   padding: 1px;
 }
-
 /* elements */
 </style>
