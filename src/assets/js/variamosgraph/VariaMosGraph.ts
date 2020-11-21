@@ -44,19 +44,17 @@ export class VariaMosGraph {
 
     public initTreeModel(modelsInfo:any){
         let root = new mxCell();
-        let layers = []
+        this.layers = []
         for (let i = 0; i < modelsInfo.length; i++) {
             let mCell =new mxCell();
-            mCell.setId(modelsInfo[i].link);
-            layers[modelsInfo[i].link] = root.insert(mCell);
+            mCell.setId(modelsInfo[i].modelType);
+            this.layers[modelsInfo[i].modelType] = root.insert(mCell);
         }
         this.model.setRoot(root);
-        return layers;
     }
 
-    public initializeGraph(modelType:string, layers:any, divContainer:any, divNavigator:any, divElements:any){
+    public initializeGraph(modelType:string, divContainer:any, divNavigator:any, divElements:any){
         this.modelType = modelType;
-        this.layers = layers;
         this.className = this.modelType.charAt(0).toUpperCase() + this.modelType.slice(1) + "Model";
         this.divElements = divElements;
         this.divContainer = divContainer;
@@ -77,13 +75,12 @@ export class VariaMosGraph {
     }
 
     public setCurrentLayer(){
-        let currentLayer = "";
-		currentLayer = this.layers[this.modelType]; //current layer to be displayed (feature, component, etc)
+		let currentLayer = this.layers[this.modelType]; //current layer to be displayed (feature, component, etc)
         this.graph.setDefaultParent(currentLayer);
         for (let layer in this.layers) { //hide all layers
 			this.model.setVisible(this.layers[layer], false);
 		}
-		this.model.setVisible(currentLayer, true); //unhidecurrent layer
+		this.model.setVisible(currentLayer, true); //unhide current layer
     }
 
     public setNavigator(){

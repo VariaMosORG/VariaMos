@@ -4,8 +4,8 @@
         <!--<h6 class="m-0 font-weight-bold text-primary">Project 1 - {{ modelType }}</h6>-->
           <ul class="tab">
             <li v-for="availableModel in availableModels" :key="availableModel">
-              <router-link v-if="availableModel.link == this.$route.params.modelType" :to="'/project/'+availableModel.link" class="tablinks active">{{ availableModel.name }}</router-link>
-              <router-link v-else :to="'/project/'+availableModel.link" class="tablinks">{{ availableModel.name }}</router-link>
+              <router-link v-if="availableModel.modelType == this.$route.params.modelType" :to="'/project/'+availableModel.modelType" class="tablinks active">{{ availableModel.name }}</router-link>
+              <router-link v-else :to="'/project/'+availableModel.modelType" class="tablinks">{{ availableModel.name }}</router-link>
             </li>
           </ul>
       </div>
@@ -73,18 +73,17 @@ import { Vue } from 'vue-class-component';
 import { VariaMosGraph } from "@/assets/js/variamosgraph/VariaMosGraph";
 
 export default class ProjectModels extends Vue {
-  public modelType:any = "";
-  public modelTypeLabel:any = "";
-  public availableModels:any = [{"name":"FeatureModel","link":"feature"},{"name":"ComponentModel","link":"component"}];
+  public modelType:any = ""; //example feature
+  public modelTypeLabel:any = ""; //example FeatureModel
+  public availableModels:any = [{"name":"FeatureModel","modelType":"feature"},{"name":"ComponentModel","modelType":"component"}];
   public variaMosGraph = new VariaMosGraph();
   public buttons = VariaMosGraph.buttons;
   public divContainer:any; //div container (HTMLElement)
   public divNavigator:any; //div navigator (HTMLElement)
   public divElements:any; //div elements (HTMLElement)
-  public layers:any; //availble layers of the current model
 
   public mounted(){
-    this.layers = this.variaMosGraph.initTreeModel(this.availableModels);
+    this.variaMosGraph.initTreeModel(this.availableModels);
     this.initGraph();
   }
 
@@ -102,7 +101,7 @@ export default class ProjectModels extends Vue {
     this.divContainer = document.getElementById("vgraph-container");
     this.divNavigator = document.getElementById("vgraph-navigator");
     this.divElements = document.getElementById("vgraph-elements");
-    this.variaMosGraph.initializeGraph(this.modelType, this.layers, this.divContainer, this.divNavigator, this.divElements);
+    this.variaMosGraph.initializeGraph(this.modelType, this.divContainer, this.divNavigator, this.divElements);
   }
 }
 </script>
