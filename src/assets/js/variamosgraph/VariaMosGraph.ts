@@ -52,14 +52,14 @@ export class VariaMosGraph {
         this.divElements = divElements;
         this.divContainer = divContainer;
         this.divNavigator = divNavigator;
-        this.setGraph();
-        this.setCurrentLayer();
-        this.setNavigator();
-        this.setConfigModel();
-        this.setButtonActions();
+        this.setGraph(); //create mxGraph object
+        this.setCurrentLayer(); //specific current layer to be shown
+        this.setNavigator(); //define the div navigator
+        this.setConfigModel(); //some graph configs
+        this.setButtonActions(); //implement button actions
         await this.setElements(); //wait to load model class and model elements, and then continue
-        this.setConstraints();
-        this.setCustomShapes();
+        this.setConstraints(); //set model elements constraints
+        this.setCustomShapes(); //set custom shapes
     }
 
     public setGraph(){
