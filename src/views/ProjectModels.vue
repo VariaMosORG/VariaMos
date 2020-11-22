@@ -278,6 +278,11 @@ ul.tab li a:focus, .active {
 .div-property-field{
   padding-bottom: 5px;
 }
+
+.property-id-section{
+  text-align: right;
+  font-weight: 700;
+}
 /* properties */
 
 </style>

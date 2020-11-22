@@ -52,6 +52,8 @@ export class ConfigProperties {
                     currentProperties = configPropertiesObject.currentModel.relationProperties;
                 }
 
+                configPropertiesObject.setIdProperty(cell);
+
                 for (let i = 0; i < attrs.length; i++){
                     for (let j = 0; j < currentProperties.length; j++){
                         if(currentProperties[j].id == attrs[i].nodeName){
@@ -74,6 +76,17 @@ export class ConfigProperties {
                 }
             }
         }
+    }
+
+    public setIdProperty(cell:any){
+        let idSection = document.createElement('div');
+        idSection.className = "property-id-section";
+        if(cell.isVertex()){
+            idSection.innerText = "ID: "+cell.getId();
+        }else{
+            idSection.innerText = "Source: "+cell.source.getId()+" - Target: "+cell.target.getId();
+        }
+        this.divProperties.appendChild(idSection);
     }
 
     public createCheckboxField(graph:any, attribute:any, cell:any, currentProperties:any){
