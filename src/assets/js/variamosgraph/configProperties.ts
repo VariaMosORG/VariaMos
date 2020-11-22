@@ -71,7 +71,7 @@ export class configProperties {
         input.className="form-control";
         input.value = attribute.nodeValue;
         
-        this.createField(input, attribute.nodeName);
+        this.createField(input, currentProperties.label);
         this.executeApplyHandler(graph, input, cell, attribute.nodeName);
     }
 

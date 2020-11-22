@@ -88,8 +88,8 @@ export default class ProjectModels extends Vue {
   public modelTypeLabel:any = ""; //example FeatureModel
   public availableModels:any = [{"name":"FeatureModel","modelType":"feature"},{"name":"ComponentModel","modelType":"component"}];
   public variaMosGraph = new VariaMosGraph();
-  public buttonsArea = VariaMosGraph.buttons.buttonArea;
-  public buttonsNavigation = VariaMosGraph.buttons.navigationArea;
+  public buttonsArea = VariaMosGraph.buttons.buttonArea; // buttons
+  public buttonsNavigation = VariaMosGraph.buttons.navigationArea; //more buttons
   public divContainer:any; //div container (HTMLElement)
   public divNavigator:any; //div navigator (HTMLElement)
   public divElements:any; //div elements (HTMLElement)
@@ -101,7 +101,6 @@ export default class ProjectModels extends Vue {
   }
 
   public updated(){
-    //this.divContainer.innerHTML = "";
     this.divElements.innerHTML = "";
     this.divNavigator.innerHTML = "";
     this.divProperties.innerHTML = "";
@@ -127,32 +126,33 @@ export default class ProjectModels extends Vue {
 }
 
 ul.tab {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
 ul.tab li {
-    float: left;
+  float: left;
 }
 
 ul.tab li a {
-    display: inline-block;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    transition: 0.3s;
-    font-weight: 600;
+  display: inline-block;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  transition: 0.3s;
+  font-weight: 600;
 }
 
 ul.tab li a:hover {
-    background-color: lavender;
+  background-color: lavender;
 }
 
 ul.tab li a:focus, .active {
-    background-color: lavender;
+  background-color: lavender;
 }
+
 @media (max-width: 1261px){
   .buttons button {
     margin-bottom: 8px;
@@ -279,4 +279,5 @@ ul.tab li a:focus, .active {
   padding-bottom: 5px;
 }
 /* properties */
+
 </style>

@@ -25,15 +25,6 @@ export class VariaMosGraph {
     public configProperties:any; //configProperties (configProperties)
     public layers:any; //availble layers of the current model
 
-    /*public static buttons: Button[] = [ new Button("save","Save","save"),
-        new Button("pdf","PDF","print"),
-        new Button("img","Img","print"),
-        new Button("delete","Delete","eraser"),
-        new Button("resetall","Reset All","eraser"),
-        new Button("export","Export","upload"),
-        new Button("xml","View XML","code"),
-    ]*/
-
     public static buttons: any = {
         "buttonArea":[
             new Button("save","Save","save"),
@@ -73,10 +64,9 @@ export class VariaMosGraph {
         this.divContainer = divContainer;
         this.divNavigator = divNavigator;
         this.divProperties = divProperties;
-        if(caseLoad==1){
+        if(caseLoad == 1){
             this.setGraph(); //create mxGraph object    
         }
-        //this.setGraph(); //create mxGraph object
         this.setCurrentLayer(); //specific current layer to be shown
         this.setNavigator(); //define the div navigator
         this.setConfigModel(); //some graph configs
