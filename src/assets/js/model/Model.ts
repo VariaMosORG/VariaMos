@@ -9,7 +9,7 @@ export class Model {
         this.type = type;
         this.elementClassNames = elementClassNames;
         this.relationProperties = [
-            { "id":"type", "label": "Type", "defValue":"relation", "inputType":"text", "disabled":"true"},
+            { "id":"type", "label": "Type", "defValue":"relation", "inputType":"text", "disabled":"true", "display":"true"},
         ];
     }
 

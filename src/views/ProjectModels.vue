@@ -275,7 +275,7 @@ ul.tab li a:focus, .active {
 /* elements */
 
 /* properties */
-.tr-unique{
+.div-property-field{
   padding-bottom: 5px;
 }
 /* properties */

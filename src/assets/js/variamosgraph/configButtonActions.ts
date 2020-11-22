@@ -3,9 +3,9 @@ import { mxgraphFactory } from "ts-mxgraph";
 
 export class configButtonActions {
 
-    public buttons: Button[];
-    public graph: any;
-    public model: any;
+    public buttons:Button[];
+    public graph:any;
+    public model:any;
 
     public constructor(graph:any, model:any, buttons:any) {
         this.buttons = buttons;
@@ -19,7 +19,7 @@ export class configButtonActions {
             const oldButton = document.getElementById(buttonId);
             if(oldButton){
                 let newButton = oldButton.cloneNode(true);
-                if(newButton !=null && oldButton.parentNode != null){
+                if(newButton != null && oldButton.parentNode != null){
                     oldButton.parentNode.replaceChild(newButton, oldButton);
                 }
             }

@@ -55,7 +55,17 @@ export class configProperties {
                 for (let i = 0; i < attrs.length; i++){
                     for (let j = 0; j < currentProperties.length; j++){
                         if(currentProperties[j].id == attrs[i].nodeName){
-                            configPropertiesObject.createTextField(configPropertiesObject.graph, attrs[i], cell, currentProperties[j]);
+                            switch (currentProperties[j].inputType) {
+                                case "text":
+                                    configPropertiesObject.createTextField(configPropertiesObject.graph, attrs[i], cell, currentProperties[j]);
+                                    break;
+                                case "select":
+                                    configPropertiesObject.createSelectField(configPropertiesObject.graph, attrs[i], cell, currentProperties[j]);
+                                    break;
+                                default:
+                                    configPropertiesObject.createTextField(configPropertiesObject.graph, attrs[i], cell, currentProperties[j]);
+                                    break;
+                            }
                         }
                     }
                 }
@@ -63,30 +73,52 @@ export class configProperties {
         }
     }
 
-    public createTextField(graph:any, attribute:any, cell:any, currentProperties:any){
-        let input = document.createElement('input');
-	
-	    input.setAttribute('type', "text");
+    public createSelectField(graph:any, attribute:any, cell:any, currentProperties:any){
+        let values = currentProperties.input_values;
+        let input = document.createElement("select");
         input.id = "property-" + attribute.nodeName;
 
-        if(currentProperties.disabled == "true"){ //disable input
-            input.disabled = true;
+        for (let i = 0; i < values.length; i++){
+            let option = document.createElement("option");
+            option.setAttribute("value", values[i]);
+            option.innerText = values[i];
+            if (values[i] == attribute.nodeValue){
+                option.setAttribute("selected", "selected");
+            }
+            input.appendChild(option);
         }
 
-        input.className="form-control";
-        input.value = attribute.nodeValue;
-        
-        this.createField(input, currentProperties.label);
+        input.className="form-control";        
+        this.createField(input, currentProperties.label, currentProperties.disabled, currentProperties.display);
         this.executeApplyHandler(graph, input, cell, attribute.nodeName);
     }
 
-    public createField(input:any, label:any){
+    public createTextField(graph:any, attribute:any, cell:any, currentProperties:any){
+        let input = document.createElement('input');	
+	    input.setAttribute('type', "text");
+        input.id = "property-" + attribute.nodeName;
+        input.className = "form-control";
+        input.value = attribute.nodeValue;        
+        this.createField(input, currentProperties.label, currentProperties.disabled, currentProperties.display);
+        this.executeApplyHandler(graph, input, cell, attribute.nodeName);
+    }
+
+    public createField(input:any, label:any, disabled:any, display:any){
         let tr = document.createElement('div');
-        //tr.id="tr-"+name;
-        tr.className="tr-unique";
-        tr.style.display="";
+
+        if(disabled == "true"){ //disable input
+            input.disabled = true;
+        }
+
+        if(display == "true"){
+            tr.style.display = "";
+        }else{
+            tr.style.display = "none";
+        }
+
+        tr.className = "div-property-field";
         let td = document.createElement('div');
-        td.innerText=label+": ";
+        td.innerText = label+": ";
         tr.appendChild(td);
         td.appendChild(input);
         tr.appendChild(td);

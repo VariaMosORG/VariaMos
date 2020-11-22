@@ -19,7 +19,10 @@ export class FeatureModel extends Model {
             }
         ];
         this.relationProperties.push(
-            { "id":"relType", "label": "RelType", "defValue":"mandatory", "inputType":"text"}
+            { 
+                "id":"relType", "label":"RelType", "defValue":"mandatory", "inputType":"select",
+                "input_values":["mandatory","optional","requires","excludes"], "display":"true"
+            }
         );
     }
     
