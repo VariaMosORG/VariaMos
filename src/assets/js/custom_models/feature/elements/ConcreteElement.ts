@@ -13,7 +13,7 @@ export class ConcreteElement extends MElement {
         this.properties.push(
             { 
                 "id":"selected", "label": "Selected", "defValue":"false", 
-                "inputType":"text", "disabled":"false", "display":"true"
+                "inputType":"checkbox", "disabled":"false", "display":"true"
             }
         );
     }

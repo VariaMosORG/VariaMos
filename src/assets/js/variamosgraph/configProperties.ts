@@ -62,6 +62,9 @@ export class configProperties {
                                 case "select":
                                     configPropertiesObject.createSelectField(configPropertiesObject.graph, attrs[i], cell, currentProperties[j]);
                                     break;
+                                case "checkbox":
+                                    configPropertiesObject.createCheckboxField(configPropertiesObject.graph, attrs[i], cell, currentProperties[j]);
+                                    break;
                                 default:
                                     configPropertiesObject.createTextField(configPropertiesObject.graph, attrs[i], cell, currentProperties[j]);
                                     break;
@@ -71,6 +74,22 @@ export class configProperties {
                 }
             }
         }
+    }
+
+    public createCheckboxField(graph:any, attribute:any, cell:any, currentProperties:any){
+        let input = document.createElement('input');	
+	    input.setAttribute('type', "checkbox");
+        input.id = "property-" + attribute.nodeName;
+
+        if (attribute.nodeValue == "true")
+        {
+            input.checked = true;
+        }
+
+        input.className = "form-control";
+        input.value = attribute.nodeValue;
+        this.createField(input, currentProperties.label, currentProperties.disabled, currentProperties.display);
+        this.executeApplyHandler(graph, input, cell, attribute.nodeName);
     }
 
     public createSelectField(graph:any, attribute:any, cell:any, currentProperties:any){
@@ -129,6 +148,14 @@ export class configProperties {
         let applyHandler = function(){
             let oldValue = cell.getAttribute(attributeNodeName, '');
             let newValue = input.value;
+
+            if(input.type == "checkbox"){
+				newValue = "false";
+				if(input.checked){
+					newValue = "true";
+				}
+            }
+            
             if (newValue != oldValue){ //verify value modified from the form
                 graph.getModel().beginUpdate();
                 try{
