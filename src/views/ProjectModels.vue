@@ -245,8 +245,8 @@ ul.tab li a:focus, .active {
 .navi-buttons button {
     border: 1px solid #ccc;
     padding: 2px;
-    padding-left: 7px;
-    padding-right: 7px;
+    padding-left: 5px;
+    padding-right: 5px;
     width: 25px;
     margin-right: 2px;
 }

@@ -3,16 +3,18 @@ import { Button } from './Button';
 import { configButtonActions } from './configButtonActions';
 import { configElements } from './configElements';
 import { configProperties } from './configProperties';
+import { configKeys } from './configKeys';
 const { mxGraphModel, mxGraph, mxOutline, 
     mxRubberband, mxRectangle, mxShape, 
     mxUtils, mxCellRenderer, mxConstants,
     mxStencilRegistry, mxStencil, mxCell, 
-    mxMultiplicity } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
+    mxMultiplicity, mxKeyHandler } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
 
 export class VariaMosGraph {
 
     public graph:any; //mxGraph (mxGraph)
     public model:any; //mxGraphModel (mxGraphModel)
+    public keyHandler:any; //mxKeyHandler (mxKeyHandler)
     public modelType:string = ""; //current model type - example feature
     public className:string = ""; //current className - example FeatureModel
     public currentModel:any; //current loaded model (example FeatureModel)
@@ -23,6 +25,7 @@ export class VariaMosGraph {
     public configButtonActions:any; //configButtons (configButtonActions)
     public configElements:any; //configElements (configElements)
     public configProperties:any; //configProperties (configProperties)
+    public configKeys:any; //configKeys (configKeys)
     public layers:any; //availble layers of the current model
 
     public static buttons: any = {
@@ -71,6 +74,7 @@ export class VariaMosGraph {
         this.setNavigator(); //define the div navigator
         this.setConfigModel(); //some graph configs
         this.setButtonActions(); //implement button actions
+        this.setKeys(); //implement key actions
         await this.loadCurrentModelClasses(); //wait to load model class and model elements, and then continue
         this.setElements(); //load model elements (palette)
         this.setConstraints(); //set model elements constraints
@@ -83,6 +87,12 @@ export class VariaMosGraph {
         if (this.divContainer) {
             this.graph = new mxGraph(this.divContainer, this.model);
         }
+    }
+
+    public setKeys(){
+        this.keyHandler = new mxKeyHandler(this.graph);
+        this.configKeys = new configKeys(this.graph, this.model, this.keyHandler);
+        this.configKeys.initializeKeys();
     }
 
     public setMainCellText(){
