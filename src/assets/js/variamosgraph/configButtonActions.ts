@@ -54,6 +54,16 @@ export class configButtonActions {
         });
     }
 
+    public delete(currentButton:HTMLElement){
+        let graph = this.graph;
+        currentButton.addEventListener('click', function () {
+            if (graph.isEnabled())
+			{
+                let removedCells = graph.removeCells();
+            }
+        });
+    }
+
     public zoomOut(currentButton:HTMLElement){
         let graph = this.graph;
         currentButton.addEventListener('click', function () {

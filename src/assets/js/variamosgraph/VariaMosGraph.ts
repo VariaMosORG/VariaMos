@@ -4,6 +4,7 @@ import { configButtonActions } from './configButtonActions';
 import { configElements } from './configElements';
 import { configProperties } from './configProperties';
 import { configKeys } from './configKeys';
+import { configRelations } from './configRelations';
 const { mxGraphModel, mxGraph, mxOutline, 
     mxRubberband, mxRectangle, mxShape, 
     mxUtils, mxCellRenderer, mxConstants,
@@ -26,6 +27,7 @@ export class VariaMosGraph {
     public configElements:any; //configElements (configElements)
     public configProperties:any; //configProperties (configProperties)
     public configKeys:any; //configKeys (configKeys)
+    public configRelations:any; //configRelations (configRelations)
     public layers:any; //availble layers of the current model
 
     public static buttons: any = {
@@ -79,6 +81,7 @@ export class VariaMosGraph {
         this.setElements(); //load model elements (palette)
         this.setConstraints(); //set model elements constraints
         this.setProperties(); //set model element properties
+        this.setRelations(); //set element relations
         this.setMainCellText(); //set the main text to be displayed for cells
         this.setCustomShapes(); //set custom shapes
     }
@@ -93,6 +96,11 @@ export class VariaMosGraph {
         this.keyHandler = new mxKeyHandler(this.graph);
         this.configKeys = new configKeys(this.graph, this.model, this.keyHandler);
         this.configKeys.initializeKeys();
+    }
+
+    public setRelations(){
+        this.configRelations = new configRelations(this.graph, this.model, this.currentModel);
+        this.configRelations.initializeRelations();
     }
 
     public setMainCellText(){

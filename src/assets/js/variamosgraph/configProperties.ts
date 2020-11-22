@@ -36,7 +36,7 @@ export class configProperties {
         let cell = configPropertiesObject.graph.getSelectionCell();
         let elements = configPropertiesObject.currentModel.elements;
         if(cell != null){
-            if(cell.value.attributes){
+            if(cell.value.attributes && cell.isVertex()){
                 let currentType = cell.getAttribute("type");
                 let currentProperties = null;
                 let attrs = cell.value.attributes;
