@@ -5,11 +5,13 @@ import { configElements } from './configElements';
 import { configProperties } from './configProperties';
 import { configKeys } from './configKeys';
 import { configRelations } from './configRelations';
+import { ModelUtil } from './ModelUtil';
 const { mxGraphModel, mxGraph, mxOutline, 
     mxRubberband, mxRectangle, mxShape, 
     mxUtils, mxCellRenderer, mxConstants,
     mxStencilRegistry, mxStencil, mxCell, 
-    mxMultiplicity, mxKeyHandler } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
+    mxMultiplicity, mxKeyHandler, mxImage,
+    mxCellOverlay } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
 
 export class VariaMosGraph {
 
@@ -84,6 +86,7 @@ export class VariaMosGraph {
         this.setRelations(); //set element relations
         this.setMainCellText(); //set the main text to be displayed for cells
         this.setCustomShapes(); //set custom shapes
+        this.setOverlay();
     }
 
     public setGraph(){
@@ -96,6 +99,10 @@ export class VariaMosGraph {
         this.keyHandler = new mxKeyHandler(this.graph);
         this.configKeys = new configKeys(this.graph, this.model, this.keyHandler);
         this.configKeys.initializeKeys();
+    }
+
+    public setOverlay(){
+        this.currentModel.overlayStart();
     }
 
     public setRelations(){
@@ -158,8 +165,10 @@ export class VariaMosGraph {
 
     public async loadCurrentModelClasses(){
         //load current model class
+        const modelUtil = new ModelUtil(this.graph, this.model); // create model util and send to current model 
         const modelModule = await import('../'+"custom_models/"+this.modelType+"/"+this.className); //load current model Class
         this.currentModel = new modelModule[this.className]();
+        this.currentModel.setModelUtil(modelUtil);
 
         for (let i = 0; i < this.currentModel.elementClassNames.length; i++) {
             //load current model element classes

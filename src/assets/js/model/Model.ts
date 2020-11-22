@@ -3,6 +3,7 @@ export class Model {
     public elementClassNames:string[];
     public elements:any = Array(); // MElement[]
     public constraints?:any = Array();
+    public modelUtil?:any; // ModelUtil
     public relationProperties:any = Array();
     
     public constructor(type:string, elementClassNames:string[]) {
@@ -11,6 +12,14 @@ export class Model {
         this.relationProperties = [
             { "id":"type", "label": "Type", "defValue":"relation", "inputType":"text", "disabled":"true", "display":"true"},
         ];
+    }
+
+    public overlayStart(){
+        //implemented in subclasses
+    }
+
+    public setModelUtil(modelUtil:any){
+        this.modelUtil = modelUtil;
     }
 
     public addElement(element:any){

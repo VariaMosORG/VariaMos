@@ -1,4 +1,6 @@
 import { Model } from "../../model/Model";
+import { mxgraphFactory } from "ts-mxgraph";
+const {mxImage, mxCellOverlay } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
 
 export class FeatureModel extends Model {
 
@@ -24,6 +26,17 @@ export class FeatureModel extends Model {
                 "input_values":["mandatory","optional","requires","excludes"], "display":"true"
             }
         );
+    }
+
+    public overlayStart(){
+        let cells = this.modelUtil.searchCellsByType(this.type, "concrete");
+        for (let i = 0; i < cells.length; i++) {
+            let sel = cells[i].getAttribute("selected");
+			if(sel == "true"){
+                let overlay = new mxCellOverlay(new mxImage("/img/check.png", 16, 16), 'Overlay tooltip');
+                this.modelUtil.graph.addCellOverlay(cells[i], overlay);
+            }
+        }
     }
     
 }
