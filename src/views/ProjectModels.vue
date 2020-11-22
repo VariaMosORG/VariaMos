@@ -2,12 +2,12 @@
   <div class="card shadow mb-4">
       <div class="card-header py-3 nopad">
         <!--<h6 class="m-0 font-weight-bold text-primary">Project 1 - {{ modelType }}</h6>-->
-          <ul class="tab">
-            <li v-for="availableModel in availableModels" :key="availableModel">
-              <router-link v-if="availableModel.modelType == this.$route.params.modelType" :to="'/project/'+availableModel.modelType" class="tablinks active">{{ availableModel.name }}</router-link>
-              <router-link v-else :to="'/project/'+availableModel.modelType" class="tablinks">{{ availableModel.name }}</router-link>
-            </li>
-          </ul>
+        <ul class="tab">
+          <li v-for="availableModel in availableModels" :key="availableModel">
+            <router-link v-if="availableModel.modelType == this.$route.params.modelType" :to="'/project/'+availableModel.modelType" class="tablinks active">{{ availableModel.name }}</router-link>
+            <router-link v-else :to="'/project/'+availableModel.modelType" class="tablinks">{{ availableModel.name }}</router-link>
+          </li>
+        </ul>
       </div>
       <div class="card-body">
         <!-- Begin Model Area -->
@@ -17,7 +17,7 @@
             <div class="card bg-light text-white shadow font13">
               <div class="card-body pad10">
                 <div id="vgraph-buttons" class="buttons">
-                    <button class="btn btn-info" v-for="button in buttons" :key="button" :id="button.id">
+                    <button class="btn btn-info" v-for="button in buttonsArea" :key="button" :id="button.id">
                       <i :class="'fas fa-'+button.icon"></i>
                       {{ button.label }}
                     </button>
@@ -62,6 +62,11 @@
                 <h6 class="m-0 font-weight-bold text-primary">Navigation</h6>
               </div>
               <div class="card-body">
+                <div class="navi-buttons">
+                  <button class="btn-model-area btn btn-sm" v-for="button in buttonsNavigation" :key="button" :id="button.id">
+                    {{ button.label }}
+                  </button>
+                </div>
                 <div id="vgraph-navigator" class="navigator"></div>
               </div>
             </div>
@@ -83,7 +88,8 @@ export default class ProjectModels extends Vue {
   public modelTypeLabel:any = ""; //example FeatureModel
   public availableModels:any = [{"name":"FeatureModel","modelType":"feature"},{"name":"ComponentModel","modelType":"component"}];
   public variaMosGraph = new VariaMosGraph();
-  public buttons = VariaMosGraph.buttons;
+  public buttonsArea = VariaMosGraph.buttons.buttonArea;
+  public buttonsNavigation = VariaMosGraph.buttons.navigationArea;
   public divContainer:any; //div container (HTMLElement)
   public divNavigator:any; //div navigator (HTMLElement)
   public divElements:any; //div elements (HTMLElement)
@@ -147,6 +153,11 @@ ul.tab li a:hover {
 ul.tab li a:focus, .active {
     background-color: lavender;
 }
+@media (max-width: 1261px){
+  .buttons button {
+    margin-bottom: 8px;
+  }
+}
 
 @media (max-width: 992px){
   .right-area, .left-area{
@@ -204,22 +215,40 @@ ul.tab li a:focus, .active {
 
 /* buttons */
 .buttons {
-  display: flex;
+  display: inline;
   margin: auto;
-  justify-content: space-between;
 }
 
 .buttons button {
-  /*flex: 0 0 18%;*/
   height: 30px;
   padding: 0px;
   padding-left: 10px;
   padding-right: 10px;
+  margin-right: 8px;
   text-align: center;
 }
 
 .pad10{
   padding: 15px !important;
+}
+
+.navi-buttons{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0 auto;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+
+.navi-buttons button {
+    border: 1px solid #ccc;
+    padding: 2px;
+    padding-left: 7px;
+    padding-right: 7px;
+    width: 25px;
+    margin-right: 2px;
 }
 /* buttons */
 

@@ -25,14 +25,31 @@ export class VariaMosGraph {
     public configProperties:any; //configProperties (configProperties)
     public layers:any; //availble layers of the current model
 
-    public static buttons: Button[] = [ new Button("save","Save","save"),
+    /*public static buttons: Button[] = [ new Button("save","Save","save"),
         new Button("pdf","PDF","print"),
         new Button("img","Img","print"),
         new Button("delete","Delete","eraser"),
         new Button("resetall","Reset All","eraser"),
         new Button("export","Export","upload"),
         new Button("xml","View XML","code"),
-    ]
+    ]*/
+
+    public static buttons: any = {
+        "buttonArea":[
+            new Button("save","Save","save"),
+            new Button("pdf","PDF","print"),
+            new Button("img","Img","print"),
+            new Button("delete","Delete","eraser"),
+            new Button("resetall","Reset All","eraser"),
+            new Button("export","Export","upload"),
+            new Button("xml","View XML","code"),
+        ],
+        "navigationArea":[
+            new Button("zoomIn","+",""),
+            new Button("zoomOut","-",""),
+            new Button("zoomReset","R",""),
+        ]
+    };
 
     public constructor() {
         this.model = new mxGraphModel();
@@ -103,7 +120,9 @@ export class VariaMosGraph {
     }
 
     public setButtonActions(){
-        this.configButtonActions = new configButtonActions(this.graph, this.model, VariaMosGraph.buttons);
+        let buttonsConcat = VariaMosGraph.buttons.buttonArea;
+        buttonsConcat = buttonsConcat.concat(VariaMosGraph.buttons.navigationArea);
+        this.configButtonActions = new configButtonActions(this.graph, this.model, buttonsConcat);
         this.configButtonActions.initializeActions();
     }
 

@@ -7,7 +7,7 @@ export class configButtonActions {
     public graph: any;
     public model: any;
 
-    public constructor(graph:any, model:any, buttons:Button[]) {
+    public constructor(graph:any, model:any, buttons:any) {
         this.buttons = buttons;
         this.graph = graph;
         this.model = model;
@@ -47,9 +47,31 @@ export class configButtonActions {
         });
     }
 
+    public zoomIn(currentButton:HTMLElement){
+        let graph = this.graph;
+        currentButton.addEventListener('click', function () {
+            graph.zoomIn();
+        });
+    }
+
+    public zoomOut(currentButton:HTMLElement){
+        let graph = this.graph;
+        currentButton.addEventListener('click', function () {
+            graph.zoomOut();
+        });
+    }
+
+    public zoomReset(currentButton:HTMLElement){
+        let graph = this.graph;
+        currentButton.addEventListener('click', function () {
+            graph.view.scaleAndTranslate(1, 0, 0);
+        });
+    }
+
     public img(currentButton:HTMLElement){
-        const { mxPrintPreview } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
-        const graph = this.graph;
+        //const { mxPrintPreview } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
+        //const graph = this.graph;
+        //preview.open();
         /*currentButton.addEventListener('click', function () {
             const preview = new mxPrintPreview(graph,1,10,"");
             preview.open(null,null,null,null);
