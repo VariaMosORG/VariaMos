@@ -1,7 +1,7 @@
 import { Button } from './Button';
 import { mxgraphFactory } from "ts-mxgraph";
 
-export class configButtonActions {
+export class ConfigButtonActions {
 
     public buttons:Button[];
     public graph:any;

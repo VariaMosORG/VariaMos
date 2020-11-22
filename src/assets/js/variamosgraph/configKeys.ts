@@ -1,7 +1,7 @@
 import { mxgraphFactory } from "ts-mxgraph";
 const { mxEvent } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
 
-export class configKeys {
+export class ConfigKeys {
     
     public graph:any; //mxGraph (mxGraph)
     public model:any; //mxGraphModel (mxGraphModel)

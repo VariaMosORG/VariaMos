@@ -1,7 +1,7 @@
 import { mxgraphFactory } from "ts-mxgraph";
 const { mxEvent, mxCellAttributeChange } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
 
-export class configProperties {
+export class ConfigProperties {
     
     public currentModel:any; //current loaded model (FeatureModel)
     public graph:any; //mxGraph (mxGraph)

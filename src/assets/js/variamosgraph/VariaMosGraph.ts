@@ -1,10 +1,10 @@
 import { mxgraphFactory } from "ts-mxgraph";
 import { Button } from './Button';
-import { configButtonActions } from './configButtonActions';
-import { configElements } from './configElements';
-import { configProperties } from './configProperties';
-import { configKeys } from './configKeys';
-import { configRelations } from './configRelations';
+import { ConfigButtonActions } from './ConfigButtonActions';
+import { ConfigElements } from './ConfigElements';
+import { ConfigProperties } from './ConfigProperties';
+import { ConfigKeys } from './ConfigKeys';
+import { ConfigRelations } from './ConfigRelations';
 import { ModelUtil } from './ModelUtil';
 const { mxGraphModel, mxGraph, mxOutline, 
     mxRubberband, mxRectangle, mxShape, 
@@ -97,7 +97,7 @@ export class VariaMosGraph {
 
     public setKeys(){
         this.keyHandler = new mxKeyHandler(this.graph);
-        this.configKeys = new configKeys(this.graph, this.model, this.keyHandler);
+        this.configKeys = new ConfigKeys(this.graph, this.model, this.keyHandler);
         this.configKeys.initializeKeys();
     }
 
@@ -106,7 +106,7 @@ export class VariaMosGraph {
     }
 
     public setRelations(){
-        this.configRelations = new configRelations(this.graph, this.model, this.currentModel);
+        this.configRelations = new ConfigRelations(this.graph, this.model, this.currentModel);
         this.configRelations.initializeRelations();
     }
 
@@ -137,12 +137,12 @@ export class VariaMosGraph {
     public setButtonActions(){
         let buttonsConcat = VariaMosGraph.buttons.buttonArea;
         buttonsConcat = buttonsConcat.concat(VariaMosGraph.buttons.navigationArea);
-        this.configButtonActions = new configButtonActions(this.graph, this.model, buttonsConcat);
+        this.configButtonActions = new ConfigButtonActions(this.graph, this.model, buttonsConcat);
         this.configButtonActions.initializeActions();
     }
 
     public setProperties(){
-        this.configProperties = new configProperties(this.graph, this.model, this.currentModel, this.divProperties);
+        this.configProperties = new ConfigProperties(this.graph, this.model, this.currentModel, this.divProperties);
         this.configProperties.initializeProperties();
     }
 
@@ -178,7 +178,7 @@ export class VariaMosGraph {
     }
 
     public setElements(){
-        this.configElements = new configElements(this.graph, this.model, this.currentModel, this.divElements);
+        this.configElements = new ConfigElements(this.graph, this.model, this.currentModel, this.divElements);
         this.configElements.initializeElements();
     }
 

@@ -1,7 +1,7 @@
 import { mxgraphFactory } from "ts-mxgraph";
 const { mxUtils } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
 
-export class configRelations {
+export class ConfigRelations {
     
     public currentModel: any; //current loaded model (FeatureModel)
     public graph:any; //mxGraph (mxGraph)
