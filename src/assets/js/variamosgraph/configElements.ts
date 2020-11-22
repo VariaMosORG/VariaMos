@@ -1,16 +1,15 @@
 import { mxgraphFactory } from "ts-mxgraph";
-import { Model } from '../Model/Model';
 const { mxUtils, mxCell, mxGeometry, mxToolbar } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
 
 export class configElements {
     
-    public currentModel: Model; //current loaded model (FeatureModel)
-    public graph: any; //mxGraph (mxGraph)
-    public model: any; //mxGraphModel (mxGraphModel)
+    public currentModel:any; //current loaded model (FeatureModel)
+    public graph:any; //mxGraph (mxGraph)
+    public model:any; //mxGraphModel (mxGraphModel)
     public divElements:any; //div elements (HTMLElement)
     public toolbar:any; //toolbar (mxToolbar)
 
-    public constructor(graph:any, model:any, currentModel:Model, divElements:any) {
+    public constructor(graph:any, model:any, currentModel:any, divElements:any) {
         this.currentModel = currentModel;
         this.graph = graph;
         this.model = model;

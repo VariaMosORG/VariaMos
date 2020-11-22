@@ -14,13 +14,13 @@ export class configRelations {
     }
 
     public initializeRelations(){
-        //to continue
-        /*let graph = this.graph;
+        let graph = this.graph;
+        let currentModel = this.currentModel;
         graph.connectionHandler.insertEdge = function(parent:any, id:any, value:any, source:any, target:any, style:any){
             let doc = mxUtils.createXmlDocument();
             let node = doc.createElement('rel_' + source.getAttribute("type") + '_' + target.getAttribute("type"));
-            node.setAttribute('type', "relation");
 
+            //by default bidirectional edges are not allowed (disjoint)
             if(target.edges != null && target.edges.length > 0){
                 for (let i = 0; i < target.edges.length; i++) {
                     if(target.edges[i].target.getId() == source.getId()){
@@ -30,10 +30,14 @@ export class configRelations {
                 }
             }
 
-
+            //set properties to the edge
+            let currentProperties = currentModel.relationProperties;
+            for (let i = 0; i < currentProperties.length; i++) {
+                node.setAttribute(currentProperties[i].id, currentProperties[i].defValue);
+            }
 
             let cell = graph.insertEdge(parent, id, node, source, target, style);
             return cell;
-        }*/
+        }
     }
 }

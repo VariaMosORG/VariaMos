@@ -168,7 +168,7 @@ export default class App extends Vue {}
 </script>
 
 <style>
-#app{
+#app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -176,7 +176,12 @@ export default class App extends Vue {}
   color: #2c3e50;
   margin-top: 60px;
 }
-.pad-0{
+
+.pad-0 {
   padding-top: 0px !important;
+}
+
+a:hover{
+    text-decoration: none !important;
 }
 </style>

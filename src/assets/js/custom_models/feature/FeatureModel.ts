@@ -18,6 +18,9 @@ export class FeatureModel extends Model {
                 "countError":"Only 1 target allowed", "typeError":"Only shape targets allowed"
             }
         ];
+        this.relationProperties.push(
+            { "id":"relType", "label": "RelType", "defValue":"mandatory", "inputType":"text"}
+        );
     }
     
 }

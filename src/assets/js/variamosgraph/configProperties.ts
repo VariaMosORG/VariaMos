@@ -1,15 +1,14 @@
 import { mxgraphFactory } from "ts-mxgraph";
-import { Model } from '../Model/Model';
 const { mxEvent, mxCellAttributeChange } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
 
 export class configProperties {
     
-    public currentModel: Model; //current loaded model (FeatureModel)
-    public graph: any; //mxGraph (mxGraph)
-    public model: any; //mxGraphModel (mxGraphModel)
+    public currentModel:any; //current loaded model (FeatureModel)
+    public graph:any; //mxGraph (mxGraph)
+    public model:any; //mxGraphModel (mxGraphModel)
     public divProperties:any; //div properties (HTMLElement)
 
-    public constructor(graph:any, model:any, currentModel:Model, divProperties:any) {
+    public constructor(graph:any, model:any, currentModel:any, divProperties:any) {
         this.currentModel = currentModel;
         this.graph = graph;
         this.model = model;
@@ -32,19 +31,25 @@ export class configProperties {
 
     public selectionChanged(configPropertiesObject:any){
         configPropertiesObject.graph.container.focus();
-        configPropertiesObject.divProperties.innerHTML="";
+        configPropertiesObject.divProperties.innerHTML = "";
         let cell = configPropertiesObject.graph.getSelectionCell();
         let elements = configPropertiesObject.currentModel.elements;
         if(cell != null){
-            if(cell.value.attributes && cell.isVertex()){
+            if(cell.value.attributes){
                 let currentType = cell.getAttribute("type");
-                let currentProperties = null;
+                let currentProperties = [];
                 let attrs = cell.value.attributes;
-                
-                for (let i = 0; i < elements.length; i++){
-                    if(elements[i].type == currentType){
-                        currentProperties = elements[i].properties;
+
+                if(cell.isVertex()){ //get properties for current vertex
+                    for (let i = 0; i < elements.length; i++){
+                        if(elements[i].type == currentType){
+                            currentProperties = elements[i].properties;
+                        }
                     }
+                }
+
+                if(cell.isEdge()){ //get properties for current edge
+                    currentProperties = configPropertiesObject.currentModel.relationProperties;
                 }
 
                 for (let i = 0; i < attrs.length; i++){
