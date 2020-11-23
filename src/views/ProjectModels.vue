@@ -19,6 +19,7 @@
 
           <div class="card bg-light text-white shadow font13">
             <div class="card-body pad10">
+              <button v-on:click="saveModel" class="btn btn-info">Guardar</button>
               <div id="vgraph-buttons" class="buttons">
                   <button class="btn btn-info" v-for="button in buttonsArea" :key="button" :id="button.id">
                     <i :class="'fas fa-'+button.icon"></i>
@@ -103,6 +104,7 @@ import Breadcrumb from '@/components/Breadcrumb.vue';
 export default class ProjectModels extends Vue {
   public modelType:any = ""; //example feature
   public modelTypeLabel:any = ""; //example FeatureModel
+  public currentProject:any; //currentProject (ProjectClass)
   public availableModels:any = [];
   public variaMosGraph = new VariaMosGraph();
   public buttonsArea = VariaMosGraph.buttons.buttonArea; // buttons
@@ -121,8 +123,17 @@ export default class ProjectModels extends Vue {
     }
   ];
 
+  public saveModel(){
+    let index = ProjectClass.getProjectIndexByName(this.$store.getters.getProjects, this.currentProject.getName());
+    if(index != -1){
+      this.currentProject.setXml("<mxgraph>");
+      this.$store.commit("updateProject", {"project":this.currentProject, "index":index});
+    }
+  }
+
   public beforeMount(){
-    this.availableModels = ProjectClass.getProjectModelsByName(this.$store.getters.getProjects, this.$route.params.projectName);
+    this.currentProject = ProjectClass.getProjectByName(this.$store.getters.getProjects, this.$route.params.projectName);
+    this.availableModels = this.currentProject.getAvailableModels();
     this.navigationList.push(
       {
         "title":this.$route.params.projectName, 
@@ -162,7 +173,10 @@ export default class ProjectModels extends Vue {
     this.divNavigator = document.getElementById("vgraph-navigator");
     this.divElements = document.getElementById("vgraph-elements");
     this.divProperties = document.getElementById("vgraph-properties");
-    this.variaMosGraph.initializeGraph(this.modelType, this.divContainer, this.divNavigator, this.divElements, this.divProperties, caseLoad);
+    this.variaMosGraph.initializeGraph(
+      this.modelType, this.divContainer, this.divNavigator, 
+      this.divElements, this.divProperties, caseLoad
+    );
   }
 
   public getBeautyModelName(name:any){

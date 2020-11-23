@@ -7,7 +7,7 @@
             <h6 class="m-0 font-weight-bold text-primary">About</h6>
         </div>
         <div class="card-body">
-            <p>-Info</p>
+            <p>- Info</p>
         </div>
     </div>
 </template>

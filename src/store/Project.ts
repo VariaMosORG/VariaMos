@@ -21,6 +21,10 @@ export class Project {
     return this.availableModels;
   }
 
+  public setXml(xml:string){
+    this.xml = xml;
+  }
+
   public static objectToThisClass(objects:any){
     let objectsToReturn = [];
     for (let i = 0; i < objects.length; i++) {
@@ -37,6 +41,15 @@ export class Project {
       }
     }
     return false;
+  }
+
+  public static getProjectIndexByName(projects:any, name:any){
+    for (let i = 0; i < projects.length; i++) {
+      if(projects[i].getName() == name){
+        return i;
+      }
+    }
+    return -1;
   }
 
   public static getProjectByName(projects:any, name:any){

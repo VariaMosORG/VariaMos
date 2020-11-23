@@ -29,7 +29,11 @@ export default createStore({
     removeProject (state:any, index:any) {
       state.projects.splice(index,1);
       localStorage.setItem('variamosProjects', JSON.stringify(state.projects));
-    }
+    },
+    updateProject (state:any, {project, index}) {
+      state.projects[index] = project;
+      localStorage.setItem('variamosProjects', JSON.stringify(state.projects));
+    },
   },
 
   actions: {
