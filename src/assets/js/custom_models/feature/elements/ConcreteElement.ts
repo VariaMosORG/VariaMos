@@ -10,11 +10,13 @@ export class ConcreteElement extends MElement {
             "",
             "Concrete Feature"
         );
-        this.properties.push(
+        let properties = this.getProperties();
+        properties.push(
             { 
                 "id":"selected", "label": "Selected", "defValue":"false", 
                 "inputType":"checkbox", "disabled":"false", "display":"true"
             }
         );
+        this.setProperties(properties);
     }
 }

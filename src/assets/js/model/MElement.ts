@@ -1,11 +1,11 @@
 export class MElement { 
-    public icon: string;
-    public type: string; 
-    public width: number; 
-    public height: number;
-    public style: string;
-    public label: string;
-    public properties: any = Array();
+    private icon: string;
+    private type: string; 
+    private width: number; 
+    private height: number;
+    private style: string;
+    private label: string;
+    private properties: any = Array();
 
     public constructor(icon:string, type:string, width:number, height:number, 
         style:string, label:string) {
@@ -19,5 +19,37 @@ export class MElement {
             { "id":"label", "label": "Label", "defValue":this.type, "inputType":"text", "disabled":"false", "display":"true"},
             { "id":"type", "label": "Type", "defValue":this.type, "inputType":"text", "disabled":"true", "display":"true"},
         ]
+    }
+
+    public getIcon(){
+        return this.icon;
+    }
+
+    public getType(){
+        return this.type;
+    }
+
+    public getWidth(){
+        return this.width;
+    }
+
+    public getHeight(){
+        return this.height;
+    }
+
+    public getStyle(){
+        return this.style;
+    }
+
+    public getLabel(){
+        return this.label;
+    }
+
+    public getProperties(){
+        return this.properties;
+    }
+
+    public setProperties(properties:any){
+        this.properties = properties;
     }
 }
