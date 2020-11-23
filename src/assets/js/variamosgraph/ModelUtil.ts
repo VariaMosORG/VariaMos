@@ -1,11 +1,19 @@
 export class ModelUtil {
 
-    public graph:any; //mxGraph (mxGraph)
-    public model:any; //mxGraphModel (mxGraphModel)
+    private graph:any; //mxGraph (mxGraph)
+    private model:any; //mxGraphModel (mxGraphModel)
     
     public constructor(graph:any, model:any) {
         this.graph = graph;
         this.model = model;
+    }
+
+    public getGraph(){
+        return this.graph;
+    }
+
+    public getModel(){
+        return this.model;
     }
 
     public searchCellsByType(rootToSearch:any, typeToSearch:any){

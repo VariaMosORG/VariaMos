@@ -3,9 +3,9 @@ import { mxgraphFactory } from "ts-mxgraph";
 
 export class ConfigButtonActions {
 
-    public buttons:Button[];
-    public graph:any;
-    public model:any;
+    private buttons:Button[];
+    private graph:any;
+    private model:any;
 
     public constructor(graph:any, model:any, buttons:any) {
         this.buttons = buttons;
@@ -13,9 +13,21 @@ export class ConfigButtonActions {
         this.model = model;
     }
 
+    public getButtons(){
+        return this.buttons;
+    }
+
+    public getGraph(){
+        return this.graph;
+    }
+
+    public getModel(){
+        return this.model;
+    }
+
     public removeAllEventListeners(){
         for (let i = 0; i < this.buttons.length; i++) {
-            const buttonId = this.buttons[i].id;
+            const buttonId = this.buttons[i].getId();
             const oldButton = document.getElementById(buttonId);
             if(oldButton){
                 let newButton = oldButton.cloneNode(true);
@@ -28,7 +40,7 @@ export class ConfigButtonActions {
 
     public initializeActions(){
         for (let i = 0; i < this.buttons.length; i++) {
-            const functionToExecute = this.buttons[i].id;
+            const functionToExecute = this.buttons[i].getId();
             if((this as any)[functionToExecute]){ // Verify if the function exists
                 const currentButton = document.getElementById(functionToExecute);
                 (this as any)[functionToExecute](currentButton); // Execute the function exists

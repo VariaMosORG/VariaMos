@@ -3,16 +3,32 @@ const { mxEvent, mxCellAttributeChange } = mxgraphFactory({mxLoadResources: fals
 
 export class ConfigProperties {
     
-    public currentModel:any; //current loaded model (FeatureModel)
-    public graph:any; //mxGraph (mxGraph)
-    public model:any; //mxGraphModel (mxGraphModel)
-    public divProperties:any; //div properties (HTMLElement)
+    private currentModel:any; //current loaded model (FeatureModel)
+    private graph:any; //mxGraph (mxGraph)
+    private model:any; //mxGraphModel (mxGraphModel)
+    private divProperties:any; //div properties (HTMLElement)
 
     public constructor(graph:any, model:any, currentModel:any, divProperties:any) {
         this.currentModel = currentModel;
         this.graph = graph;
         this.model = model;
         this.divProperties = divProperties;
+    }
+
+    public getCurrentModel(){
+        return this.currentModel;
+    }
+
+    public getGraph(){
+        return this.graph;
+    }
+
+    public getModel(){
+        return this.model;
+    }
+
+    public getDivProperties(){
+        return this.divProperties;
     }
 
     public initializeProperties(){

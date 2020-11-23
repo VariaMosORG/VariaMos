@@ -3,14 +3,26 @@ const { mxEvent } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: f
 
 export class ConfigKeys {
     
-    public graph:any; //mxGraph (mxGraph)
-    public model:any; //mxGraphModel (mxGraphModel)
-    public keyHandler:any; //mxKeyHandler (mxKeyHandler)
+    private graph:any; //mxGraph (mxGraph)
+    private model:any; //mxGraphModel (mxGraphModel)
+    private keyHandler:any; //mxKeyHandler (mxKeyHandler)
 
     public constructor(graph:any, model:any, keyHandler:any) {
         this.graph = graph;
         this.model = model;
         this.keyHandler = keyHandler;
+    }
+
+    public getGraph(){
+        return this.graph;
+    }
+
+    public getModel(){
+        return this.model;
+    }
+
+    public getKeyHandler(){
+        return this.keyHandler;
     }
 
     public initializeKeys(){

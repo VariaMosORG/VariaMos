@@ -3,17 +3,37 @@ const { mxUtils, mxCell, mxGeometry, mxToolbar } = mxgraphFactory({mxLoadResourc
 
 export class ConfigElements {
     
-    public currentModel:any; //current loaded model (FeatureModel)
-    public graph:any; //mxGraph (mxGraph)
-    public model:any; //mxGraphModel (mxGraphModel)
-    public divElements:any; //div elements (HTMLElement)
-    public toolbar:any; //toolbar (mxToolbar)
+    private currentModel:any; //current loaded model (FeatureModel)
+    private graph:any; //mxGraph (mxGraph)
+    private model:any; //mxGraphModel (mxGraphModel)
+    private divElements:any; //div elements (HTMLElement)
+    private toolbar:any; //toolbar (mxToolbar)
 
     public constructor(graph:any, model:any, currentModel:any, divElements:any) {
         this.currentModel = currentModel;
         this.graph = graph;
         this.model = model;
         this.divElements = divElements;
+    }
+
+    public getCurrentModel(){
+        return this.currentModel;
+    }
+
+    public getGraph(){
+        return this.graph;
+    }
+
+    public getModel(){
+        return this.model;
+    }
+
+    public getDivElements(){
+        return this.divElements;
+    }
+
+    public getToolbar(){
+        return this.toolbar;
     }
 
     public initializeElements(){

@@ -3,14 +3,26 @@ const { mxUtils } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: f
 
 export class ConfigRelations {
     
-    public currentModel: any; //current loaded model (FeatureModel)
-    public graph:any; //mxGraph (mxGraph)
-    public model:any; //mxGraphModel (mxGraphModel)
+    private currentModel: any; //current loaded model (FeatureModel)
+    private graph:any; //mxGraph (mxGraph)
+    private model:any; //mxGraphModel (mxGraphModel)
 
     public constructor(graph:any, model:any, currentModel:any) {
         this.currentModel = currentModel;
         this.graph = graph;
         this.model = model;
+    }
+
+    public getCurrentModel(){
+        return this.currentModel;
+    }
+
+    public getGraph(){
+        return this.graph;
+    }
+
+    public getModel(){
+        return this.model;
     }
 
     public initializeRelations(){

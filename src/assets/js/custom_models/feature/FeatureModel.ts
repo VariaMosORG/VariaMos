@@ -34,7 +34,7 @@ export class FeatureModel extends Model {
             let sel = cells[i].getAttribute("selected");
 			if(sel == "true"){
                 let overlay = new mxCellOverlay(new mxImage("/img/check.png", 16, 16), 'Overlay tooltip');
-                this.modelUtil.graph.addCellOverlay(cells[i], overlay);
+                this.modelUtil.getGraph().addCellOverlay(cells[i], overlay);
             }
         }
     }
