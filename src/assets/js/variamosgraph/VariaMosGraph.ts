@@ -24,11 +24,11 @@ export class VariaMosGraph {
     private divNavigator:any; //div navigator (HTMLElement)
     private divElements:any; //div elements (HTMLElement)
     private divProperties:any; //div properties (HTMLElement)
-    private configButtonActions:any; //configButtons (configButtonActions)
-    private configElements:any; //configElements (configElements)
-    private configProperties:any; //configProperties (configProperties)
-    private configKeys:any; //configKeys (configKeys)
-    private configRelations:any; //configRelations (configRelations)
+    private configButtonActions:any; //configButtons (ConfigButtonActions)
+    private configElements:any; //configElements (ConfigElements)
+    private configProperties:any; //configProperties (ConfigProperties)
+    private configKeys:any; //configKeys (ConfigKeys)
+    private configRelations:any; //configRelations (ConfigRelations)
     private layers:any; //availble layers of the current model
 
     public static buttons: any = {
