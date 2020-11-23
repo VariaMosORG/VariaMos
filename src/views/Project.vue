@@ -23,7 +23,14 @@ import Breadcrumb from '@/components/Breadcrumb.vue';
 @Options({
   components: {
     Breadcrumb
-  }
+  },
+  watch:{
+    $route (to, from){
+      if(this.$route.name === 'Project'){
+        this.updatePageOnRouteChange();
+      }
+    }
+  } 
 })
 export default class Project extends Vue {
   public currentProjectName:any = "";
@@ -38,10 +45,18 @@ export default class Project extends Vue {
     }
   ];
 
-  public beforeMount(){
+  public mounted(){
     this.currentProjectName = this.$route.params.projectName;
     let currentProject = ProjectClass.getProjectByName(this.$store.getters.getProjects, this.$route.params.projectName);
     this.currentProjectModels = currentProject.getAvailableModels();
+    this.navigationList.push({"title":this.currentProjectName, "route":""});
+  }
+
+  public updatePageOnRouteChange(){
+    this.currentProjectName = this.$route.params.projectName;
+    let currentProject = ProjectClass.getProjectByName(this.$store.getters.getProjects, this.$route.params.projectName);
+    this.currentProjectModels = currentProject.getAvailableModels();
+    this.navigationList.pop();
     this.navigationList.push({"title":this.currentProjectName, "route":""});
   }
 

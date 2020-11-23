@@ -91,7 +91,14 @@ import Breadcrumb from '@/components/Breadcrumb.vue';
 @Options({
   components: {
     Breadcrumb
-  }
+  },
+  watch:{
+    $route (to, from){
+      if(this.$route.name === 'ProjectModel'){
+        this.updatePageOnRouteChange();
+      }
+    }
+  } 
 })
 export default class ProjectModels extends Vue {
   public modelType:any = ""; //example feature
@@ -133,7 +140,7 @@ export default class ProjectModels extends Vue {
     this.initGraph(1);
   }
 
-  public updated(){
+  public updatePageOnRouteChange(){
     this.divElements.innerHTML = "";
     this.divNavigator.innerHTML = "";
     this.divProperties.innerHTML = "";
