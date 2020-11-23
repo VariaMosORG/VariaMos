@@ -38,4 +38,13 @@ export class Project {
     }
     return false;
   }
+
+  public static getProjectByName(projects:any, name:any){
+    for (let i = 0; i < projects.length; i++) {
+      if(projects[i].getName() == name){
+        return projects[i];
+      }
+    }
+    return null;
+  }
 }

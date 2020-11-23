@@ -1,11 +1,14 @@
 <template>
+
+  <Breadcrumb :navigationList="navigationList" />
+
   <div class="card shadow mb-4">
       <div class="card-header py-3 nopad">
         <!--<h6 class="m-0 font-weight-bold text-primary">Project 1 - {{ modelType }}</h6>-->
         <ul class="tab">
           <li v-for="availableModel in availableModels" :key="availableModel">
-            <router-link v-if="availableModel.modelType == this.$route.params.modelType" :to="'/project/'+availableModel.modelType" class="tablinks active">{{ availableModel.name }}</router-link>
-            <router-link v-else :to="'/projects/'+availableModel.modelType" class="tablinks">{{ availableModel.name }}</router-link>
+            <router-link v-if="availableModel.modelType == this.$route.params.modelType" :to="'/project/'+this.$route.params.projectName+'/'+availableModel.modelType" class="tablinks active">{{ availableModel.name }}</router-link>
+            <router-link v-else :to="'/projects/'+this.$route.params.projectName+'/'+availableModel.modelType" class="tablinks">{{ availableModel.name }}</router-link>
           </li>
         </ul>
       </div>
@@ -80,9 +83,15 @@
 </template>
 
 <script lang="ts">
-import { Vue } from 'vue-class-component';
+import { Vue, Options } from 'vue-class-component';
 import { VariaMosGraph } from "@/assets/js/variamosgraph/VariaMosGraph";
+import Breadcrumb from '@/components/Breadcrumb.vue';
 
+@Options({
+  components: {
+    Breadcrumb
+  }
+})
 export default class ProjectModels extends Vue {
   public modelType:any = ""; //example feature
   public modelTypeLabel:any = ""; //example FeatureModel
@@ -94,9 +103,27 @@ export default class ProjectModels extends Vue {
   public divNavigator:any; //div navigator (HTMLElement)
   public divElements:any; //div elements (HTMLElement)
   public divProperties:any; //div properties (HTMLElement)
+  public navigationList:any = [
+    {
+        "title":"Home", "route":"/"
+    },
+    {
+        "title":"Projects", "route":"/projects"
+    }
+  ];
 
   public mounted(){
     this.variaMosGraph.initTreeModel(this.availableModels);
+    this.navigationList.push(
+      {
+        "title":this.$route.params.projectName, 
+        "route":"/projects/"+this.$route.params.projectName
+      },
+      {
+        "title":this.getBeautyModelName(this.$route.params.modelType),
+        "route":""
+      }
+    );
     this.initGraph(1);
   }
 
@@ -105,6 +132,13 @@ export default class ProjectModels extends Vue {
     this.divNavigator.innerHTML = "";
     this.divProperties.innerHTML = "";
     this.variaMosGraph.removeAllButtonEventListeners();
+    this.navigationList.pop();
+    this.navigationList.push(
+      {
+        "title":this.getBeautyModelName(this.$route.params.modelType),
+        "route":""
+      }
+    );
     this.initGraph(2);
   }
 
@@ -116,6 +150,10 @@ export default class ProjectModels extends Vue {
     this.divElements = document.getElementById("vgraph-elements");
     this.divProperties = document.getElementById("vgraph-properties");
     this.variaMosGraph.initializeGraph(this.modelType, this.divContainer, this.divNavigator, this.divElements, this.divProperties, caseLoad);
+  }
+
+  public getBeautyModelName(name:any){
+    return name.charAt(0).toUpperCase() + name.slice(1) + "Model";
   }
 }
 </script>

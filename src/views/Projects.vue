@@ -1,5 +1,7 @@
 <template>
 
+  <Breadcrumb :navigationList="navigationList" />
+
   <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">Create new project</h6>
@@ -25,7 +27,7 @@
 
   <div class="card shadow mb-4" v-for="(project, index) in projects" :key="project">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary">Project: {{ project.getName() }}</h6>
+        <router-link class="m-0 font-weight-bold text-primary" :to="'/projects/'+project.getName()">Project: {{ project.getName() }}</router-link>
         <div class="right-buttons">
           <div class="btn-group">
             <i v-on:click="removeProject(index)" class="fas fa-trash-alt hover-hand"></i>
@@ -33,7 +35,7 @@
         </div>
     </div>
     <div class="card-body">
-      <router-link v-for="model in project.getAvailableModels()" :key="model" :to="'/projects/'+model" class="btn btn-info marr20">
+      <router-link v-for="model in project.getAvailableModels()" :key="model" :to="'/projects/'+project.getName()+'/'+model" class="btn btn-info marr20">
         {{ getBeautyModelName(model) }}
       </router-link>
     </div>
@@ -41,18 +43,32 @@
 </template>
 
 <script lang="ts">
-import { Vue } from 'vue-class-component';
+import { Vue, Options } from 'vue-class-component';
 import { Project as ProjectClass } from '@/store/Project';
+import Breadcrumb from '@/components/Breadcrumb.vue';
 
-export default class Project extends Vue {
+@Options({
+  components: {
+    Breadcrumb
+  }
+})
+export default class Projects extends Vue {
   public avaModels:any = ["feature","component"];
   public projectName:string = "";
   public projectAvailableModels:any = [];
   public projects:any = [];
   public $store:any; //references vuex store
+  public navigationList:any = [
+    {
+        "title":"Home", "route":"/"
+    },
+    {
+        "title":"Projects", "route":""
+    },
+  ];
 
   public mounted(){
-    this.projects = this.$store.getters.initializeProjects;
+    this.projects = this.$store.getters.getProjects;
   }
 
   public createProject(){
@@ -60,7 +76,7 @@ export default class Project extends Vue {
       alert("Please enter a project name");
     }else if (/\s/.test(this.projectName)) {
       alert("Blank spaces not allowed");
-    }else if(ProjectClass.checkIfProjectExists(this.$store.getters.getProjects, this.projectName)){
+    }else if(ProjectClass.checkIfProjectExists(this.projects, this.projectName)){
       alert("A project with that name already exists");
     }else{
       if(this.projectAvailableModels.length > 0){

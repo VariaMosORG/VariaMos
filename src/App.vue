@@ -37,7 +37,7 @@
       <li class="nav-item">
           <router-link to="/projects" class="nav-link pad-0">
               <i class="fas fa-fw fa-folder"></i>
-              <span>Project</span>
+              <span>Projects</span>
           </router-link>
       </li>
 
@@ -58,9 +58,10 @@
           </a>
           <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
-                  <h6 class="collapse-header">Available Projects:</h6>
-                  <a class="collapse-item" href="#">Project 1</a>
-                  <a class="collapse-item" href="#">Project 2</a>
+                <h6 class="collapse-header">Available Projects:</h6>
+                <router-link v-for="(project) in projects" :key="project" :to="'/projects/'+project.getName()" class="collapse-item" href="#">
+                    {{ project.getName() }}
+                </router-link>
               </div>
           </div>
       </li>
@@ -164,7 +165,16 @@
 
 <script lang="ts">
 import { Vue } from 'vue-class-component';
-export default class App extends Vue {}
+import { Project as ProjectClass } from '@/store/Project';
+
+export default class App extends Vue {
+    public $store:any; //references vuex store
+    public projects:any = [];//refences current projects (Project[])
+
+    public mounted(){
+        this.projects = this.$store.getters.initializeProjects;
+    }
+}
 </script>
 
 <style>
