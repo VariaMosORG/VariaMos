@@ -1,10 +1,10 @@
 export class Model {
-    private type:string;
+    private type:string; //for example feature
     private elementClassNames:string[];
     private elements:any = Array(); // MElement[]
-    private constraints?:any = Array();
+    private constraints?:any = Array(); //list of constraints between elements
     private modelUtil?:any; // ModelUtil
-    private relationProperties:any = Array();
+    private relationProperties:any = Array(); //list of relation properties between elements
     
     public constructor(type:string, elementClassNames:string[]) {
         this.type = type;

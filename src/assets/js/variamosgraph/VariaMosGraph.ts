@@ -10,27 +10,26 @@ const { mxGraphModel, mxGraph, mxOutline,
     mxRubberband, mxRectangle, mxShape, 
     mxUtils, mxCellRenderer, mxConstants,
     mxStencilRegistry, mxStencil, mxCell, 
-    mxMultiplicity, mxKeyHandler, mxImage,
-    mxCellOverlay } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
+    mxMultiplicity, mxKeyHandler } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
 
 export class VariaMosGraph {
 
-    public graph:any; //mxGraph (mxGraph)
-    public model:any; //mxGraphModel (mxGraphModel)
-    public keyHandler:any; //mxKeyHandler (mxKeyHandler)
-    public modelType:string = ""; //current model type - example feature
-    public className:string = ""; //current className - example FeatureModel
-    public currentModel:any; //current loaded model (example FeatureModel)
-    public divContainer:any; //div container (HTMLElement)
-    public divNavigator:any; //div navigator (HTMLElement)
-    public divElements:any; //div elements (HTMLElement)
-    public divProperties:any; //div properties (HTMLElement)
-    public configButtonActions:any; //configButtons (configButtonActions)
-    public configElements:any; //configElements (configElements)
-    public configProperties:any; //configProperties (configProperties)
-    public configKeys:any; //configKeys (configKeys)
-    public configRelations:any; //configRelations (configRelations)
-    public layers:any; //availble layers of the current model
+    private graph:any; //mxGraph (mxGraph)
+    private model:any; //mxGraphModel (mxGraphModel)
+    private keyHandler:any; //mxKeyHandler (mxKeyHandler)
+    private modelType:string = ""; //current model type - example feature
+    private className:string = ""; //current className - example FeatureModel
+    private currentModel:any; //current loaded model (example FeatureModel)
+    private divContainer:any; //div container (HTMLElement)
+    private divNavigator:any; //div navigator (HTMLElement)
+    private divElements:any; //div elements (HTMLElement)
+    private divProperties:any; //div properties (HTMLElement)
+    private configButtonActions:any; //configButtons (configButtonActions)
+    private configElements:any; //configElements (configElements)
+    private configProperties:any; //configProperties (configProperties)
+    private configKeys:any; //configKeys (configKeys)
+    private configRelations:any; //configRelations (configRelations)
+    private layers:any; //availble layers of the current model
 
     public static buttons: any = {
         "buttonArea":[
