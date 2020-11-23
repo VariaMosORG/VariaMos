@@ -47,4 +47,13 @@ export class Project {
     }
     return null;
   }
+
+  public static getProjectModelsByName(projects:any, name:any){
+    for (let i = 0; i < projects.length; i++) {
+      if(projects[i].getName() == name){
+        return projects[i].getAvailableModels();
+      }
+    }
+    return null;
+  }
 }

@@ -58,8 +58,8 @@ export class VariaMosGraph {
         this.layers = []
         for (let i = 0; i < modelsInfo.length; i++) {
             let mCell =new mxCell();
-            mCell.setId(modelsInfo[i].modelType);
-            this.layers[modelsInfo[i].modelType] = root.insert(mCell);
+            mCell.setId(modelsInfo[i]);
+            this.layers[modelsInfo[i]] = root.insert(mCell);
         }
         this.model.setRoot(root);
     }

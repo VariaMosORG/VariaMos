@@ -23,9 +23,9 @@ const routes = [
     component: Config,
   },
   {
-    path: '/projects',
-    name: 'Projects',
-    component: Projects,
+    path: '/projects/:projectName/:modelType',
+    name: 'ProjectModel',
+    component: ProjectModels,
   },
   {
     path: '/projects/:projectName',
@@ -33,9 +33,9 @@ const routes = [
     component: Project,
   },
   {
-    path: '/projects/:projectName/:modelType',
-    name: 'ProjectModel',
-    component: ProjectModels,
+    path: '/projects',
+    name: 'Projects',
+    component: Projects,
   }
 ];
 

@@ -3,88 +3,89 @@
   <Breadcrumb :navigationList="navigationList" />
 
   <div class="card shadow mb-4">
-      <div class="card-header py-3 nopad">
-        <!--<h6 class="m-0 font-weight-bold text-primary">Project 1 - {{ modelType }}</h6>-->
-        <ul class="tab">
-          <li v-for="availableModel in availableModels" :key="availableModel">
-            <router-link v-if="availableModel.modelType == this.$route.params.modelType" :to="'/project/'+this.$route.params.projectName+'/'+availableModel.modelType" class="tablinks active">{{ availableModel.name }}</router-link>
-            <router-link v-else :to="'/projects/'+this.$route.params.projectName+'/'+availableModel.modelType" class="tablinks">{{ availableModel.name }}</router-link>
-          </li>
-        </ul>
-      </div>
-      <div class="card-body">
-        <!-- Begin Model Area -->
-        <div class="row main_area">
-          <div id="left-draw" class="col-sm-9 left-area">
+    <div class="card-header py-3 nopad">
+      <ul class="tab">
+        <li v-for="availableModel in availableModels" :key="availableModel">
+          <router-link v-if="availableModel == this.$route.params.modelType" :to="'/projects/'+this.$route.params.projectName+'/'+availableModel" class="tablinks active">{{ getBeautyModelName(availableModel) }}</router-link>
+          <router-link v-else :to="'/projects/'+this.$route.params.projectName+'/'+availableModel" class="tablinks">{{ getBeautyModelName(availableModel) }}</router-link>
+        </li>
+      </ul>
+    </div>
 
-            <div class="card bg-light text-white shadow font13">
-              <div class="card-body pad10">
-                <div id="vgraph-buttons" class="buttons">
-                    <button class="btn btn-info" v-for="button in buttonsArea" :key="button" :id="button.id">
-                      <i :class="'fas fa-'+button.icon"></i>
-                      {{ button.label }}
-                    </button>
-                </div>
-              </div>
-            </div>
+    <div class="card-body">
+      <!-- Begin Model Area -->
+      <div class="row main_area">
+        <div id="left-draw" class="col-sm-9 left-area">
 
-            <div class="card bg-light text-black shadow mtop">
-              <div class="card-body">
-                <div id="vgraph-container" class="model-area"></div>
-              </div>
-            </div>
-
-          </div>
-
-          <div id="right-draw" class="col-sm-3 right-area font13">
-            <!-- Begin Elements Section -->
-            <div class="card bg-white text-black shadow">
-              <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Elements</h6>
-              </div>
-              <div class="card-body">
-                <div id="vgraph-elements" class="elements"></div>
-              </div>
-            </div>
-            <!-- End Elements Section -->
-
-            <!-- Begin Properties Section -->
-            <div class="card bg-info text-white shadow mtop">
-              <div class="card-header bg-info py-3">
-                <h6 class="m-0 font-weight-bold text-white">Properties</h6>
-              </div>
-              <div class="card-body">
-                <div id="vgraph-properties" class="properties"></div>
-              </div>
-            </div>
-            <!-- End Properties Section -->
-
-            <!-- Begin Navigation Section -->
-            <div class="card bg-light text-black shadow mtop">
-              <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Navigation</h6>
-              </div>
-              <div class="card-body">
-                <div class="navi-buttons">
-                  <button class="btn-model-area btn btn-sm" v-for="button in buttonsNavigation" :key="button" :id="button.id">
+          <div class="card bg-light text-white shadow font13">
+            <div class="card-body pad10">
+              <div id="vgraph-buttons" class="buttons">
+                  <button class="btn btn-info" v-for="button in buttonsArea" :key="button" :id="button.id">
+                    <i :class="'fas fa-'+button.icon"></i>
                     {{ button.label }}
                   </button>
-                </div>
-                <div id="vgraph-navigator" class="navigator"></div>
               </div>
             </div>
-            <!-- End Navigation Section -->
-
           </div>
+
+          <div class="card bg-light text-black shadow mtop">
+            <div class="card-body">
+              <div id="vgraph-container" class="model-area"></div>
+            </div>
+          </div>
+
         </div>
-        <!-- End Model Area -->
+
+        <div id="right-draw" class="col-sm-3 right-area font13">
+          <!-- Begin Elements Section -->
+          <div class="card bg-white text-black shadow">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Elements</h6>
+            </div>
+            <div class="card-body">
+              <div id="vgraph-elements" class="elements"></div>
+            </div>
+          </div>
+          <!-- End Elements Section -->
+
+          <!-- Begin Properties Section -->
+          <div class="card bg-info text-white shadow mtop">
+            <div class="card-header bg-info py-3">
+              <h6 class="m-0 font-weight-bold text-white">Properties</h6>
+            </div>
+            <div class="card-body">
+              <div id="vgraph-properties" class="properties"></div>
+            </div>
+          </div>
+          <!-- End Properties Section -->
+
+          <!-- Begin Navigation Section -->
+          <div class="card bg-light text-black shadow mtop">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Navigation</h6>
+            </div>
+            <div class="card-body">
+              <div class="navi-buttons">
+                <button class="btn-model-area btn btn-sm" v-for="button in buttonsNavigation" :key="button" :id="button.id">
+                  {{ button.label }}
+                </button>
+              </div>
+              <div id="vgraph-navigator" class="navigator"></div>
+            </div>
+          </div>
+          <!-- End Navigation Section -->
+
+        </div>
       </div>
+      <!-- End Model Area -->
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Options } from 'vue-class-component';
 import { VariaMosGraph } from "@/assets/js/variamosgraph/VariaMosGraph";
+import { Project as ProjectClass } from '@/store/Project';
 import Breadcrumb from '@/components/Breadcrumb.vue';
 
 @Options({
@@ -95,7 +96,7 @@ import Breadcrumb from '@/components/Breadcrumb.vue';
 export default class ProjectModels extends Vue {
   public modelType:any = ""; //example feature
   public modelTypeLabel:any = ""; //example FeatureModel
-  public availableModels:any = [{"name":"FeatureModel","modelType":"feature"},{"name":"ComponentModel","modelType":"component"}];
+  public availableModels:any = [];
   public variaMosGraph = new VariaMosGraph();
   public buttonsArea = VariaMosGraph.buttons.buttonArea; // buttons
   public buttonsNavigation = VariaMosGraph.buttons.navigationArea; //more buttons
@@ -103,6 +104,7 @@ export default class ProjectModels extends Vue {
   public divNavigator:any; //div navigator (HTMLElement)
   public divElements:any; //div elements (HTMLElement)
   public divProperties:any; //div properties (HTMLElement)
+  public $store:any; //references vuex store
   public navigationList:any = [
     {
         "title":"Home", "route":"/"
@@ -112,8 +114,8 @@ export default class ProjectModels extends Vue {
     }
   ];
 
-  public mounted(){
-    this.variaMosGraph.initTreeModel(this.availableModels);
+  public beforeMount(){
+    this.availableModels = ProjectClass.getProjectModelsByName(this.$store.getters.getProjects, this.$route.params.projectName);
     this.navigationList.push(
       {
         "title":this.$route.params.projectName, 
@@ -124,6 +126,10 @@ export default class ProjectModels extends Vue {
         "route":""
       }
     );
+  }
+
+  public mounted(){
+    this.variaMosGraph.initTreeModel(this.availableModels);
     this.initGraph(1);
   }
 

@@ -67,7 +67,7 @@ export default class Projects extends Vue {
     },
   ];
 
-  public mounted(){
+  public beforeMount(){
     this.projects = this.$store.getters.getProjects;
   }
 

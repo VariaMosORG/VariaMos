@@ -38,7 +38,7 @@ export default class Project extends Vue {
     }
   ];
 
-  public mounted(){
+  public beforeMount(){
     this.currentProjectName = this.$route.params.projectName;
     let currentProject = ProjectClass.getProjectByName(this.$store.getters.getProjects, this.$route.params.projectName);
     this.currentProjectModels = currentProject.getAvailableModels();
