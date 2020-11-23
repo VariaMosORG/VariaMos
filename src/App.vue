@@ -35,7 +35,7 @@
       </li>
 
       <li class="nav-item">
-          <router-link to="/project" class="nav-link pad-0">
+          <router-link to="/projects" class="nav-link pad-0">
               <i class="fas fa-fw fa-folder"></i>
               <span>Project</span>
           </router-link>

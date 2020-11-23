@@ -2,7 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 import Home from '@/views/Home.vue';
 import About from '@/views/About.vue';
 import Config from '@/views/Config.vue';
-import Project from '@/views/Project.vue';
+import Projects from '@/views/Projects.vue';
 import ProjectModels from '@/views/ProjectModels.vue';
 
 const routes = [
@@ -22,14 +22,14 @@ const routes = [
     component: Config,
   },
   {
-    path: '/project/:modelType',
+    path: '/projects/:modelType',
     name: 'ProjectModel',
     component: ProjectModels,
   },
   {
-    path: '/project',
+    path: '/projects',
     name: 'Project',
-    component: Project,
+    component: Projects,
   }
 ];
 

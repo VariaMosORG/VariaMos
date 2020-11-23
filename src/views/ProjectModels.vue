@@ -5,7 +5,7 @@
         <ul class="tab">
           <li v-for="availableModel in availableModels" :key="availableModel">
             <router-link v-if="availableModel.modelType == this.$route.params.modelType" :to="'/project/'+availableModel.modelType" class="tablinks active">{{ availableModel.name }}</router-link>
-            <router-link v-else :to="'/project/'+availableModel.modelType" class="tablinks">{{ availableModel.name }}</router-link>
+            <router-link v-else :to="'/projects/'+availableModel.modelType" class="tablinks">{{ availableModel.name }}</router-link>
           </li>
         </ul>
       </div>
