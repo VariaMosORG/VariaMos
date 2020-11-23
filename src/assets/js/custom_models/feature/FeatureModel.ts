@@ -8,7 +8,9 @@ export class FeatureModel extends Model {
         super("feature",
             ["RootElement", "AbstractElement", "ConcreteElement", "BundleElement"]
         );
-        this.constraints = [
+        
+        let constraints = this.getConstraints();
+        constraints = [
             {
                 "source":"true", "type":"root", "attr":null,
                 "value":null, "min":0, "max":0, "validNeighbors":null,
@@ -20,21 +22,25 @@ export class FeatureModel extends Model {
                 "countError":"Only 1 target allowed", "typeError":"Only shape targets allowed"
             }
         ];
-        this.relationProperties.push(
+        this.setConstraints(constraints);
+
+        let relationProperties = this.getConstraints();
+        relationProperties.push(
             { 
                 "id":"relType", "label":"RelType", "defValue":"mandatory", "inputType":"select",
                 "input_values":["mandatory","optional","requires","excludes"], "display":"true"
             }
         );
+        this.setRelationProperties(relationProperties);
     }
 
     public overlayStart(){
-        let cells = this.modelUtil.searchCellsByType(this.type, "concrete");
+        let cells = this.getModelUtil().searchCellsByType(this.getType(), "concrete");
         for (let i = 0; i < cells.length; i++) {
             let sel = cells[i].getAttribute("selected");
 			if(sel == "true"){
                 let overlay = new mxCellOverlay(new mxImage("/img/check.png", 16, 16), 'Overlay tooltip');
-                this.modelUtil.getGraph().addCellOverlay(cells[i], overlay);
+                this.getModelUtil().getGraph().addCellOverlay(cells[i], overlay);
             }
         }
     }

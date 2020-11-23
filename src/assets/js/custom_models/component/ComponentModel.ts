@@ -6,7 +6,9 @@ export class ComponentModel extends Model {
         super("component",
             ["ComponentElement", "FileElement", "FragmentElement", "CustomElement"]
         );
-        this.constraints = [
+        
+        let constraints = this.getConstraints();
+        constraints = [
             {
                 "source":"true", "type":"component", "attr":null,
                 "value":null, "min":0, "max":0, "validNeighbors":null,
@@ -28,6 +30,7 @@ export class ComponentModel extends Model {
                 "countError":"Only 1 target allowed", "typeError":"Only shape targets allowed"
             },
         ];
+        this.setConstraints(constraints);
     }
     
 }

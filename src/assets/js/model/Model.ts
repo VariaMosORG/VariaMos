@@ -1,10 +1,10 @@
 export class Model {
-    public type:string;
-    public elementClassNames:string[];
-    public elements:any = Array(); // MElement[]
-    public constraints?:any = Array();
-    public modelUtil?:any; // ModelUtil
-    public relationProperties:any = Array();
+    private type:string;
+    private elementClassNames:string[];
+    private elements:any = Array(); // MElement[]
+    private constraints?:any = Array();
+    private modelUtil?:any; // ModelUtil
+    private relationProperties:any = Array();
     
     public constructor(type:string, elementClassNames:string[]) {
         this.type = type;
@@ -12,6 +12,38 @@ export class Model {
         this.relationProperties = [
             { "id":"type", "label": "Type", "defValue":"relation", "inputType":"text", "disabled":"true", "display":"true"},
         ];
+    }
+
+    public getType(){
+        return this.type;
+    }
+
+    public getElementClassNames(){
+        return this.elementClassNames;
+    }
+
+    public getElements(){
+        return this.elements;
+    }
+
+    public getConstraints(){
+        return this.constraints;
+    }
+
+    public getModelUtil(){
+        return this.modelUtil;
+    }
+
+    public getRelationProperties(){
+        return this.relationProperties;
+    }
+
+    public setConstraints(constraints:any){
+        this.constraints = constraints;
+    }
+
+    public setRelationProperties(relationProperties:any){
+        this.relationProperties = relationProperties;
     }
 
     public overlayStart(){
