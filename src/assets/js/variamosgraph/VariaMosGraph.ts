@@ -10,7 +10,8 @@ const { mxGraphModel, mxGraph, mxOutline,
     mxRubberband, mxRectangle, mxShape, 
     mxUtils, mxCellRenderer, mxConstants,
     mxStencilRegistry, mxStencil, mxCell, 
-    mxMultiplicity, mxKeyHandler } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
+    mxMultiplicity, mxKeyHandler, mxCodec,
+    mxDragSource, mxEvent } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
 
 export class VariaMosGraph {
 
@@ -33,18 +34,17 @@ export class VariaMosGraph {
 
     public static buttons: any = {
         "buttonArea":[
-            new Button("save","Save","save"),
-            new Button("pdf","PDF","print"),
-            new Button("img","Img","print"),
-            new Button("delete","Delete","eraser"),
-            new Button("resetall","Reset All","eraser"),
-            new Button("export","Export","upload"),
-            new Button("xml","View XML","code"),
+            new Button("pdf","PDF","print","Bla bla"),
+            new Button("img","Img","print","Bla bla"),
+            new Button("delete","Delete","eraser","Bla bla"),
+            new Button("resetall","Reset All","eraser","Bla bla"),
+            new Button("export","Export","upload","Bla bla"),
+            new Button("xml","View XML","code","This button shows the XML code of all project models"),
         ],
         "navigationArea":[
-            new Button("zoomIn","+",""),
-            new Button("zoomOut","-",""),
-            new Button("zoomReset","R",""),
+            new Button("zoomIn","+","","Zoom in the model"),
+            new Button("zoomOut","-","","Zoom out the model"),
+            new Button("zoomReset","R","","Restore model zoom"),
         ]
     };
 
@@ -52,15 +52,35 @@ export class VariaMosGraph {
         this.model = new mxGraphModel();
     }
 
-    public initTreeModel(modelsInfo:any){
-        let root = new mxCell();
-        this.layers = []
-        for (let i = 0; i < modelsInfo.length; i++) {
-            let mCell =new mxCell();
-            mCell.setId(modelsInfo[i]);
-            this.layers[modelsInfo[i]] = root.insert(mCell);
+    public getGraph(){
+        return this.graph;
+    }
+
+    public getModel(){
+        return this.model;
+    }
+
+    public initTreeModel(modelsInfo:any, xmlCode:any){
+        if(xmlCode != ""){ //load model based on previously saved model
+            let xmlDoc = mxUtils.parseXml(xmlCode);
+            let node = xmlDoc.documentElement;
+            let dec = new mxCodec(node.ownerDocument);
+            dec.decode(node, this.model);
+            this.layers = []
+            for (let i = 0; i < modelsInfo.length; i++) {
+                let layer = this.model.getCell(modelsInfo[i]);
+                this.layers[modelsInfo[i]] = layer;
+            }
+        }else{ //create a new model structure
+            let root = new mxCell();
+            this.layers = []
+            for (let i = 0; i < modelsInfo.length; i++) {
+                let mCell =new mxCell();
+                mCell.setId(modelsInfo[i]);
+                this.layers[modelsInfo[i]] = root.insert(mCell);
+            }
+            this.model.setRoot(root);
         }
-        this.model.setRoot(root);
     }
 
     public async initializeGraph(modelType:string, divContainer:any, divNavigator:any, divElements:any, divProperties:any, caseLoad:any){
@@ -73,7 +93,6 @@ export class VariaMosGraph {
         if(caseLoad == 1){
             this.setGraph(); //create mxGraph object    
         }
-        this.setCurrentLayer(); //specific current layer to be shown
         this.setNavigator(); //define the div navigator
         this.setConfigModel(); //some graph configs
         this.setButtonActions(); //implement button actions
@@ -86,6 +105,7 @@ export class VariaMosGraph {
         this.setMainCellText(); //set the main text to be displayed for cells
         this.setCustomShapes(); //set custom shapes
         this.setOverlay();
+        this.setCurrentLayer(); //specific current layer to be shown
     }
 
     public setGraph(){
@@ -93,6 +113,12 @@ export class VariaMosGraph {
             this.graph = new mxGraph(this.divContainer, this.model);
         }
     }
+
+    /*public setGraph2(divContainer:any){
+        if (divContainer) {
+            this.graph = new mxGraph(this.divContainer, this.model);
+        }
+    }*/
 
     public setKeys(){
         this.keyHandler = new mxKeyHandler(this.graph);

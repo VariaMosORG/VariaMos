@@ -19,11 +19,10 @@
 
           <div class="card bg-light text-white shadow font13">
             <div class="card-body pad10">
-              <button v-on:click="saveModel" class="btn btn-info">Guardar</button>
               <div id="vgraph-buttons" class="buttons">
-                  <button class="btn btn-info" v-for="button in buttonsArea" :key="button" :id="button.id">
-                    <i :class="'fas fa-'+button.icon"></i>
-                    {{ button.label }}
+                  <button class="btn btn-info" v-for="button in buttonsArea" :key="button" :id="button.getId()" :title="button.getButtonTitle()">
+                    <i :class="'fas fa-'+button.getIcon()"></i>
+                    {{ button.getLabel() }}
                   </button>
               </div>
             </div>
@@ -38,8 +37,22 @@
         </div>
 
         <div id="right-draw" class="col-sm-3 right-area font13">
+
+          <!-- Begin Project Operations Section -->
+          <div class="card bg-info text-white shadow">
+            <div class="card-header bg-info py-3">
+              <h6 class="m-0 font-weight-bold text-white">Project Operations</h6>
+            </div>
+            <div class="card-body project-buttons">
+              <button v-on:click="saveAll" class="btn btn-light" title="This button saves all the project models info" id="save">
+                <i class="fas fa-save"></i> Save All
+              </button>
+            </div>
+          </div>
+          <!-- End Project Operations Section -->
+
           <!-- Begin Elements Section -->
-          <div class="card bg-white text-black shadow">
+          <div class="card bg-white text-black shadow mtop">
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">Elements</h6>
             </div>
@@ -86,6 +99,7 @@
 <script lang="ts">
 import { Vue, Options } from 'vue-class-component';
 import { VariaMosGraph } from "@/assets/js/variamosgraph/VariaMosGraph";
+import { ProjectOperations } from "@/assets/js/variamosgraph/ProjectOperations";
 import { Project as ProjectClass } from '@/store/Project';
 import Breadcrumb from '@/components/Breadcrumb.vue';
 
@@ -123,11 +137,12 @@ export default class ProjectModels extends Vue {
     }
   ];
 
-  public saveModel(){
+  public saveAll(){
     let index = ProjectClass.getProjectIndexByName(this.$store.getters.getProjects, this.currentProject.getName());
     if(index != -1){
-      this.currentProject.setXml("<mxgraph>");
-      this.$store.commit("updateProject", {"project":this.currentProject, "index":index});
+      let projectOp = new ProjectOperations(this.variaMosGraph.getGraph(), this.variaMosGraph.getModel(), this.currentProject, this.$store);
+      projectOp.saveAll(index);
+      alert("All models saved succesfully!");
     }
   }
 
@@ -147,7 +162,9 @@ export default class ProjectModels extends Vue {
   }
 
   public mounted(){
-    this.variaMosGraph.initTreeModel(this.availableModels);
+    this.variaMosGraph.initTreeModel(this.availableModels, this.currentProject.getXml());
+    //this.divContainer = document.getElementById("vgraph-container");
+    //this.variaMosGraph.setGraph2(this.divContainer);
     this.initGraph(1);
   }
 
@@ -313,6 +330,13 @@ ul.tab li a:focus, .active {
     padding-left: 5px;
     padding-right: 5px;
     width: 25px;
+    margin-right: 2px;
+}
+
+.project-buttons button {
+    padding: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
     margin-right: 2px;
 }
 /* buttons */

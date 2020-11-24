@@ -24,7 +24,7 @@ export class FeatureModel extends Model {
         ];
         this.setConstraints(constraints);
 
-        let relationProperties = this.getConstraints();
+        let relationProperties = this.getRelationProperties();
         relationProperties.push(
             { 
                 "id":"relType", "label":"RelType", "defValue":"mandatory", "inputType":"select",
