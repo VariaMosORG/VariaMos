@@ -10,8 +10,7 @@ const { mxGraphModel, mxGraph, mxOutline,
     mxRubberband, mxRectangle, mxShape, 
     mxUtils, mxCellRenderer, mxConstants,
     mxStencilRegistry, mxStencil, mxCell, 
-    mxMultiplicity, mxKeyHandler, mxCodec,
-    mxDragSource, mxEvent } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
+    mxMultiplicity, mxKeyHandler, mxCodec } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
 
 export class VariaMosGraph {
 
@@ -93,6 +92,7 @@ export class VariaMosGraph {
         if(caseLoad == 1){
             this.setGraph(); //create mxGraph object    
         }
+        this.hideAllLayers(); //hide all layers while configuring the model
         this.setNavigator(); //define the div navigator
         this.setConfigModel(); //some graph configs
         this.setButtonActions(); //implement button actions
@@ -104,8 +104,8 @@ export class VariaMosGraph {
         this.setRelations(); //set element relations
         this.setMainCellText(); //set the main text to be displayed for cells
         this.setCustomShapes(); //set custom shapes
-        this.setOverlay();
-        this.setCurrentLayer(); //specific current layer to be shown
+        this.setOverlay(); //set overlays functions
+        this.setCurrentLayer(); //specific current layer to be shown and display it
     }
 
     public setGraph(){
@@ -113,12 +113,6 @@ export class VariaMosGraph {
             this.graph = new mxGraph(this.divContainer, this.model);
         }
     }
-
-    /*public setGraph2(divContainer:any){
-        if (divContainer) {
-            this.graph = new mxGraph(this.divContainer, this.model);
-        }
-    }*/
 
     public setKeys(){
         this.keyHandler = new mxKeyHandler(this.graph);
@@ -145,13 +139,16 @@ export class VariaMosGraph {
         };
     }
 
-    public setCurrentLayer(){
-		let currentLayer = this.layers[this.modelType]; //current layer to be displayed (feature, component, etc)
-        this.graph.setDefaultParent(currentLayer);
+    public hideAllLayers(){
         for (let layer in this.layers) { //hide all layers
 			this.model.setVisible(this.layers[layer], false);
-		}
-		this.model.setVisible(currentLayer, true); //unhide current layer
+        }
+    }
+
+    public setCurrentLayer(){
+        let currentLayer = this.layers[this.modelType]; //current layer to be displayed (feature, component, etc)
+        this.graph.setDefaultParent(currentLayer);
+        this.model.setVisible(currentLayer, true); //unhide current layer
     }
 
     public setNavigator(){

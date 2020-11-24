@@ -80,7 +80,7 @@
             </div>
             <div class="card-body">
               <div class="navi-buttons">
-                <button class="btn-model-area btn btn-sm" v-for="button in buttonsNavigation" :key="button" :id="button.id">
+                <button class="btn-model-area btn btn-sm" v-for="button in buttonsNavigation" :key="button" :id="button.id" :title="button.getButtonTitle()">
                   {{ button.label }}
                 </button>
               </div>
