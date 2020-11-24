@@ -23,9 +23,5 @@ import { Vue, Options } from 'vue-class-component';
 })
 export default class Breadcrumb extends Vue {
     public navigationList:any;
-
-    public mounted(){
-        //console.log(this.navigationList);
-    }
 }
 </script>

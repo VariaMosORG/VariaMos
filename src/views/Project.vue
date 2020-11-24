@@ -80,7 +80,7 @@ export default class Project extends Vue {
 }
 
 .vertical-scroll { 
-  height: 300px; 
+  max-height: 300px; 
   overflow-x: hidden; 
   overflow-y: auto; 
   text-align:justify; 
