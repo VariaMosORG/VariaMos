@@ -5,6 +5,9 @@
       <!-- Sidebar - Brand -->
       <router-link to="/">
       <a class="sidebar-brand d-flex align-items-center justify-content-center">
+          <div id="main-icon" class="sidebar-brand-icon rotate-n-15 display-icon">
+              V
+           </div>
           <div class="sidebar-brand-text mx-3">VariaMos <sup>Basic</sup></div>
       </a>
       </router-link>
@@ -65,6 +68,14 @@
               </div>
           </div>
       </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+          <button v-on:click="hideSidebar" class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
   </ul>
   <!-- End of Sidebar -->
 
@@ -78,7 +89,7 @@
           <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
               <!-- Sidebar Toggle (Topbar) -->
-              <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+              <button v-on:click="hideSidebar" id="sidebarToggleTop" class="btn btn-link rounded-circle d-md-none mr-3">
                   <i class="fa fa-bars"></i>
               </button>
 
@@ -174,10 +185,41 @@ export default class App extends Vue {
     public mounted(){
         this.projects = this.$store.getters.initializeProjects;
     }
+    public hideSidebar(){
+        let body = document.querySelector('body');
+        if(body){
+            body.classList.toggle('sidebar-toggled');
+        }
+
+        let sidebar = document.querySelector('.sidebar');
+        if(sidebar){
+            sidebar.classList.toggle('toggled');
+        }
+
+        let mainIcon = document.querySelector('#main-icon');
+        if(mainIcon){
+            mainIcon.classList.toggle('display-icon-yes');
+        }
+    }
 }
 </script>
 
 <style>
+@media (max-width: 768px){
+    .display-icon {
+        display: block !important;
+    }
+}
+
+.display-icon {
+    display: none;
+}
+
+.display-icon-yes {
+    display: block !important;
+}
+
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -193,5 +235,9 @@ export default class App extends Vue {
 
 a:hover{
     text-decoration: none !important;
+}
+
+.sidebar-brand-icon{
+    font-size:25px;
 }
 </style>
