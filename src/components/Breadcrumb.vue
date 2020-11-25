@@ -1,5 +1,5 @@
 <template>
-<nav aria-label="breadcrumb">
+<nav aria-label="breadcrumb" class="breadcrumb-font">
     <ol class="breadcrumb">
         <li class="breadcrumb-item" v-for="navigation in navigationList" :key="navigation" aria-current="page">
             <template v-if="navigation.route != ''">
@@ -25,3 +25,9 @@ export default class Breadcrumb extends Vue {
     public navigationList:any;
 }
 </script>
+
+<style>
+.breadcrumb-font{
+    font-size: 14px;
+}
+</style>

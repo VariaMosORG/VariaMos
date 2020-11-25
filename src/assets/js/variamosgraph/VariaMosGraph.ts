@@ -37,11 +37,11 @@ export class VariaMosGraph {
     public static buttons: any = {
         "buttonArea":[
             new Button("delete","Delete","eraser","Delete selected cells"),
-            new Button("save","Save All","save","Save all the project models info"),
-            /*new Button("pdf","PDF","print","Bla bla"),
-            new Button("img","Img","print","Bla bla"),*/
-            new Button("resetAll","Reset All","eraser","Delete all the project models info"),
-            //new Button("export","Export","upload","Bla bla"),
+            new Button("save","Save Models","save","Save all the project models info"),
+            new Button("img","Img","print","Download current model in PNG format"),
+            new Button("resetAll","Reset Models","eraser","Delete all the project models info"),
+            new Button("resetCurrent","Reset This Model","eraser","Delete current model"),
+            new Button("export","Export Models","upload","Export the project models (XML)"),
             new Button("xml","View XML","code","Show XML code of all project models"),
         ],
         "navigationArea":[
@@ -168,7 +168,7 @@ export class VariaMosGraph {
         let buttonsConcat = VariaMosGraph.buttons.buttonArea;
         buttonsConcat = buttonsConcat.concat(VariaMosGraph.buttons.navigationArea);
         this.configButtonActions = new ConfigButtonActions(this.graph, this.model, this.$modal,
-            this.$store, this.currentProject, buttonsConcat);
+            this.$store, this.currentProject, this.divContainer, buttonsConcat);
         this.configButtonActions.initializeActions();
     }
 

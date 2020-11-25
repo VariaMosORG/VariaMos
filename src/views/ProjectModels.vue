@@ -302,11 +302,12 @@ ul.tab li a:focus, .active {
 }
 
 .buttons button {
+  font-size: 14px;
   height: 30px;
   padding: 0px;
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-right: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-right: 6px;
   text-align: center;
 }
 
