@@ -133,7 +133,7 @@ export class VariaMosGraph {
     }
 
     public setRelations(){
-        this.configRelations = new ConfigRelations(this.graph, this.model, this.currentModel);
+        this.configRelations = new ConfigRelations(this.graph, this.model, this.$modal, this.currentModel);
         this.configRelations.initializeRelations();
     }
 

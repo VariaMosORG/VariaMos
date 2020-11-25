@@ -6,11 +6,13 @@ export class ConfigRelations {
     private currentModel: any; //current loaded model (FeatureModel)
     private graph:any; //mxGraph (mxGraph)
     private model:any; //mxGraphModel (mxGraphModel)
+    private $modal:any; //references modalPlugin
 
-    public constructor(graph:any, model:any, currentModel:any) {
+    public constructor(graph:any, model:any, modal:any, currentModel:any) {
         this.currentModel = currentModel;
         this.graph = graph;
         this.model = model;
+        this.$modal = modal;
     }
 
     public getCurrentModel(){
@@ -28,6 +30,7 @@ export class ConfigRelations {
     public initializeRelations(){
         let graph = this.graph;
         let currentModel = this.currentModel;
+        let modal = this.$modal;
         graph.connectionHandler.insertEdge = function(parent:any, id:any, value:any, source:any, target:any, style:any){
             let doc = mxUtils.createXmlDocument();
             let node = doc.createElement('rel_' + source.getAttribute("type") + '_' + target.getAttribute("type"));
@@ -36,7 +39,8 @@ export class ConfigRelations {
             if(target.edges != null && target.edges.length > 0){
                 for (let i = 0; i < target.edges.length; i++) {
                     if(target.edges[i].target.getId() == source.getId()){
-                        alert("Bidirectional connections not allowed");
+                        modal.setData("error", "Error", "Bidirectional connections not allowed");
+                        modal.click();
                         return null;
                     }
                 }
