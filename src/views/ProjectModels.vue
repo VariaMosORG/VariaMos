@@ -38,21 +38,18 @@
 
         <div id="right-draw" class="col-sm-3 right-area font13">
 
-          <!-- Begin Project Operations Section -->
-          <div class="card bg-info text-white shadow">
+          <!-- Begin Model Operations Section -->
+          <!--<div class="card bg-info text-white shadow">
             <div class="card-header bg-info py-3">
-              <h6 class="m-0 font-weight-bold text-white">Project Operations</h6>
+              <h6 class="m-0 font-weight-bold text-white">Model Operations</h6>
             </div>
-            <div class="card-body project-buttons">
-              <button v-on:click="saveAll" class="btn btn-light" title="This button saves all the project models info" id="save">
-                <i class="fas fa-save"></i> Save All
-              </button>
+            <div class="card-body">
             </div>
-          </div>
-          <!-- End Project Operations Section -->
+          </div>-->
+          <!-- End Model Operations Section -->
 
           <!-- Begin Elements Section -->
-          <div class="card bg-white text-black shadow mtop">
+          <div class="card bg-white text-black shadow">
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">Elements</h6>
             </div>
@@ -93,13 +90,15 @@
       </div>
       <!-- End Model Area -->
     </div>
+
+    <GlobalModalPlugin ref="modalPlugin" />
+    
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Options } from 'vue-class-component';
 import { VariaMosGraph } from "@/assets/js/variamosgraph/VariaMosGraph";
-import { ProjectOperations } from "@/assets/js/variamosgraph/ProjectOperations";
 import { Project as ProjectClass } from '@/store/Project';
 import Breadcrumb from '@/components/Breadcrumb.vue';
 
@@ -128,6 +127,7 @@ export default class ProjectModels extends Vue {
   public divElements:any; //div elements (HTMLElement)
   public divProperties:any; //div properties (HTMLElement)
   public $store:any; //references vuex store
+  public $modal:any; //references modalPlugin
   public navigationList:any = [
     {
         "title":"Home", "route":"/"
@@ -137,14 +137,15 @@ export default class ProjectModels extends Vue {
     }
   ];
 
-  public saveAll(){
+  /*public saveAll(){
     let index = ProjectClass.getProjectIndexByName(this.$store.getters.getProjects, this.currentProject.getName());
     if(index != -1){
       let projectOp = new ProjectOperations(this.variaMosGraph.getGraph(), this.variaMosGraph.getModel(), this.currentProject, this.$store);
       projectOp.saveAll(index);
-      alert("All models saved succesfully!");
+      this.$modal.setData("success", "Success", "All models saved succesfully!");
+      this.$modal.click();
     }
-  }
+  }*/
 
   public beforeMount(){
     this.currentProject = ProjectClass.getProjectByName(this.$store.getters.getProjects, this.$route.params.projectName);
@@ -163,8 +164,7 @@ export default class ProjectModels extends Vue {
 
   public mounted(){
     this.variaMosGraph.initTreeModel(this.availableModels, this.currentProject.getXml());
-    //this.divContainer = document.getElementById("vgraph-container");
-    //this.variaMosGraph.setGraph2(this.divContainer);
+    this.$modal = <any> this.$refs.modalPlugin; //reference the modal plugin
     this.initGraph(1);
   }
 
@@ -192,7 +192,7 @@ export default class ProjectModels extends Vue {
     this.divProperties = document.getElementById("vgraph-properties");
     this.variaMosGraph.initializeGraph(
       this.modelType, this.divContainer, this.divNavigator, 
-      this.divElements, this.divProperties, caseLoad
+      this.divElements, this.divProperties, this.$modal, this.$store, caseLoad
     );
   }
 

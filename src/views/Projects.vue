@@ -56,6 +56,9 @@
         </div>
       </div>
     </div>
+
+    <GlobalModalPlugin ref="modalPlugin" />
+
   </div>
 </template>
 
@@ -75,6 +78,7 @@ export default class Projects extends Vue {
   public projectAvailableModels:any = [];
   public projects:any = [];
   public $store:any; //references vuex store
+  public $modal:any; //references modalPlugin
   public navigationList:any = [
     {
         "title":"Home", "route":"/"
@@ -88,27 +92,40 @@ export default class Projects extends Vue {
     this.projects = this.$store.getters.getProjects;
   }
 
+  public mounted(){
+    this.$modal = <any> this.$refs.modalPlugin; //reference the modal plugin
+  }
+
   public createProject(){
     if(this.projectName == ""){
-      alert("Please enter a project name");
+      this.$modal.setData("error", "Error", "Please enter a project name");
+      this.$modal.click();
     }else if (/\s/.test(this.projectName)) {
-      alert("Blank spaces not allowed");
+      this.$modal.setData("error", "Error", "Blank spaces not allowed in project name");
+      this.$modal.click();
     }else if(ProjectClass.checkIfProjectExists(this.projects, this.projectName)){
-      alert("A project with that name already exists");
+      this.$modal.setData("error", "Error", "A project with that name already exists");
+      this.$modal.click();
     }else{
       if(this.projectAvailableModels.length > 0){
         let project = new ProjectClass(this.projectName, "", this.projectAvailableModels);
         this.$store.commit("addProject",project);
+        this.$modal.setData("success", "Success", "Project created successfully");
+        this.$modal.click();
       }else{
-        alert("You must select at least one model");
+        this.$modal.setData("error", "Error", "You must select at least one model");
+        this.$modal.click();
       }
     }
   }
 
   public removeProject(index:any){
-    if(confirm("Are you sure you want to remove this project?")){
-      this.$store.commit("removeProject",index);
+    let store = this.$store;
+    let confirmAction = function(){
+      store.commit("removeProject", index);
     }
+    this.$modal.setData("warning", "Warning", "Are you sure you want to remove this project?", "confirm", confirmAction);
+    this.$modal.click();
   }
 
   public getBeautyModelName(name:string){

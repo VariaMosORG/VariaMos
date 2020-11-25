@@ -4,13 +4,17 @@ import { mxgraphFactory } from "ts-mxgraph";
 export class ConfigButtonActions {
 
     private buttons:Button[];
-    private graph:any;
-    private model:any;
+    private graph:any; //mxGraph (mxGraph)
+    private model:any; //mxGraphModel (mxGraphModel)
+    private $store:any; //references vuex store
+    private $modal:any; //references modalPlugin
 
-    public constructor(graph:any, model:any, buttons:any) {
+    public constructor(graph:any, model:any, modal:any, store:any, buttons:any) {
         this.buttons = buttons;
         this.graph = graph;
         this.model = model;
+        this.$modal = modal;
+        this.$store = store;
     }
 
     public getButtons(){
@@ -51,11 +55,15 @@ export class ConfigButtonActions {
     public xml(currentButton:HTMLElement){
         const { mxCodec, mxUtils } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
         const model = this.model;
+        const modal = this.$modal;
         currentButton.addEventListener('click', function () {
             let encoder = new mxCodec();
             let node = encoder.encode(model);
             let xmlCode = mxUtils.getPrettyXml(node);
-            alert(xmlCode);
+            let parsedXml = String(xmlCode).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+            let stringBody = "<div class='vertical-scroll border'><pre lang='xml'>"+parsedXml+"</pre></div>";
+            modal.setData("", "XML code", stringBody);
+            modal.click();
         });
     }
 

@@ -11,12 +11,6 @@
         </div>
     </div>
 
-    <GlobalModalPlugin />
-
-    <button v-on:click="openModal">
-        Launch
-    </button>
-
 </template>
 
 <script lang="ts">
@@ -29,7 +23,6 @@ import Breadcrumb from '@/components/Breadcrumb.vue';
   }
 })
 export default class About extends Vue {
-    public $modal:any;
     public navigationList:any = [
         {
             "title":"Home", "route":"/"
@@ -38,13 +31,5 @@ export default class About extends Vue {
             "title":"About", "route":""
         },
     ];
-
-    public openModal(){
-        console.log(this.$modal);
-        let modal = document.getElementById("globalModalButton");
-        if(modal){
-            modal.click();
-        }
-    }
 }
 </script>

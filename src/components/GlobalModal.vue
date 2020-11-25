@@ -1,27 +1,26 @@
 <template>
 
 <!-- Modal -->
-<div class="modal fade" id="globalModal" tabindex="-1" role="dialog" aria-labelledby="globalModalLabel" aria-hidden="true">
+<div class="modal fade" id="gmodal" tabindex="-1" role="dialog" aria-labelledby="gmodal-label" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
-      <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title" id="globalModalLabel">{{ title }}</h5>
+      <div id="gmodal-header">
+        <h5 class="modal-title" id="gmodal-label">{{ title }}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        {{ content }}
+      <div class="modal-body" id="gmodal-body">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" @click="confirm" class="btn btn-primary">Save changes</button>
+        <button id="gmodal-button-confirm" v-on:click="confirmAction" class="btn btn-primary gmodal-button-confirm" type="button">Confirm</button>
       </div>
     </div>
   </div>
 
   <!-- Button trigger modal -->
-  <button id="globalModalButton" style="display:none" data-toggle="modal" data-target="#globalModal">B</button>
+  <button id="gmodal-button" style="display:none" data-toggle="modal" data-target="#gmodal"></button>
 </div>
 </template>
 
@@ -29,18 +28,61 @@
 import { Vue } from 'vue-class-component';
 
 export default class AppModal extends Vue {
-  public visible:boolean = true;
-  public title:string = "Important";
-  public content:string = "Are you sure?";
+  public title:string = "";
+  public confirm:boolean = false;
+  public mainAction:any = null;
 
-  public show(visible:boolean, title:string, content:string){
-    this.visible = visible;
+  public setData(type:string, title:string, content:string, buttonType:string = "normal", mainAction:any = null){
+    this.confirm = false;
+    this.mainAction = null;
+    let confirmButton = document.getElementById("gmodal-button-confirm");
+    let modalBody = document.getElementById("gmodal-body");
+
+    //set content
+    if(modalBody){
+      modalBody.innerHTML = "";
+      modalBody.innerHTML = content;
+    }
+
+    //set custom action
+    if(confirmButton){
+      confirmButton.style.display = "none";
+      if(buttonType == "confirm"){
+        confirmButton.style.display = "block";
+        this.mainAction = mainAction;
+      }
+    }
+
+    //set type and title
+    this.setType(type);
     this.title = title;
-    this.content = content;
   }
 
-  public confirm(){
-    let modal = document.getElementById("globalModalButton");
+  public setType(type:string){
+    let modalHeader = document.getElementById("gmodal-header");
+    if(modalHeader){
+      if(type == "error"){
+        modalHeader.className = "modal-header bg-danger text-white";
+      }else if(type == "success"){
+        modalHeader.className = "modal-header bg-success text-white";
+      }else if(type == "warning"){
+        modalHeader.className = "modal-header bg-warning text-white";
+      }
+      else{
+        modalHeader.className = "modal-header bg-primary text-white";
+      }
+    }
+  }
+
+  public confirmAction(){
+    if(this.mainAction){
+      this.mainAction();
+      this.click();
+    }
+  }
+
+  public click(){
+    let modal = document.getElementById("gmodal-button");
     if(modal){
         modal.click();
     }
@@ -49,6 +91,10 @@ export default class AppModal extends Vue {
 </script>
 
 <style>
+.gmodal-button-confirm{
+  display:none;
+}
+
 .modal-content{
   border: 0px !important;
 }
