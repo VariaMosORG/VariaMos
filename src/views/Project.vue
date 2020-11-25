@@ -68,6 +68,20 @@ export default class Project extends Vue {
     this.navigationList.push({"title":this.currentProject.getName(), "route":""});
   }
 
+  public exportProject(index:any){
+    let jsonProject = this.$store.getters.getProjectJson(index);
+    let pseudoelement = document.createElement("a");
+    let filename = "project.json";
+    let blob = new Blob([ jsonProject ], { type: "application/json" });
+
+    pseudoelement.setAttribute("href", window.URL.createObjectURL(blob));
+    pseudoelement.setAttribute("download", filename);
+    pseudoelement.dataset.downloadurl = ["application/json", pseudoelement.download, pseudoelement.href].join(":");
+    pseudoelement.draggable = true;
+    pseudoelement.classList.add("dragout");
+    pseudoelement.click();
+  }
+
   public getBeautyModelName(name:string){
     return name.charAt(0).toUpperCase() + name.slice(1) + "Model";
   }

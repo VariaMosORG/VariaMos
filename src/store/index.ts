@@ -18,7 +18,10 @@ export default createStore({
     },
     getProjects: state => {
       return state.projects;
-    }
+    },
+    getProjectJson: (state) => (index:any) => {
+      return JSON.stringify(state.projects[index]);
+    },
   },
 
   mutations: {

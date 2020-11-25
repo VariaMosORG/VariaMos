@@ -9,7 +9,8 @@
             <router-link class="m-0 font-weight-bold text-primary" :to="'/projects/'+project.getName()">Project: {{ project.getName() }}</router-link>
             <div class="right-buttons">
               <div class="btn-group">
-                <i v-on:click="removeProject(index)" class="fas fa-trash-alt hover-hand"></i>
+                <i title="Export this project in a json file" v-on:click="exportProject(index)" class="fas fa-upload hover-hand"></i>
+                <i title="Remove this project" v-on:click="removeProject(index)" class="fas fa-trash-alt hover-hand"></i>
               </div>
             </div>
         </div>
@@ -119,6 +120,20 @@ export default class Projects extends Vue {
     }
   }
 
+  public exportProject(index:any){
+    let jsonProject = this.$store.getters.getProjectJson(index);
+    let pseudoelement = document.createElement("a");
+    let filename = "project.json";
+    let blob = new Blob([ jsonProject ], { type: "application/json" });
+
+    pseudoelement.setAttribute("href", window.URL.createObjectURL(blob));
+    pseudoelement.setAttribute("download", filename);
+    pseudoelement.dataset.downloadurl = ["application/json", pseudoelement.download, pseudoelement.href].join(":");
+    pseudoelement.draggable = true;
+    pseudoelement.classList.add("dragout");
+    pseudoelement.click();
+  }
+
   public removeProject(index:any){
     let store = this.$store;
     let confirmAction = function(){
@@ -138,6 +153,11 @@ export default class Projects extends Vue {
 .marr20{
   margin-right: 10px;
 }
+
+.hover-hand{
+  padding-left:5px;
+}
+
 .hover-hand:hover{
   cursor: pointer;
 }
