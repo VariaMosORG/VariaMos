@@ -1,18 +1,21 @@
 import { Button } from './Button';
 import { mxgraphFactory } from "ts-mxgraph";
+const { mxCodec, mxUtils } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
 
 export class ConfigButtonActions {
 
     private buttons:Button[];
     private graph:any; //mxGraph (mxGraph)
     private model:any; //mxGraphModel (mxGraphModel)
+    private currentProject:any //current loaded project (ProjectClass)
     private $store:any; //references vuex store
     private $modal:any; //references modalPlugin
 
-    public constructor(graph:any, model:any, modal:any, store:any, buttons:any) {
+    public constructor(graph:any, model:any, modal:any, store:any, currentProject:any, buttons:any) {
         this.buttons = buttons;
         this.graph = graph;
         this.model = model;
+        this.currentProject = currentProject;
         this.$modal = modal;
         this.$store = store;
     }
@@ -52,8 +55,44 @@ export class ConfigButtonActions {
         }
     }
 
+    public resetAll(currentButton:HTMLElement){
+        const currentProject = this.currentProject;
+        const store = this.$store;
+        const modal = this.$modal;
+        let index = Object.getPrototypeOf(currentProject).constructor.getProjectIndexByName(store.getters.getProjects, currentProject.getName());
+        if(index != -1){
+            currentButton.addEventListener('click', function () {
+                let confirmAction = function(){
+                    currentProject.setXml("");
+                    store.commit("updateProject", {"project":currentProject, "index":index});
+                    location.reload();
+                }
+                modal.setData("warning", "Warning", "Are you sure you want to remove all models of this project?", "confirm", confirmAction);
+                modal.click();
+            });
+        }
+    }
+
+    public save(currentButton:HTMLElement){
+        const currentProject = this.currentProject;
+        const model = this.model;
+        const store = this.$store;
+        const modal = this.$modal;
+        let index = Object.getPrototypeOf(currentProject).constructor.getProjectIndexByName(store.getters.getProjects, currentProject.getName());
+        if(index != -1){
+            currentButton.addEventListener('click', function () {
+                let encoder = new mxCodec();
+                let result = encoder.encode(model);
+                let xml = mxUtils.getPrettyXml(result);
+                currentProject.setXml(xml);
+                store.commit("updateProject", {"project":currentProject, "index":index});
+                modal.setData("success", "Success", "All models saved succesfully!");
+                modal.click();
+            });
+        }
+    }
+
     public xml(currentButton:HTMLElement){
-        const { mxCodec, mxUtils } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
         const model = this.model;
         const modal = this.$modal;
         currentButton.addEventListener('click', function () {

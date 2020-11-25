@@ -36,13 +36,13 @@ export class VariaMosGraph {
 
     public static buttons: any = {
         "buttonArea":[
-            new Button("save","Save All","save","This button saves all the project models info"),
-            new Button("pdf","PDF","print","Bla bla"),
-            new Button("img","Img","print","Bla bla"),
-            new Button("delete","Delete","eraser","Bla bla"),
-            new Button("resetall","Reset All","eraser","Bla bla"),
-            new Button("export","Export","upload","Bla bla"),
-            new Button("xml","View XML","code","This button shows the XML code of all project models"),
+            new Button("delete","Delete","eraser","Delete selected cells"),
+            new Button("save","Save All","save","Save all the project models info"),
+            /*new Button("pdf","PDF","print","Bla bla"),
+            new Button("img","Img","print","Bla bla"),*/
+            new Button("resetAll","Reset All","eraser","Delete all the project models info"),
+            //new Button("export","Export","upload","Bla bla"),
+            new Button("xml","View XML","code","Show XML code of all project models"),
         ],
         "navigationArea":[
             new Button("zoomIn","+","","Zoom in the model"),
@@ -86,7 +86,7 @@ export class VariaMosGraph {
         }
     }
 
-    public async initializeGraph(modelType:string, divContainer:any, divNavigator:any, 
+    public async initializeGraph(modelType:string, currentProject:any, divContainer:any, divNavigator:any, 
             divElements:any, divProperties:any, modal:any, store:any, caseLoad:any){
         this.modelType = modelType;
         this.className = this.modelType.charAt(0).toUpperCase() + this.modelType.slice(1) + "Model";
@@ -94,6 +94,7 @@ export class VariaMosGraph {
         this.divContainer = divContainer;
         this.divNavigator = divNavigator;
         this.divProperties = divProperties;
+        this.currentProject = currentProject;
         this.$modal = modal;
         this.$store = store;
         if(caseLoad == 1){
@@ -166,7 +167,8 @@ export class VariaMosGraph {
     public setButtonActions(){
         let buttonsConcat = VariaMosGraph.buttons.buttonArea;
         buttonsConcat = buttonsConcat.concat(VariaMosGraph.buttons.navigationArea);
-        this.configButtonActions = new ConfigButtonActions(this.graph, this.model, this.$modal, this.$store, buttonsConcat);
+        this.configButtonActions = new ConfigButtonActions(this.graph, this.model, this.$modal,
+            this.$store, this.currentProject, buttonsConcat);
         this.configButtonActions.initializeActions();
     }
 

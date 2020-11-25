@@ -191,7 +191,7 @@ export default class ProjectModels extends Vue {
     this.divElements = document.getElementById("vgraph-elements");
     this.divProperties = document.getElementById("vgraph-properties");
     this.variaMosGraph.initializeGraph(
-      this.modelType, this.divContainer, this.divNavigator, 
+      this.modelType, this.currentProject, this.divContainer, this.divNavigator, 
       this.divElements, this.divProperties, this.$modal, this.$store, caseLoad
     );
   }
