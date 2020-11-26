@@ -86,7 +86,7 @@
       <div id="content">
 
           <!-- Topbar -->
-          <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+          <nav v-bind:style="{ display: configApp.getDisplayTopBar() }" class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
               <!-- Sidebar Toggle (Topbar) -->
               <button v-on:click="hideSidebar" id="sidebarToggleTop" class="btn btn-link rounded-circle d-md-none mr-3">
@@ -147,7 +147,7 @@
           <!-- End of Topbar -->
 
           <!-- Begin Page Content -->
-          <div class="container-fluid">
+          <div class="container-fluid mar20">
 
               <!-- Content Row -->
               <div class="row">
@@ -228,6 +228,10 @@ export default class App extends Vue {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.mar20{
+    margin-top: 20px;
 }
 
 .pad-0 {

@@ -19,6 +19,12 @@
                 <input type="text" class="form-control" v-model="configApp.sidebarBackgroundColor">
                 </div>
             </div>
+            <div class="form-group row">
+                <label for="staticEmail" class="col-sm-4 col-form-label">Display Top Bar (flex):</label>
+                <div class="col-sm-8">
+                <input type="text" class="form-control" v-model="configApp.displayTopBar">
+                </div>
+            </div>
           <button v-on:click="saveConfig" class="btn btn-info marr20">Save</button>
         </div>
     </div>
