@@ -7,7 +7,7 @@
             <h6 class="m-0 font-weight-bold text-primary">Config</h6>
         </div>
         <div class="card-body">
-            <p>- Info</p>
+            <p>- Info - background nav - height model area</p>
         </div>
     </div>
 

@@ -34,6 +34,7 @@
     </div>
 
     <div class="col-xl-6 col-lg-6">
+
       <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Create a new project</h6>
@@ -56,6 +57,23 @@
           <button v-on:click="createProject" class="btn btn-info marr20">Create Project</button>
         </div>
       </div>
+
+      <!-- import project -->
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Import existing project</h6>
+        </div>
+
+        <div class="card-body">
+          <div class="form-group">
+            <label><b>Upload the JSON project file:</b></label><br />
+            <input type="file" ref="file" v-on:change="importProject" />
+          </div>
+          <div class="form-group">
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <GlobalModalPlugin ref="modalPlugin" />
@@ -97,6 +115,7 @@ export default class Projects extends Vue {
     this.$modal = <any> this.$refs.modalPlugin; //reference the modal plugin
   }
 
+  //create a new project
   public createProject(){
     if(this.projectName == ""){
       this.$modal.setData("error", "Error", "Please enter a project name");
@@ -120,6 +139,44 @@ export default class Projects extends Vue {
     }
   }
 
+  //export existing project (json format)
+  public importProject(e:any){
+    let files = e.target.files || e.dataTransfer.files;
+      if (!files.length){
+        return;
+      }
+      else{
+        let fileToLoad = files[0];
+        let fileReader = new FileReader();
+        let projects = this.projects;
+        let modal = this.$modal;
+        let store = this.$store;
+        fileReader.onload = function(fileLoadedEvent:any) 
+        {
+          let textFromFileLoaded = fileLoadedEvent.target.result;
+          let jsonText = JSON.parse(textFromFileLoaded);
+          if(jsonText.hasOwnProperty('name') && jsonText.hasOwnProperty('xml') && jsonText.hasOwnProperty('availableModels')){
+            let newProjectName = jsonText.name;
+            if(ProjectClass.checkIfProjectExists(projects, newProjectName)){
+              modal.setData("error", "Error", "A project called '"+newProjectName+"' already exists");
+              modal.click();
+            }else{
+              let project = new ProjectClass(newProjectName, jsonText.xml, jsonText.availableModels);
+              store.commit("addProject",project);
+              modal.setData("success", "Success", "Project created successfully");
+              modal.click();
+            }
+          }
+          else{
+            modal.setData("error", "Error", "Invalid JSON format, it must contain 'name', 'xml', and 'availableModels' keys");
+            modal.click();
+          }
+        }
+        fileReader.readAsText(fileToLoad, "UTF-8");
+      }
+  }
+
+  //export project in json format
   public exportProject(index:any){
     let jsonProject = this.$store.getters.getProjectJson(index);
     let pseudoelement = document.createElement("a");
@@ -134,6 +191,7 @@ export default class Projects extends Vue {
     pseudoelement.click();
   }
 
+  //remove selected project
   public removeProject(index:any){
     let store = this.$store;
     let confirmAction = function(){

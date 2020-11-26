@@ -1,6 +1,6 @@
 <template>
   <!-- Sidebar -->
-  <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+  <ul class="navbar-nav bg-gradient-primary bg-dark-blue sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
       <router-link to="/">
@@ -219,6 +219,9 @@ export default class App extends Vue {
     display: block !important;
 }
 
+.bg-dark-blue{
+    background: navy;
+}
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

@@ -36,11 +36,11 @@ export class VariaMosGraph {
 
     public static buttons: any = {
         "buttonArea":[
-            new Button("delete","Delete","eraser","Delete selected cells"),
             new Button("save","Save Models","save","Save all the project models info"),
             new Button("img","Img","print","Download current model in PNG format"),
-            new Button("resetAll","Reset Models","eraser","Delete all the project models info"),
-            new Button("resetCurrent","Reset This Model","eraser","Delete current model"),
+            new Button("delete","Delete","eraser","Delete selected cells"),
+            new Button("resetCurrent","Delete this Model","eraser","Delete current model"),
+            new Button("resetAll","Delete Models","eraser","Delete all the project models info"),
             new Button("export","Export Models","upload","Export the project models (XML)"),
             new Button("xml","View XML","code","Show XML code of all project models"),
         ],
