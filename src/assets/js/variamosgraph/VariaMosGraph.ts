@@ -41,6 +41,7 @@ export class VariaMosGraph {
             new Button("delete","Delete","eraser","Delete selected cells"),
             new Button("resetCurrent","Delete this Model","eraser","Delete current model"),
             new Button("resetAll","Delete Models","eraser","Delete all the project models info"),
+            new Button("import","Import Models","download","Import models (XML)"),
             new Button("export","Export Models","upload","Export the project models (XML)"),
             new Button("xml","View XML","code","Show XML code of all project models"),
         ],

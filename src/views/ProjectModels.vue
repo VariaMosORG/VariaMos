@@ -20,7 +20,7 @@
           <div class="card bg-light text-white shadow font13">
             <div class="card-body pad10">
               <div id="vgraph-buttons" class="buttons">
-                  <button class="btn btn-info" v-for="button in buttonsArea" :key="button" :id="button.getId()" :title="button.getButtonTitle()">
+                  <button class="btn btn-info btn-title" v-for="button in buttonsArea" :key="button" :id="button.getId()" :data-title="button.getButtonTitle()">
                     <i :class="'fas fa-'+button.getIcon()"></i>
                     {{ button.getLabel() }}
                   </button>
@@ -299,6 +299,35 @@ ul.tab li a:focus, .active {
   padding-right: 5px;
   margin-right: 6px;
   text-align: center;
+  /*margin-bottom: 5px;*/
+}
+
+[data-title]:hover:after {
+    opacity: 1;
+    transition: all 0.1s ease 0.5s;
+    visibility: visible;
+}
+
+[data-title]:after {
+  content: attr(data-title);
+  visibility: hidden;
+  width: 200px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  position: absolute;
+  opacity: 0;
+  z-index: 99999;
+  top: 100%;
+  left: 50%;
+  margin-left: -60px;
+  margin-top: 5px;
+}
+
+[data-title] {
+    position: relative;
 }
 
 .pad10{

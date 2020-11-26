@@ -24,7 +24,7 @@
       <!-- import project -->
       <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Import One Existing Project</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Import a Project</h6>
         </div>
 
         <div class="card-body">
@@ -51,7 +51,7 @@
       <!-- import project -->
       <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Import One Existing Project</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Import a Project</h6>
         </div>
 
         <div class="card-body">
@@ -70,7 +70,7 @@
 
       <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Create a new project</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Create a New Project</h6>
         </div>
 
         <div class="card-body">
@@ -113,7 +113,7 @@
           <!-- import project -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Import All Existing Projects</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Import Multiple Projects</h6>
             </div>
 
             <div class="card-body">
