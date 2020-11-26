@@ -34,16 +34,6 @@
 
         <div id="right-draw" class="col-sm-3 right-area font13">
 
-          <!-- Begin Model Operations Section -->
-          <!--<div class="card bg-info text-white shadow">
-            <div class="card-header bg-info py-3">
-              <h6 class="m-0 font-weight-bold text-white">Model Operations</h6>
-            </div>
-            <div class="card-body">
-            </div>
-          </div>-->
-          <!-- End Model Operations Section -->
-
           <!-- Begin Elements Section -->
           <div class="card bg-white text-black shadow">
             <div class="card-header py-3">

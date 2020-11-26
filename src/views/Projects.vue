@@ -9,8 +9,14 @@
             <router-link class="m-0 font-weight-bold text-primary" :to="'/projects/'+project.getName()">Project: {{ project.getName() }}</router-link>
             <div class="right-buttons">
               <div class="btn-group">
-                <i title="Export this project in a json file" v-on:click="exportProject(index)" class="fas fa-upload hover-hand"></i>
-                <i title="Remove this project" v-on:click="removeProject(index)" class="fas fa-trash-alt hover-hand"></i>
+                <div class="csstooltip">
+                  <i v-on:click="exportProject(index)" class="fas fa-upload hover-hand"></i>
+                  <span class="csstooltiptext">Export this project (json file)</span>
+                </div>
+                <div class="csstooltip">
+                  <i v-on:click="removeProject(index)" class="fas fa-trash-alt hover-hand"></i>
+                  <span class="csstooltiptext">Remove this project</span>
+                </div>
               </div>
             </div>
         </div>
