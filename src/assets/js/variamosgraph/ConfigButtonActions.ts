@@ -5,7 +5,7 @@ const { mxCodec, mxUtils } = mxgraphFactory({mxLoadResources: false, mxLoadStyle
 
 export class ConfigButtonActions {
 
-    private buttons:Button[];
+    private buttons:Button[]; //model buttons
     private graph:any; //mxGraph (mxGraph)
     private model:any; //mxGraphModel (mxGraphModel)
     private currentProject:any //current loaded project (ProjectClass)
@@ -35,6 +35,18 @@ export class ConfigButtonActions {
         return this.model;
     }
 
+    //initialize button actions (onclick)
+    public initializeActions(){
+        for (let i = 0; i < this.buttons.length; i++) {
+            const functionToExecute = this.buttons[i].getId();
+            if((this as any)[functionToExecute]){ // Verify if the function exists
+                const currentButton = document.getElementById(functionToExecute);
+                (this as any)[functionToExecute](currentButton); // Execute the function exists
+            }
+        }
+    }
+
+    //remove all event listeners from all the buttons
     public removeAllEventListeners(){
         for (let i = 0; i < this.buttons.length; i++) {
             const buttonId = this.buttons[i].getId();
@@ -44,16 +56,6 @@ export class ConfigButtonActions {
                 if(newButton != null && oldButton.parentNode != null){
                     oldButton.parentNode.replaceChild(newButton, oldButton);
                 }
-            }
-        }
-    }
-
-    public initializeActions(){
-        for (let i = 0; i < this.buttons.length; i++) {
-            const functionToExecute = this.buttons[i].getId();
-            if((this as any)[functionToExecute]){ // Verify if the function exists
-                const currentButton = document.getElementById(functionToExecute);
-                (this as any)[functionToExecute](currentButton); // Execute the function exists
             }
         }
     }
@@ -137,6 +139,18 @@ export class ConfigButtonActions {
         });
     }
 
+    //import current project models XML from an XML file
+    public import(currentButton:HTMLElement){
+        const model = this.model;
+        const modal = this.$modal;
+        currentButton.addEventListener('click', function () {
+            let stringBody = "<input type='file' name='filebutton'>";
+            modal.setData("", "Upload XML models code", stringBody);
+            modal.click();
+            //pending for implementation
+        });
+    }
+
     //export current project models XML in an XML file
     public export(currentButton:HTMLElement){
         const model = this.model;
@@ -194,6 +208,7 @@ export class ConfigButtonActions {
         });
     }
 
+    //convert current model to png format and download it
     public img(currentButton:HTMLElement){
         let divContainer = this.divContainer;
         let name = this.currentProject.getName();
