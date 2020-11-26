@@ -13,7 +13,7 @@
       <div class="modal-body" id="gmodal-body">
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button id="gmodal-button-close" v-on:click="closeAction" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button id="gmodal-button-confirm" v-on:click="confirmAction" class="btn btn-primary gmodal-button-confirm" type="button">Confirm</button>
       </div>
     </div>
@@ -31,10 +31,13 @@ export default class AppModal extends Vue {
   public title:string = "";
   public confirm:boolean = false;
   public mainAction:any = null;
+  public secondaryAction:any = null;
 
-  public setData(type:string, title:string, content:string, buttonType:string = "normal", mainAction:any = null){
+  public setData(type:string, title:string, content:string, buttonType:string = "normal",
+    mainAction:any = null, secondaryAction:any = null){
     this.confirm = false;
     this.mainAction = null;
+    this.secondaryAction = null; 
     let confirmButton = document.getElementById("gmodal-button-confirm");
     let modalBody = document.getElementById("gmodal-body");
 
@@ -51,6 +54,11 @@ export default class AppModal extends Vue {
         confirmButton.style.display = "block";
         this.mainAction = mainAction;
       }
+    }
+
+    //set secondary action
+    if(secondaryAction){
+      this.secondaryAction = secondaryAction;
     }
 
     //set type and title
@@ -71,6 +79,13 @@ export default class AppModal extends Vue {
       else{
         modalHeader.className = "modal-header bg-primary text-white";
       }
+    }
+  }
+
+  public closeAction(){
+    if(this.secondaryAction){
+      this.secondaryAction();
+      this.click();
     }
   }
 

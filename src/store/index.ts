@@ -22,6 +22,9 @@ export default createStore({
     getProjectJson: (state) => (index:any) => {
       return JSON.stringify(state.projects[index]);
     },
+    getAllProjects: state => {
+      return JSON.stringify(state.projects);
+    },
   },
 
   mutations: {
@@ -32,6 +35,10 @@ export default createStore({
     removeProject (state:any, index:any) {
       state.projects.splice(index,1);
       localStorage.setItem('variamosProjects', JSON.stringify(state.projects));
+    },
+    removeAllProjects (state:any) {
+      state.projects = [];
+      localStorage.setItem('variamosProjects', "[]");
     },
     updateProject (state:any, {project, index}) {
       state.projects[index] = project;

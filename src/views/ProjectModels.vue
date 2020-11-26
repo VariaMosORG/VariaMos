@@ -137,16 +137,6 @@ export default class ProjectModels extends Vue {
     }
   ];
 
-  /*public saveAll(){
-    let index = ProjectClass.getProjectIndexByName(this.$store.getters.getProjects, this.currentProject.getName());
-    if(index != -1){
-      let projectOp = new ProjectOperations(this.variaMosGraph.getGraph(), this.variaMosGraph.getModel(), this.currentProject, this.$store);
-      projectOp.saveAll(index);
-      this.$modal.setData("success", "Success", "All models saved succesfully!");
-      this.$modal.click();
-    }
-  }*/
-
   public beforeMount(){
     this.currentProject = ProjectClass.getProjectByName(this.$store.getters.getProjects, this.$route.params.projectName);
     this.availableModels = this.currentProject.getAvailableModels();
