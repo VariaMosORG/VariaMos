@@ -4,7 +4,7 @@
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">About</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Docs</h6>
         </div>
         <div class="card-body">
             <p>- Info</p>
@@ -28,7 +28,7 @@ export default class About extends Vue {
             "title":"Home", "route":"/"
         },
         {
-            "title":"About", "route":""
+            "title":"Docs", "route":""
         },
     ];
 }

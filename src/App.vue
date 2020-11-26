@@ -24,9 +24,9 @@
       </li>
 
       <li class="nav-item">
-          <router-link to="/about" class="nav-link pad-0">
+          <router-link to="/docs" class="nav-link pad-0">
               <i class="fas fa-fw fa-info-circle"></i>
-              <span>About</span>
+              <span>Docs</span>
           </router-link>
       </li>
 
