@@ -1,12 +1,15 @@
 import { createStore } from 'vuex';
 import { Project } from './Project';
+import { ConfigApp } from './ConfigApp';
 
 export default createStore({
   state: {
     projects:[] as any,
+    configApp: new ConfigApp("55v","navy")
   },
 
   getters: {
+    /* begin project section*/
     initializeProjects: state => {
       const localProjectsJSON = localStorage.getItem('variamosProjects');
       if(typeof localProjectsJSON === 'string') {
@@ -25,9 +28,26 @@ export default createStore({
     getAllProjects: state => {
       return JSON.stringify(state.projects);
     },
+    /* end project section*/
+
+    /* begin configApp section*/
+    initializeConfigApp: state => {
+      const localConfigAppJSON = localStorage.getItem('variamosConfigApp');
+      if(typeof localConfigAppJSON === 'string') {
+        let genericProjects = JSON.parse(localConfigAppJSON);
+        let configAppNew = ConfigApp.objectToThisClass(genericProjects);
+        state.configApp = configAppNew;
+      }
+      return state.configApp;
+    },
+    getConfigApp: state => {
+      return state.configApp;
+    },
+    /* end configApp section*/
   },
 
   mutations: {
+    /* begin project section*/
     addProject (state:any, project:Project) {
       state.projects.push(project);
       localStorage.setItem('variamosProjects', JSON.stringify(state.projects));
@@ -44,6 +64,14 @@ export default createStore({
       state.projects[index] = project;
       localStorage.setItem('variamosProjects', JSON.stringify(state.projects));
     },
+    /* end project section*/
+
+    /* begin configApp section*/
+    setConfigApp (state:any, configApp:ConfigApp) {
+      state.configApp = configApp;
+      localStorage.setItem('variamosConfigApp', JSON.stringify(state.configApp));
+    },
+    /* end configApp section*/
   },
 
   actions: {

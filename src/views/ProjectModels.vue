@@ -26,7 +26,7 @@
 
           <div class="card bg-light text-black shadow mtop">
             <div class="card-body">
-              <div id="vgraph-container" class="model-area"></div>
+              <div id="vgraph-container" class="model-area" v-bind:style="{ height: configApp.getModelAreaHeight() }"></div>
             </div>
           </div>
 
@@ -99,6 +99,7 @@ export default class ProjectModels extends Vue {
   public modelType:any = ""; //example feature
   public modelTypeLabel:any = ""; //example FeatureModel
   public currentProject:any; //currentProject (ProjectClass)
+  public configApp:any; //references current configApp (ConfigApp)
   public availableModels:any = [];
   public variaMosGraph = new VariaMosGraph();
   public buttonsArea = VariaMosGraph.buttons.buttonArea; // buttons
@@ -118,6 +119,7 @@ export default class ProjectModels extends Vue {
   ];
 
   public beforeMount(){
+    this.configApp = this.$store.getters.getConfigApp;
     this.currentProject = ProjectClass.getProjectByName(this.$store.getters.getProjects, this.$route.params.projectName);
     this.availableModels = this.currentProject.getAvailableModels();
     this.navigationList.push(
@@ -229,7 +231,6 @@ ul.tab li a:focus, .active {
   overflow-block: scroll;
   overflow-x: auto;
   overflow-y: auto;
-  height:55vh;
   background:url("../assets/img/grid.gif");
   cursor:default;
   padding-right: 0px; 

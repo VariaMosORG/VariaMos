@@ -1,6 +1,6 @@
 <template>
   <!-- Sidebar -->
-  <ul class="navbar-nav bg-gradient-primary bg-dark-blue sidebar sidebar-dark accordion" id="accordionSidebar">
+  <ul v-bind:style="{ background: configApp.getSidebarBackgroundColor() }" class="navbar-nav sidebar sidebar-dark accordion"  id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
       <router-link to="/">
@@ -176,15 +176,17 @@
 
 <script lang="ts">
 import { Vue } from 'vue-class-component';
-import { Project as ProjectClass } from '@/store/Project';
 
 export default class App extends Vue {
     public $store:any; //references vuex store
-    public projects:any = [];//refences current projects (Project[])
+    public projects:any = []; //references current projects (Project[])
+    public configApp:any; //references current configApp (ConfigApp)
 
-    public mounted(){
-        this.projects = this.$store.getters.initializeProjects;
+    public beforeMount(){
+        this.projects = this.$store.getters.initializeProjects; //initialize projects for the entire app
+        this.configApp = this.$store.getters.initializeConfigApp; //initialize configApp for the entire app
     }
+
     public hideSidebar(){
         let body = document.querySelector('body');
         if(body){
@@ -219,10 +221,6 @@ export default class App extends Vue {
     display: block !important;
 }
 
-.bg-dark-blue{
-    background: navy;
-}
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -245,7 +243,6 @@ a:hover{
 }
 
 /* begin tooltip */
-
 .csstooltip .csstooltiptext {
   visibility: hidden;
   width: 120px;
@@ -290,6 +287,5 @@ a:hover{
   visibility: visible;
   opacity: 1;
 }
-
 /* end tooltip */
 </style>
