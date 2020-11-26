@@ -36,19 +36,17 @@ export class VariaMosGraph {
 
     public static buttons: any = {
         "buttonArea":[
-            new Button("save","Save Models","save","Save all the project models info"),
-            new Button("img","Img","print","Download current model in PNG format"),
+            new Button("save","Save Models","save","Save all models"),
+            new Button("img","Img","print","Download model in PNG format"),
             new Button("delete","Delete","eraser","Delete selected cells"),
             new Button("resetCurrent","Delete this Model","eraser","Delete current model"),
-            new Button("resetAll","Delete Models","eraser","Delete all the project models info"),
+            new Button("resetAll","Delete Models","eraser","Delete all models"),
             new Button("import","Import Models","download","Import models (XML)"),
-            new Button("export","Export Models","upload","Export the project models (XML)"),
-            new Button("xml","View XML","code","Show XML code of all project models"),
-        ],
-        "navigationArea":[
-            new Button("zoomIn","+","","Zoom in the model"),
-            new Button("zoomOut","-","","Zoom out the model"),
-            new Button("zoomReset","R","","Restore model zoom"),
+            new Button("export","Export Models","upload","Export project models (XML)"),
+            new Button("zoomIn","+","search-plus","Zoom in the model"),
+            new Button("zoomOut","-","search-minus","Zoom out the model"),
+            new Button("zoomReset","R","search","Restore model zoom"),
+            new Button("xml","View XML","code","Show XML code of models"),
         ]
     };
 
@@ -167,7 +165,6 @@ export class VariaMosGraph {
 
     public setButtonActions(){
         let buttonsConcat = VariaMosGraph.buttons.buttonArea;
-        buttonsConcat = buttonsConcat.concat(VariaMosGraph.buttons.navigationArea);
         this.configButtonActions = new ConfigButtonActions(this.graph, this.model, this.$modal,
             this.$store, this.currentProject, this.divContainer, buttonsConcat);
         this.configButtonActions.initializeActions();

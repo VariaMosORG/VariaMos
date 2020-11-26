@@ -17,15 +17,10 @@
       <div class="row main_area">
         <div id="left-draw" class="col-sm-9 left-area">
 
-          <div class="card bg-light text-white shadow font13">
-            <div class="card-body pad10">
-              <div id="vgraph-buttons" class="buttons">
-                  <button class="btn btn-info btn-title" v-for="button in buttonsArea" :key="button" :id="button.getId()" :data-title="button.getButtonTitle()">
-                    <i :class="'fas fa-'+button.getIcon()"></i>
-                    {{ button.getLabel() }}
-                  </button>
-              </div>
-            </div>
+          <div id="vgraph-buttons" class="btn-group flex-wrap" role="group">
+            <button class="btn btn-info btn-title" v-for="button in buttonsArea" :key="button" :id="button.getId()" :data-title="button.getButtonTitle()">
+              <i :class="'fas fa-'+button.getIcon()"></i>
+            </button>
           </div>
 
           <div class="card bg-light text-black shadow mtop">
@@ -76,11 +71,6 @@
               <h6 class="m-0 font-weight-bold text-primary">Navigation</h6>
             </div>
             <div class="card-body">
-              <div class="navi-buttons">
-                <button class="btn-model-area btn btn-sm" v-for="button in buttonsNavigation" :key="button" :id="button.id" :title="button.getButtonTitle()">
-                  {{ button.label }}
-                </button>
-              </div>
               <div id="vgraph-navigator" class="navigator"></div>
             </div>
           </div>
@@ -121,7 +111,6 @@ export default class ProjectModels extends Vue {
   public availableModels:any = [];
   public variaMosGraph = new VariaMosGraph();
   public buttonsArea = VariaMosGraph.buttons.buttonArea; // buttons
-  public buttonsNavigation = VariaMosGraph.buttons.navigationArea; //more buttons
   public divContainer:any; //div container (HTMLElement)
   public divNavigator:any; //div navigator (HTMLElement)
   public divElements:any; //div elements (HTMLElement)
@@ -226,8 +215,11 @@ ul.tab li a:focus, .active {
 }
 
 @media (max-width: 1261px){
-  .buttons button {
-    margin-bottom: 8px;
+  #vgraph-buttons{
+    display: inline-block !important;
+  }
+  #vgraph-buttons button {
+    margin-bottom: 5px;
   }
 }
 
@@ -291,17 +283,6 @@ ul.tab li a:focus, .active {
   margin: auto;
 }
 
-.buttons button {
-  font-size: 14px;
-  height: 30px;
-  padding: 0px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin-right: 6px;
-  text-align: center;
-  /*margin-bottom: 5px;*/
-}
-
 [data-title]:hover:after {
     opacity: 1;
     transition: all 0.1s ease 0.5s;
@@ -311,7 +292,8 @@ ul.tab li a:focus, .active {
 [data-title]:after {
   content: attr(data-title);
   visibility: hidden;
-  width: 200px;
+  width: 150px;
+  font-size: 14px;
   background-color: black;
   color: #fff;
   text-align: center;
