@@ -136,10 +136,10 @@
 
                   <!-- Nav Item - User Information -->
                   <li class="nav-item dropdown no-arrow">
-                      <a class="nav-link dropdown-toggle" href="#" id="userDropdown">
+                      <router-link to="/config" class="nav-link" id="userDropdown">
                           <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
                           <img class="img-profile rounded-circle" src="/img/undraw_profile.svg">
-                      </a>
+                      </router-link>
                   </li>
               </ul>
 
@@ -243,4 +243,53 @@ a:hover{
 .sidebar-brand-icon{
     font-size:25px;
 }
+
+/* begin tooltip */
+
+.csstooltip .csstooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  font-size: 14px;
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  margin-top: 5px;
+  left: 50%;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.csstooltip:hover .csstooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.csstooltip .csstooltiptext2 {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  font-size: 14px;
+  position: absolute;
+  z-index: 1;
+  margin-left: -60px;
+  margin-top: 30px;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.csstooltip:hover .csstooltiptext2 {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* end tooltip */
 </style>

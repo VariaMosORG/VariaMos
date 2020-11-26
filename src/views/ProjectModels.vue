@@ -18,8 +18,9 @@
         <div id="left-draw" class="col-sm-9 left-area">
 
           <div id="vgraph-buttons" class="btn-group flex-wrap" role="group">
-            <button class="btn btn-info btn-title" v-for="button in buttonsArea" :key="button" :id="button.getId()" :data-title="button.getButtonTitle()">
+            <button class="btn btn-info btn-title csstooltip" v-for="button in buttonsArea" :key="button" :id="button.getId()">
               <i :class="'fas fa-'+button.getIcon()"></i>
+              <span class="csstooltiptext">{{ button.getButtonTitle() }}</span>
             </button>
           </div>
 
@@ -281,35 +282,6 @@ ul.tab li a:focus, .active {
 .buttons {
   display: inline;
   margin: auto;
-}
-
-[data-title]:hover:after {
-    opacity: 1;
-    transition: all 0.1s ease 0.5s;
-    visibility: visible;
-}
-
-[data-title]:after {
-  content: attr(data-title);
-  visibility: hidden;
-  width: 150px;
-  font-size: 14px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;
-  position: absolute;
-  opacity: 0;
-  z-index: 99999;
-  top: 100%;
-  left: 50%;
-  margin-left: -60px;
-  margin-top: 5px;
-}
-
-[data-title] {
-    position: relative;
 }
 
 .pad10{

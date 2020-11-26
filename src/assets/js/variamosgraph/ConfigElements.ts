@@ -72,12 +72,19 @@ export class ConfigElements {
         }
 
         let mdiv = document.createElement('div');
+        let mspan = document.createElement('span'); //tooltip
+        mspan.classList.add("csstooltiptext2");
 
         let img = this.toolbar.addMode(element.label, "/img/custom_models/"+this.currentModel.type+"/"+element.icon, drapAndDropCreation);
+        mspan.innerText = img.getAttribute('title');
+        img.removeAttribute('title');
+
         mxUtils.makeDraggable(img, graph, drapAndDropCreation);
 
-        mdiv.classList.add("pallete-div"); 
+        mdiv.classList.add("pallete-div");
+        mdiv.classList.add("csstooltip");
         mdiv.appendChild(img);
+        mdiv.appendChild(mspan);
         this.divElements.appendChild(mdiv);
     }
 }
