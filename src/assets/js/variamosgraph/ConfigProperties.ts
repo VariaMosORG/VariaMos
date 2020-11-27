@@ -147,9 +147,25 @@ export class ConfigProperties {
 	    input.setAttribute('type', "text");
         input.id = "property-" + attribute.nodeName;
         input.className = "form-control";
-        input.value = attribute.nodeValue;        
-        this.createField(attribute, input, currentProperties.label, currentProperties.disabled, currentProperties.display);
+        input.value = attribute.nodeValue;
+        let display =  this.checkCustomDisplay(cell, currentProperties);       
+        this.createField(attribute, input, currentProperties.label, currentProperties.disabled, display);
         this.executeApplyHandler(graph, input, cell, attribute.nodeName, currentProperties);
+    }
+
+    public checkCustomDisplay(cell:any, currentProperties:any){
+        if(currentProperties.display){
+            if(currentProperties.display == "basedOnPropertyValue"){
+                if(currentProperties.displayIfValue == cell.getAttribute(currentProperties.displayCheckProperty)){
+					return "true";
+				}else{
+                    return "false";
+                }
+            }else if(currentProperties.display == "false"){
+                return "false";
+            }
+        }
+        return "true";
     }
 
     public createField(attribute:any, input:any, label:any, disabled:any, display:any){

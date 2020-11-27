@@ -21,17 +21,19 @@ export class BundleElement extends MElement {
             },
             { 
                 "id":"lowRange", "label": "Low Range", "defValue":"1", 
-                "inputType":"text", "customTypeText":"number", "display":"false", 
+                "inputType":"text", "customTypeText":"number", "display":"basedOnPropertyValue", 
+                "displayCheckProperty":"bundleType", "displayIfValue":"RANGE",
             },
             { 
                 "id":"highRange", "label": "High Range", "defValue":"1", 
-                "inputType":"text", "customTypeText":"number", "display":"false", 
+                "inputType":"text", "customTypeText":"number", "display":"basedOnPropertyValue", 
+                "displayCheckProperty":"bundleType", "displayIfValue":"RANGE",
             },
         );
         this.setProperties(properties);
     }
 
-    //if bundle type is change to range, then display the high range and low range
+    //if bundle type is changed to range, then display the high range and low range properties
     public getOnChangeBundleTypeFunction(){
         let OnChangeBundleTypeFunction = function(this:any){
             let trLowRange = document.getElementById("tr-lowRange");
