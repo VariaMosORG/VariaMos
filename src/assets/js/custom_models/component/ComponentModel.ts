@@ -3,7 +3,8 @@ import { Model } from "../../model/Model";
 export class ComponentModel extends Model {
 
     public constructor() {
-        super("component",
+        super(
+            "component",
             ["ComponentElement", "FileElement", "FragmentElement", "CustomElement"]
         );
         
@@ -42,7 +43,7 @@ export class ComponentModel extends Model {
 			let incoEgdes = graph.getModel().getIncomingEdges(graph.getModel().getCell(targetId));
 			for (let j = 0; j < incoEgdes.length; j++) {
 				if(incoEgdes[j].source.getAttribute("type")=="custom"){
-                    returnConstraintRelations ={
+                    returnConstraintRelations = {
                         "message":"Invalid connection only one Custom. file can be linked for this component"
                     }
 				}
@@ -55,7 +56,7 @@ export class ComponentModel extends Model {
 			let outEgdes = graph.getModel().getOutgoingEdges(graph.getModel().getCell(sourceId));
 			for (let j = 0; j < outEgdes.length; j++) {
 				if(outEgdes[j].target.getAttribute("type") == "component"){
-                    returnConstraintRelations ={
+                    returnConstraintRelations = {
                         "message":"Invalid connection one Fragment can be only linked with one component"
                     }
 				}

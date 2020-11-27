@@ -5,7 +5,8 @@ const {mxImage, mxCellOverlay } = mxgraphFactory({mxLoadResources: false, mxLoad
 export class FeatureModel extends Model {
 
     public constructor() {
-        super("feature",
+        super(
+            "feature",
             ["RootElement", "AbstractElement", "ConcreteElement", "BundleElement"]
         );
         
