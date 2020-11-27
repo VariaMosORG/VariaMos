@@ -37,7 +37,7 @@ export class ConfigButtonActions {
 
     //initialize button actions (onclick)
     public initializeActions(){
-        for (let i = 0; i < this.buttons.length; i++) {
+        for(let i = 0; i < this.buttons.length; i++) {
             const functionToExecute = this.buttons[i].getId();
             if((this as any)[functionToExecute]){ // Verify if the function exists
                 const currentButton = document.getElementById(functionToExecute);
@@ -48,7 +48,7 @@ export class ConfigButtonActions {
 
     //remove all event listeners from all the buttons
     public removeAllEventListeners(){
-        for (let i = 0; i < this.buttons.length; i++) {
+        for(let i = 0; i < this.buttons.length; i++) {
             const buttonId = this.buttons[i].getId();
             const oldButton = document.getElementById(buttonId);
             if(oldButton){
@@ -141,13 +141,36 @@ export class ConfigButtonActions {
 
     //import current project models XML from an XML file
     public import(currentButton:HTMLElement){
-        const model = this.model;
+        const store = this.$store;
         const modal = this.$modal;
+        const currentProject = this.currentProject;
+        let index = Object.getPrototypeOf(currentProject).constructor.getProjectIndexByName(store.getters.getProjects, currentProject.getName());
         currentButton.addEventListener('click', function () {
-            let stringBody = "<input type='file' name='filebutton'>";
-            modal.setData("", "Upload XML models code", stringBody);
+            let inputFunction = function(e:any){
+                let files = e.target.files || e.dataTransfer.files;
+                if(!files.length){
+                return;
+                }else{
+                    let fileToLoad = files[0];
+                    let fileReader = new FileReader();
+                    fileReader.onload = function(fileLoadedEvent:any) 
+                    {
+                        let xml = fileLoadedEvent.target.result;
+                        currentProject.setXml(xml);
+                        store.commit("updateProject", {"project":currentProject, "index":index});
+                        location.reload(); //reload page
+                    }
+                    fileReader.readAsText(fileToLoad, "UTF-8");
+                }
+            }
+            let div = document.createElement("div");
+            div.innerHTML = "Be careful, once the file is uploaded, it will remove the previous XML data.<br /><br />";
+            let input = document.createElement("input");
+            input.type = "file";
+            input.onchange =  inputFunction;
+            div.appendChild(input);
+            modal.setData("", "Upload XML models code", div);
             modal.click();
-            //pending for implementation
         });
     }
 
@@ -185,8 +208,7 @@ export class ConfigButtonActions {
     public delete(currentButton:HTMLElement){
         let graph = this.graph;
         currentButton.addEventListener('click', function () {
-            if (graph.isEnabled())
-			{
+            if(graph.isEnabled()){
                 let removedCells = graph.removeCells();
             }
         });

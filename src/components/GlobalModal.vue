@@ -33,7 +33,7 @@ export default class AppModal extends Vue {
   public mainAction:any = null;
   public secondaryAction:any = null;
 
-  public setData(type:string, title:string, content:string, buttonType:string = "normal",
+  public setData(type:string, title:string, content:any, buttonType:string = "normal",
     mainAction:any = null, secondaryAction:any = null){
     this.confirm = false;
     this.mainAction = null;
@@ -44,7 +44,11 @@ export default class AppModal extends Vue {
     //set content
     if(modalBody){
       modalBody.innerHTML = "";
-      modalBody.innerHTML = content;
+      if(content instanceof HTMLElement){ //if content is an HTMLElement, it is appended inside the modalbody
+        modalBody.appendChild(content);
+      }else{  //if content is text, the text is applied to the modalbody
+        modalBody.innerHTML = content;
+      }
     }
 
     //set custom action
