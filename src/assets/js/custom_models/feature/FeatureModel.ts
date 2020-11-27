@@ -28,7 +28,12 @@ export class FeatureModel extends Model {
         relationProperties.push(
             { 
                 "id":"relType", "label":"RelType", "defValue":"mandatory", "inputType":"select",
-                "input_values":["mandatory","optional","requires","excludes"], "display":"true"
+                "input_values":["mandatory","optional","requires","excludes"], "display":"true",
+                "conditions":{
+                    "type":"and", 
+                    "source":["abstract","concrete","bundle"], 
+                    "target":["abstract","concrete","root"]
+                }
             }
         );
         this.setRelationProperties(relationProperties);

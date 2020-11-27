@@ -32,5 +32,37 @@ export class ComponentModel extends Model {
         ];
         this.setConstraints(constraints);
     }
+
+    public customConstraintsRelations(graph:any, source:any, target:any){
+        let returnConstraintRelations = {};
+
+		//only one custom file per component
+		if(target.getAttribute("type") == "component" && source.getAttribute("type") == "custom"){
+			let targetId = target.getId();
+			let incoEgdes = graph.getModel().getIncomingEdges(graph.getModel().getCell(targetId));
+			for (let j = 0; j < incoEgdes.length; j++) {
+				if(incoEgdes[j].source.getAttribute("type")=="custom"){
+                    returnConstraintRelations ={
+                        "message":"Invalid connection only one Custom. file can be linked for this component"
+                    }
+				}
+			}
+		}
+
+		//fragment can be only linked with one component
+		if(target.getAttribute("type") == "component" && source.getAttribute("type") == "fragment"){
+			let sourceId = source.getId();
+			let outEgdes = graph.getModel().getOutgoingEdges(graph.getModel().getCell(sourceId));
+			for (let j = 0; j < outEgdes.length; j++) {
+				if(outEgdes[j].target.getAttribute("type") == "component"){
+                    returnConstraintRelations ={
+                        "message":"Invalid connection one Fragment can be only linked with one component"
+                    }
+				}
+			}
+		}
+
+		return returnConstraintRelations;
+	}
     
 }

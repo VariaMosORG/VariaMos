@@ -11,5 +11,14 @@ export class FragmentElement extends MElement {
             "Fragment",
             currentModel
         );
+
+        let properties = this.getProperties();
+        properties.push(
+            { 
+                "id":"filename", "label":"Filename", "defValue":"", 
+                "inputType":"text", "disabled":"false", "display":"true"
+            }
+        );
+        this.setProperties(properties);
     }
 }

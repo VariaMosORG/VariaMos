@@ -46,10 +46,29 @@ export class ConfigRelations {
                 }
             }
 
+            //check custom constraints relations
+            let customConstraintRelations = currentModel.customConstraintsRelations(graph, source, target);
+            if(customConstraintRelations.message){
+                modal.setData("error", "Error", customConstraintRelations.message);
+                modal.click();
+                return null;
+            }
+
             //set properties to the edge
-            let currentProperties = currentModel.relationProperties;
-            for (let i = 0; i < currentProperties.length; i++) {
-                node.setAttribute(currentProperties[i].id, currentProperties[i].defValue);
+            let currentRelProperties = currentModel.relationProperties;
+            for (let i = 0; i < currentRelProperties.length; i++) {
+                if(currentRelProperties[i].conditions){ //check if the property has conditions
+                    if(currentRelProperties[i].conditions.type == "and"){
+                        if((currentRelProperties[i].conditions.source.indexOf(source.getAttribute("type")) > -1) && (currentRelProperties[i].conditions.target.indexOf(target.getAttribute("type"))> -1)){
+                            node.setAttribute(currentRelProperties[i].id, currentRelProperties[i].defValue);
+                        }
+                    }
+                    else if((currentRelProperties[i].conditions.source.indexOf(source.getAttribute("type")) > -1) || (currentRelProperties[i].conditions.target.indexOf(target.getAttribute("type"))> -1)){
+                        node.setAttribute(currentRelProperties[i].id, currentRelProperties[i].defValue);
+                    }
+                }else{
+                    node.setAttribute(currentRelProperties[i].id, currentRelProperties[i].defValue);
+                }
             }
 
             let cell = graph.insertEdge(parent, id, node, source, target, style);
