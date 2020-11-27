@@ -11,5 +11,15 @@ export class BundleElement extends MElement {
             "Bundle",
             currentModel
         );
+
+        let properties = this.getProperties();
+        properties.push(
+            { 
+                "id":"bundleType", "label": "Bundle Type", "defValue":"AND", 
+                "inputType":"select", "input_values":["AND","OR","XOR","RANGE"],
+                "display":"true", 
+            }
+        );
+        this.setProperties(properties);
     }
 }

@@ -4,6 +4,7 @@ export class Model {
     private elements:any = Array(); // MElement[]
     private constraints?:any = Array(); //list of constraints between elements
     private modelUtil?:any; // ModelUtil
+    private customElementTexts?:any; // custom element texts to be displayed
     private relationProperties:any = Array(); //list of relation properties between elements
     
     public constructor(type:string, elementClassNames:string[]) {
@@ -34,8 +35,16 @@ export class Model {
         return this.modelUtil;
     }
 
+    public getCustomElementTexts(){
+        return this.customElementTexts;
+    }
+
     public getRelationProperties(){
         return this.relationProperties;
+    }
+
+    public setCustomElementTexts(customElementTexts:any){
+        this.customElementTexts = customElementTexts;
     }
 
     public setConstraints(constraints:any){

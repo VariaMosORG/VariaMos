@@ -13,7 +13,6 @@ const { mxGraphModel, mxGraph, mxOutline,
     mxMultiplicity, mxKeyHandler, mxCodec } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
 
 export class VariaMosGraph {
-
     private graph:any; //mxGraph (mxGraph)
     private model:any; //mxGraphModel (mxGraphModel)
     private keyHandler:any; //mxKeyHandler (mxKeyHandler)
@@ -62,6 +61,7 @@ export class VariaMosGraph {
         return this.model;
     }
 
+    //initiliaze the main model tree (an XML element which is used to store the model info)
     public initTreeModel(modelsInfo:any, xmlCode:any){
         if(xmlCode != ""){ //load model based on previously saved model
             let xmlDoc = mxUtils.parseXml(xmlCode);
@@ -85,6 +85,7 @@ export class VariaMosGraph {
         }
     }
 
+    //initilize the VariaMosGraph and call the main functions
     public async initializeGraph(modelType:string, currentProject:any, divContainer:any, divNavigator:any, 
             divElements:any, divProperties:any, modal:any, store:any, caseLoad:any){
         this.modelType = modelType;
@@ -96,8 +97,8 @@ export class VariaMosGraph {
         this.currentProject = currentProject;
         this.$modal = modal;
         this.$store = store;
-        if(caseLoad == 1){
-            this.setGraph(); //create mxGraph object    
+        if(caseLoad == 1){ //case 1 is called each time the ProjectModels view is mounted
+            this.setGraph(); //create mxGraph object
         }
         this.hideAllLayers(); //hide all layers while configuring the model
         this.setNavigator(); //define the div navigator
@@ -115,30 +116,40 @@ export class VariaMosGraph {
         this.setCurrentLayer(); //specific current layer to be shown and display it
     }
 
+    //create a new mxgraph
     public setGraph(){
         if (this.divContainer) {
             this.graph = new mxGraph(this.divContainer, this.model);
         }
     }
 
+    //set the keyboard key actions
     public setKeys(){
         this.keyHandler = new mxKeyHandler(this.graph);
         this.configKeys = new ConfigKeys(this.graph, this.model, this.keyHandler);
         this.configKeys.initializeKeys();
     }
 
+    //initialize the overlay function (if it is available for the current model)
     public setOverlay(){
         this.currentModel.overlayStart();
     }
 
+    //configure the relations between the current model elements
     public setRelations(){
         this.configRelations = new ConfigRelations(this.graph, this.model, this.$modal, this.currentModel);
         this.configRelations.initializeRelations();
     }
 
+    //define the default attribute to be shown is drawing area for each element
     public setMainCellText(){
+        let currentModel = this.currentModel;
         this.graph.convertValueToString = function(cell:any){
-            if(cell.isEdge()){
+            let customTexts = currentModel.getCustomElementTexts();
+            if(customTexts && customTexts[cell.getAttribute("type")]){
+                return cell.getAttribute(customTexts[cell.getAttribute("type")], ''); //default attribute showed in drawing area was customized in model
+            }
+            else if(cell.isEdge()){
                 return cell.getAttribute('relType', ''); //default attribute showed in drawing area for edges is relType
             }else{
                 return cell.getAttribute('label', ''); //default attribute showed in drawing area for vertex is label
@@ -146,23 +157,27 @@ export class VariaMosGraph {
         };
     }
 
+    //hide all layers
     public hideAllLayers(){
-        for (let layer in this.layers) { //hide all layers
+        for (let layer in this.layers) {
 			this.model.setVisible(this.layers[layer], false);
         }
     }
 
+    //set the current layer and unhide the current layer
     public setCurrentLayer(){
         let currentLayer = this.layers[this.modelType]; //current layer to be displayed (feature, component, etc)
         this.graph.setDefaultParent(currentLayer);
         this.model.setVisible(currentLayer, true); //unhide current layer
     }
 
+    //set the mxgraph navigator
     public setNavigator(){
         let outline = new mxOutline(this.graph, this.divNavigator);
         outline.refresh();
     }
 
+    //initiliaze the button actions (buttons above the drawing area)
     public setButtonActions(){
         let buttonsConcat = VariaMosGraph.buttons.buttonArea;
         this.configButtonActions = new ConfigButtonActions(this.graph, this.model, this.$modal,
@@ -170,15 +185,18 @@ export class VariaMosGraph {
         this.configButtonActions.initializeActions();
     }
 
+    //configure the properties for each model element
     public setProperties(){
         this.configProperties = new ConfigProperties(this.graph, this.model, this.currentModel, this.divProperties);
         this.configProperties.initializeProperties();
     }
 
+    //remove all button event listeners once the URL is changed
     public removeAllButtonEventListeners(){
         this.configButtonActions.removeAllEventListeners();
     }
 
+    //establish the main mxgraph configuration
     public setConfigModel(){
         this.graph.dropEnabled = true;
 		this.graph.setConnectable(true); // Enables new connections in the graph
@@ -192,6 +210,7 @@ export class VariaMosGraph {
 		this.graph.maximumGraphBounds = new mxRectangle(0, 0, 4000, 4000);
     }
 
+    //load and include all the element classes for the current model
     public async loadCurrentModelClasses(){
         //load current model class
         const modelUtil = new ModelUtil(this.graph, this.model); // create model util and send to current model 
@@ -206,11 +225,13 @@ export class VariaMosGraph {
         }
     }
 
+    //configure each element of the current model
     public setElements(){
         this.configElements = new ConfigElements(this.graph, this.model, this.currentModel, this.divElements);
         this.configElements.initializeElements();
     }
 
+    //establish the constraints between the model elements
     public setConstraints(){
         this.graph.multiplicities = [];
         for (let i = 0; i < this.currentModel.constraints.length; i++) {
@@ -228,6 +249,7 @@ export class VariaMosGraph {
         }
     }
 
+    //establish the custom shapes for the current model (based on an XML file)
     public setCustomShapes(){
         function CustomShape()
 		{

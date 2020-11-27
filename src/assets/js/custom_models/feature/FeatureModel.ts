@@ -32,6 +32,9 @@ export class FeatureModel extends Model {
             }
         );
         this.setRelationProperties(relationProperties);
+        
+        let customElementTexts = {"bundle":"bundleType"}; //default element to be shown in drawing area is bundleType (for bundle elements)
+        this.setCustomElementTexts(customElementTexts);
     }
 
     public overlayStart(){

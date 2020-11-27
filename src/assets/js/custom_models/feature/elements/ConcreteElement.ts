@@ -13,6 +13,7 @@ export class ConcreteElement extends MElement {
             "Concrete Feature",
             currentModel
         );
+        
         let properties = this.getProperties();
         properties.push(
             { 
