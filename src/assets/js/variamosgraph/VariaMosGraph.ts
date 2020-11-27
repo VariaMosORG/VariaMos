@@ -202,7 +202,7 @@ export class VariaMosGraph {
         for (let i = 0; i < this.currentModel.elementClassNames.length; i++) {
             //load current model element classes
             const elementModule = await import('../'+"custom_models/"+this.modelType+"/elements/"+this.currentModel.elementClassNames[i]);
-            this.currentModel.addElement(new elementModule[this.currentModel.elementClassNames[i]]);
+            this.currentModel.addElement(new elementModule[this.currentModel.elementClassNames[i]](this.currentModel));
         }
     }
 

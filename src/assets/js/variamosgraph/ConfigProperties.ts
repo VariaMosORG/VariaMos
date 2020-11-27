@@ -1,4 +1,5 @@
 import { mxgraphFactory } from "ts-mxgraph";
+import { initCustomFormatter } from 'vue';
 const { mxEvent, mxCellAttributeChange } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
 
 export class ConfigProperties {
@@ -118,7 +119,7 @@ export class ConfigProperties {
         input.className = "form-control";
         input.value = attribute.nodeValue;
         this.createField(input, currentProperties.label, currentProperties.disabled, currentProperties.display);
-        this.executeApplyHandler(graph, input, cell, attribute.nodeName);
+        this.executeApplyHandler(graph, input, cell, attribute.nodeName, currentProperties);
     }
 
     public createSelectField(graph:any, attribute:any, cell:any, currentProperties:any){
@@ -138,7 +139,7 @@ export class ConfigProperties {
 
         input.className="form-control";        
         this.createField(input, currentProperties.label, currentProperties.disabled, currentProperties.display);
-        this.executeApplyHandler(graph, input, cell, attribute.nodeName);
+        this.executeApplyHandler(graph, input, cell, attribute.nodeName, currentProperties);
     }
 
     public createTextField(graph:any, attribute:any, cell:any, currentProperties:any){
@@ -148,7 +149,7 @@ export class ConfigProperties {
         input.className = "form-control";
         input.value = attribute.nodeValue;        
         this.createField(input, currentProperties.label, currentProperties.disabled, currentProperties.display);
-        this.executeApplyHandler(graph, input, cell, attribute.nodeName);
+        this.executeApplyHandler(graph, input, cell, attribute.nodeName, currentProperties);
     }
 
     public createField(input:any, label:any, disabled:any, display:any){
@@ -173,7 +174,8 @@ export class ConfigProperties {
         this.divProperties.appendChild(tr);
     }
 
-    public executeApplyHandler(graph:any, input:any, cell:any, attributeNodeName:any){
+    public executeApplyHandler(graph:any, input:any, cell:any, attributeNodeName:any, currentProperties:any){
+        this.applyCustomFunctions(input, cell, currentProperties);
         let applyHandler = function(){
             let oldValue = cell.getAttribute(attributeNodeName, '');
             let newValue = input.value;
@@ -200,5 +202,12 @@ export class ConfigProperties {
             }
         }
         mxEvent.addListener(input, 'focusout', applyHandler);
+    }
+
+    public applyCustomFunctions(input:any, cell:any, currentProperties:any){
+        if(currentProperties.onchange){
+            input.setAttribute("data-cell-id",cell.getId());
+            input.onchange = currentProperties.onchange;
+        }
     }
 }
