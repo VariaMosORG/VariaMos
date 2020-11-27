@@ -118,7 +118,7 @@ export class ConfigProperties {
 
         input.className = "form-control";
         input.value = attribute.nodeValue;
-        this.createField(input, currentProperties.label, currentProperties.disabled, currentProperties.display);
+        this.createField(attribute, input, currentProperties.label, currentProperties.disabled, currentProperties.display);
         this.executeApplyHandler(graph, input, cell, attribute.nodeName, currentProperties);
     }
 
@@ -138,7 +138,7 @@ export class ConfigProperties {
         }
 
         input.className="form-control";        
-        this.createField(input, currentProperties.label, currentProperties.disabled, currentProperties.display);
+        this.createField(attribute, input, currentProperties.label, currentProperties.disabled, currentProperties.display);
         this.executeApplyHandler(graph, input, cell, attribute.nodeName, currentProperties);
     }
 
@@ -148,11 +148,11 @@ export class ConfigProperties {
         input.id = "property-" + attribute.nodeName;
         input.className = "form-control";
         input.value = attribute.nodeValue;        
-        this.createField(input, currentProperties.label, currentProperties.disabled, currentProperties.display);
+        this.createField(attribute, input, currentProperties.label, currentProperties.disabled, currentProperties.display);
         this.executeApplyHandler(graph, input, cell, attribute.nodeName, currentProperties);
     }
 
-    public createField(input:any, label:any, disabled:any, display:any){
+    public createField(attribute:any, input:any, label:any, disabled:any, display:any){
         let tr = document.createElement('div');
 
         if(disabled == "true"){ //disable input
@@ -166,6 +166,7 @@ export class ConfigProperties {
         }
 
         tr.className = "div-property-field";
+        tr.id = "tr-" + attribute.nodeName;
         let td = document.createElement('div');
         td.innerText = label+": ";
         tr.appendChild(td);
@@ -208,6 +209,10 @@ export class ConfigProperties {
         if(currentProperties.onchange){
             input.setAttribute("data-cell-id",cell.getId());
             input.onchange = currentProperties.onchange;
+        }
+
+        if(currentProperties.customTypeText){
+            input.setAttribute('type', currentProperties.customTypeText);
         }
     }
 }
