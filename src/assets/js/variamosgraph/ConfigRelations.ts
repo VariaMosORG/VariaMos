@@ -71,6 +71,21 @@ export class ConfigRelations {
                 }
             }
 
+            //set custom relation styles
+            let currentRelStyles = currentModel.relationStyles;
+            for (let i = 0; i < currentRelStyles.length; i++) {
+                if(currentRelStyles[i].type == "and"){
+                    if((currentRelStyles[i].source.indexOf(source.getAttribute("type")) > -1) && (currentRelStyles[i].target.indexOf(target.getAttribute("type"))> -1)){
+                        style = currentRelStyles[i].style;
+                    }
+                }else{
+                    if((currentRelStyles[i].source.indexOf(source.getAttribute("type")) > -1) || (currentRelStyles[i].target.indexOf(target.getAttribute("type"))> -1)){
+                        style = currentRelStyles[i].style;
+                    }
+                }
+            }
+
+
             let cell = graph.insertEdge(parent, id, node, source, target, style);
             return cell;
         }

@@ -33,10 +33,23 @@ export class ComponentModel extends Model {
         ];
         this.setConstraints(constraints);
 
-        let elementClones = { //clone component cells in binding_feature_component model if available
+        //clone component cells in binding_feature_component model if available
+        let elementClones = {
             "component":"binding_feature_component"
         }
         this.setElementClones(elementClones);
+
+        //custom red line if relation between a fragment and a file
+        let relationStyles = this.getRelationStyles();
+        relationStyles.push(
+            { 
+                "type":"and", 
+                "source":["fragment"], 
+                "target":["file"],
+                "style":"dashed=1;endArrow=open;strokeColor=red;"
+            }
+        );
+        this.setRelationStyles(relationStyles);
     }
 
     public customConstraintsRelations(graph:any, source:any, target:any){

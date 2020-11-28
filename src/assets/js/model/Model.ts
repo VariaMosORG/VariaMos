@@ -7,6 +7,7 @@ export class Model {
     private modelUtil?:any; // ModelUtil
     private customElementTexts?:any; // custom element texts to be displayed
     private relationProperties:any = Array(); //list of relation properties between elements
+    private relationStyles:any = Array(); //list of relation styles between elements
     
     public constructor(type:string, elementClassNames:string[]) {
         this.type = type;
@@ -48,6 +49,10 @@ export class Model {
         return this.relationProperties;
     }
 
+    public getRelationStyles(){
+        return this.relationStyles;
+    }
+
     public setCustomElementTexts(customElementTexts:any){
         this.customElementTexts = customElementTexts;
     }
@@ -58,6 +63,10 @@ export class Model {
 
     public setRelationProperties(relationProperties:any){
         this.relationProperties = relationProperties;
+    }
+
+    public setRelationStyles(relationStyles:any){
+        this.relationStyles = relationStyles;
     }
 
     public setElementClones(elementClones:any){
