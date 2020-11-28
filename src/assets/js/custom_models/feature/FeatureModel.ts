@@ -41,6 +41,11 @@ export class FeatureModel extends Model {
         
         let customElementTexts = {"bundle":"bundleType"}; //default element to be shown in drawing area is bundleType (for bundle elements)
         this.setCustomElementTexts(customElementTexts);
+
+        let elementClones = { //clone concrete feature in binding_feature_component model if available
+            "concrete":"binding_feature_component"
+        }
+        this.setElementClones(elementClones);
     }
 
     // display overlay (green check) of selected concrete features

@@ -207,8 +207,20 @@ export class ConfigButtonActions {
     //delete selected cells in current model
     public delete(currentButton:HTMLElement){
         let graph = this.graph;
+        let modal = this.$modal;
         currentButton.addEventListener('click', function () {
             if(graph.isEnabled()){
+                let cells = graph.getSelectionCells();
+                for (let i = 0; i < cells.length; i++) {
+                    if(cells[i].isVertex()){
+                        if(cells[i].getId().includes("clon")){
+                            modal.setData("error", "Error", "Cloned elements cannot be removed directly");
+                            modal.click();
+                            return null;
+                        }
+                    }
+                }
+
                 let removedCells = graph.removeCells();
             }
         });

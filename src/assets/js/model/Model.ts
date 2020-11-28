@@ -2,6 +2,7 @@ export class Model {
     private type:string; //for example feature
     private elementClassNames:string[];
     private elements:any = Array(); // MElement[]
+    private elementClones:any = {}; // element clones
     private constraints?:any = Array(); //list of constraints between elements
     private modelUtil?:any; // ModelUtil
     private customElementTexts?:any; // custom element texts to be displayed
@@ -25,6 +26,10 @@ export class Model {
 
     public getElements(){
         return this.elements;
+    }
+
+    public getElementClones(){
+        return this.elementClones;
     }
 
     public getConstraints(){
@@ -53,6 +58,10 @@ export class Model {
 
     public setRelationProperties(relationProperties:any){
         this.relationProperties = relationProperties;
+    }
+
+    public setElementClones(elementClones:any){
+        this.elementClones = elementClones;
     }
 
     public setModelUtil(modelUtil:any){

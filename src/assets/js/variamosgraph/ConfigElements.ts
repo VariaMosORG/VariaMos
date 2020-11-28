@@ -1,5 +1,5 @@
 import { mxgraphFactory } from "ts-mxgraph";
-const { mxUtils, mxCell, mxGeometry, mxToolbar } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
+const { mxUtils, mxCell, mxGeometry, mxToolbar, mxConstants } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
 
 export class ConfigElements {
     
@@ -81,6 +81,23 @@ export class ConfigElements {
             vertex.geometry.x = pt.x;
             vertex.geometry.y = pt.y;
             let newCells = graph.importCells([vertex], 0, 0, cell);
+            graph.setSelectionCells(newCells);
+
+            //start cloning feature
+            let clonesInfo = currentModel.getElementClones();
+            if(clonesInfo[vertex.getAttribute("type")]){ //check if clone is defined for current element
+                let clonDestinationModel = clonesInfo[vertex.getAttribute("type")];
+                if(graph.getModel().getCell(clonDestinationModel)){ //if the destination model is available
+                    graph.getModel().prefix = "clon"; //cloned cell contains clon prefix
+                    graph.getModel().nextId = graph.getModel().nextId - 1;
+                    let vertex2 = graph.getModel().cloneCell(newCells[0]);
+                    let parent2 = graph.getModel().getCell(clonDestinationModel);
+                    graph.setCellStyles(mxConstants.STYLE_FILLCOLOR, "#DCDCDC", [vertex2]); //different background for a cloned cell
+                    graph.importCells([vertex2], 0, 0, parent2);
+                    graph.getModel().prefix = ""; //restart prefix
+                }
+            }
+            //end cloning feature
         }
 
         let mdiv = document.createElement('div');

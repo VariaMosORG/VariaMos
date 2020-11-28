@@ -140,7 +140,7 @@ export class VariaMosGraph {
     //set the keyboard key actions
     public setKeys(){
         this.keyHandler = new mxKeyHandler(this.graph);
-        this.configKeys = new ConfigKeys(this.graph, this.model, this.keyHandler);
+        this.configKeys = new ConfigKeys(this.graph, this.model, this.keyHandler, this.$modal);
         this.configKeys.initializeKeys();
     }
 
