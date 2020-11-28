@@ -209,6 +209,13 @@ export class ConfigProperties {
                 try{
                     let edit = new mxCellAttributeChange(cell, attributeNodeName, newValue); //change to newValue
                     graph.getModel().execute(edit);
+
+                    //update clon cell if exists
+                    let clon = graph.getModel().getCell("clon"+cell.getId());
+					if(clon){
+						let edit2 = new mxCellAttributeChange(clon, attributeNodeName, newValue);
+						graph.getModel().execute(edit2);
+					}
                 }
                 catch(error){
                     console.log(error);
