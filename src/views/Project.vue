@@ -83,7 +83,17 @@ export default class Project extends Vue {
   }
 
   public getBeautyModelName(name:string){
-    return name.charAt(0).toUpperCase() + name.slice(1) + "Model";
+    if(name.includes("_")){
+      let parts = name.split("_");
+      let completeName = "";
+      for (let i = 0; i < parts.length; i++) {
+        completeName = completeName + parts[i].charAt(0).toUpperCase() + parts[i].slice(1);
+      }
+      completeName = completeName + "Model";
+      return completeName;
+    }else{
+      return name.charAt(0).toUpperCase() + name.slice(1) + "Model";
+    }
   }
 }
 </script>
@@ -91,6 +101,7 @@ export default class Project extends Vue {
 <style>
 .marr20{
   margin-right: 10px;
+  margin-bottom: 5px;
 }
 
 .vertical-scroll { 
