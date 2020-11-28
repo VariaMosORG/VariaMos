@@ -32,6 +32,11 @@ export class ComponentModel extends Model {
             },
         ];
         this.setConstraints(constraints);
+
+        let elementClones = { //clone component cells in binding_feature_component model if available
+            "component":"binding_feature_component"
+        }
+        this.setElementClones(elementClones);
     }
 
     public customConstraintsRelations(graph:any, source:any, target:any){
