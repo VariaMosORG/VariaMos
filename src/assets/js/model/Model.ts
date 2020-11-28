@@ -55,15 +55,6 @@ export class Model {
         this.relationProperties = relationProperties;
     }
 
-    public overlayStart(){
-        //implemented in subclasses
-    }
-
-    public customConstraintsRelations(graph:any, source:any, target:any){
-        //implemented in subclasses
-        return {};
-    }
-
     public setModelUtil(modelUtil:any){
         this.modelUtil = modelUtil;
     }
@@ -74,5 +65,19 @@ export class Model {
 
     public setElements(elements:any){
         this.elements = elements;
+    }
+
+    public overlayStart(){
+        //implemented in subclasses
+    }
+
+    public customConstraintsRelations(graph:any, source:any, target:any){
+        //implemented in subclasses
+        return {};
+    }
+
+    public customConstraintsElementCreation(graph:any){
+        //implemented in subclasses
+        return {};
     }
 }

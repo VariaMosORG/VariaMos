@@ -227,7 +227,7 @@ export class VariaMosGraph {
 
     //configure each element of the current model
     public setElements(){
-        this.configElements = new ConfigElements(this.graph, this.model, this.currentModel, this.divElements);
+        this.configElements = new ConfigElements(this.graph, this.model, this.currentModel, this.divElements, this.$modal);
         this.configElements.initializeElements();
     }
 
