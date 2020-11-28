@@ -205,7 +205,7 @@ export class ConfigButtonActions {
             let xmlCode = mxUtils.getPrettyXml(node);
             let toXml = xmlCode;
             let pseudoelement = document.createElement("a");
-            let filename = name+".xml";
+            let filename = "Models-"+name+".xml";
             let blob = new Blob([ toXml ], { type: "text/xml" });
 
             pseudoelement.setAttribute("href", window.URL.createObjectURL(blob));

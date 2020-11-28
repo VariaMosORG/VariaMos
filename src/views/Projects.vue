@@ -10,7 +10,7 @@
             <div class="right-buttons">
               <div class="btn-group">
                 <div class="csstooltip">
-                  <i v-on:click="exportProject(index)" class="fas fa-upload hover-hand"></i>
+                  <i v-on:click="exportProject(index, project.getName())" class="fas fa-upload hover-hand"></i>
                   <span class="csstooltiptext">Export this project (json file)</span>
                 </div>
                 <div class="csstooltip">
@@ -283,13 +283,13 @@ export default class Projects extends Vue {
   //export all projects in json format
   public exportAllProjects(){
     let jsonAllProjects = this.$store.getters.getAllProjects;
-    this.generateJsonFile(jsonAllProjects, "allProjects.json");
+    this.generateJsonFile(jsonAllProjects, "MultiProject-MultiProjects.json");
   }
 
   //export project in json format
-  public exportProject(index:any){
+  public exportProject(index:any, name:any){
     let jsonProject = this.$store.getters.getProjectJson(index);
-    this.generateJsonFile(jsonProject, "project.json");
+    this.generateJsonFile(jsonProject, "Project-"+name+".json");
   }
 
   //generate and download json file

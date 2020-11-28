@@ -39,7 +39,7 @@ export class ComponentModel extends Model {
         }
         this.setElementClones(elementClones);
 
-        //custom red line if relation between a fragment and a file
+        //custom red line for relations between a fragment and a file
         let relationStyles = this.getRelationStyles();
         relationStyles.push(
             { 
