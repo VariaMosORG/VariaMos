@@ -279,10 +279,11 @@ export class ConfigButtonActions {
     public img(currentButton:HTMLElement){
         let divContainer = this.divContainer;
         let name = this.currentProject.getName();
+        let graph = this.graph;
         currentButton.addEventListener('click', function () {
             if(divContainer){
                 const svg = divContainer.firstElementChild;
-                saveSVG.saveSvgAsPng(svg, name+".png");
+                saveSVG.saveSvgAsPng(svg, "Model-"+graph.getDefaultParent().getId()+".png");
             }
         });
     }
