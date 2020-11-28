@@ -89,7 +89,7 @@ export class VariaMosGraph {
     public async initializeGraph(modelType:string, currentProject:any, divContainer:any, divNavigator:any, 
             divElements:any, divProperties:any, modal:any, store:any, caseLoad:any){
         this.modelType = modelType;
-        this.className = this.modelType.charAt(0).toUpperCase() + this.modelType.slice(1) + "Model";
+        this.className = this.getClassModelName(this.modelType);
         this.divElements = divElements;
         this.divContainer = divContainer;
         this.divNavigator = divNavigator;
@@ -114,6 +114,20 @@ export class VariaMosGraph {
         this.setCustomShapes(); //set custom shapes
         this.setOverlay(); //set overlays functions
         this.setCurrentLayer(); //specific current layer to be shown and display it
+    }
+
+    public getClassModelName(name:string){
+        if(name.includes("_")){
+            let parts = name.split("_");
+            let completeName = "";
+            for (let i = 0; i < parts.length; i++) {
+                completeName = completeName + parts[i].charAt(0).toUpperCase() + parts[i].slice(1);
+            }
+            completeName = completeName + "Model";
+            return completeName;
+        }else{
+            return name.charAt(0).toUpperCase() + name.slice(1) + "Model";
+        }
     }
 
     //create a new mxgraph

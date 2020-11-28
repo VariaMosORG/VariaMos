@@ -7,6 +7,6 @@ export class BindingFeatureComponentModel extends Model {
             "binding_feature_component",
             []
         );
-        
+        console.log("testing");
     }
 }
