@@ -69,30 +69,36 @@ export class ConfigButtonActions {
         const modal = this.$modal;
         const graph = this.graph;
         const model = this.model;
+        const modelUtil = this.modelUtil;
         let index = Object.getPrototypeOf(currentProject).constructor.getProjectIndexByName(store.getters.getProjects, currentProject.getName());
         if(index != -1){
             currentButton.addEventListener('click', function () {
                 let confirmAction = function(){
-                    let removedCells = graph.removeCells(graph.getChildVertices(graph.getDefaultParent()));
-
-                    //remove clons if exist
-                    for (let i = 0; i < removedCells.length; i++) {
-                        if(removedCells[i].isVertex()){
-                            let clon = graph.getModel().getCell("clon"+removedCells[i].getId());
-                            if(clon){
-                                let cells = [];
-                                cells[0] = clon;
-                                graph.removeCells(cells);
+                    let existCloneCells = modelUtil.existCloneCells(graph.getDefaultParent());
+                    if(existCloneCells){
+                        modal.setData("error", "Error", "Models that contains cloned cells cannot be removed");
+                        modal.setSecondaryMessage(true);
+                    }else{
+                        //remove clons if exist
+                        let removedCells = graph.removeCells(graph.getChildVertices(graph.getDefaultParent()));
+                        for (let i = 0; i < removedCells.length; i++) {
+                            if(removedCells[i].isVertex()){
+                                let clon = graph.getModel().getCell("clon"+removedCells[i].getId());
+                                if(clon){
+                                    let cells = [];
+                                    cells[0] = clon;
+                                    graph.removeCells(cells);
+                                }
                             }
                         }
-                    }
 
-                    let encoder = new mxCodec();
-                    let result = encoder.encode(model);
-                    let xml = mxUtils.getPrettyXml(result);
-                    currentProject.setXml(xml);
-                    store.commit("updateProject", {"project":currentProject, "index":index});
-                    location.reload();
+                        let encoder = new mxCodec();
+                        let result = encoder.encode(model);
+                        let xml = mxUtils.getPrettyXml(result);
+                        currentProject.setXml(xml);
+                        store.commit("updateProject", {"project":currentProject, "index":index});
+                        location.reload();
+                    }
                 }
                 modal.setData("warning", "Warning", "Are you sure you want to remove the current model of this project?", "confirm", confirmAction);
                 modal.click();

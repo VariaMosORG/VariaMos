@@ -32,9 +32,11 @@ export default class AppModal extends Vue {
   public confirm:boolean = false;
   public mainAction:any = null;
   public secondaryAction:any = null;
+  public secondaryMessage:boolean = false;
 
   public setData(type:string, title:string, content:any, buttonType:string = "normal",
     mainAction:any = null, secondaryAction:any = null){
+    this.secondaryMessage = false;
     this.confirm = false;
     this.mainAction = null;
     this.secondaryAction = null; 
@@ -70,6 +72,10 @@ export default class AppModal extends Vue {
     this.title = title;
   }
 
+  public setSecondaryMessage(secondary:boolean){
+    this.secondaryMessage = secondary;
+  }
+
   public setType(type:string){
     let modalHeader = document.getElementById("gmodal-header");
     if(modalHeader){
@@ -96,7 +102,9 @@ export default class AppModal extends Vue {
   public confirmAction(){
     if(this.mainAction){
       this.mainAction();
-      this.click();
+      if(!this.secondaryMessage){
+        this.click();
+      }
     }
   }
 

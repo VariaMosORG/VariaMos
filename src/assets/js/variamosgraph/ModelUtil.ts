@@ -29,4 +29,16 @@ export class ModelUtil {
         }
         return cells;
     }
+
+    public existCloneCells(rootCell:any){
+        let rootChildren = this.model.getChildVertices(rootCell);
+        for (let i = 0; i < rootChildren.length; i++) {
+            let cell = rootChildren[i];
+            let id = cell.getId();
+            if(id.includes("clon")){
+                return true;
+            }
+        }
+        return false;
+    }
 }
