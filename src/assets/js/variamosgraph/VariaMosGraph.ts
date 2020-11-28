@@ -32,6 +32,7 @@ export class VariaMosGraph {
     private layers:any; //availble layers of the current model
     private $store:any; //references vuex store
     private $modal:any; //references modalPlugin
+    private modelUtil:any; // ModelUtil
 
     public static buttons: any = {
         "buttonArea":[
@@ -59,6 +60,10 @@ export class VariaMosGraph {
 
     public getModel(){
         return this.model;
+    }
+
+    public getModelUtil(){
+        return this.modelUtil;
     }
 
     //initiliaze the main model tree (an XML element which is used to store the model info)
@@ -100,6 +105,7 @@ export class VariaMosGraph {
         if(caseLoad == 1){ //case 1 is called each time the ProjectModels view is mounted
             this.setGraph(); //create mxGraph object
         }
+        this.setModelUtil();
         this.hideAllLayers(); //hide all layers while configuring the model
         this.setNavigator(); //define the div navigator
         this.setConfigModel(); //some graph configs
@@ -128,6 +134,11 @@ export class VariaMosGraph {
         }else{
             return name.charAt(0).toUpperCase() + name.slice(1) + "Model";
         }
+    }
+
+    //create model util
+    public setModelUtil(){
+        this.modelUtil = new ModelUtil(this.graph, this.model);
     }
 
     //create a new mxgraph
@@ -195,7 +206,7 @@ export class VariaMosGraph {
     public setButtonActions(){
         let buttonsConcat = VariaMosGraph.buttons.buttonArea;
         this.configButtonActions = new ConfigButtonActions(this.graph, this.model, this.$modal,
-            this.$store, this.currentProject, this.divContainer, buttonsConcat);
+            this.$store, this.currentProject, this.divContainer, buttonsConcat, this.modelUtil);
         this.configButtonActions.initializeActions();
     }
 
@@ -227,10 +238,9 @@ export class VariaMosGraph {
     //load and include all the element classes for the current model
     public async loadCurrentModelClasses(){
         //load current model class
-        const modelUtil = new ModelUtil(this.graph, this.model); // create model util and send to current model 
         const modelModule = await import('../'+"custom_models/"+this.modelType+"/"+this.className); //load current model Class
         this.currentModel = new modelModule[this.className]();
-        this.currentModel.setModelUtil(modelUtil);
+        this.currentModel.setModelUtil(this.modelUtil);
 
         for (let i = 0; i < this.currentModel.elementClassNames.length; i++) {
             //load current model element classes

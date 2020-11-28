@@ -12,8 +12,9 @@ export class ConfigButtonActions {
     private divContainer:any; //div container (HTMLElement)
     private $store:any; //references vuex store
     private $modal:any; //references modalPlugin
+    private modelUtil:any; // ModelUtil
 
-    public constructor(graph:any, model:any, modal:any, store:any, currentProject:any, divContainer:any, buttons:any) {
+    public constructor(graph:any, model:any, modal:any, store:any, currentProject:any, divContainer:any, buttons:any, modelUtil:any) {
         this.buttons = buttons;
         this.graph = graph;
         this.model = model;
@@ -21,6 +22,7 @@ export class ConfigButtonActions {
         this.divContainer = divContainer;
         this.$modal = modal;
         this.$store = store;
+        this.modelUtil = modelUtil;
     }
 
     public getButtons(){
@@ -71,7 +73,20 @@ export class ConfigButtonActions {
         if(index != -1){
             currentButton.addEventListener('click', function () {
                 let confirmAction = function(){
-                    graph.removeCells(graph.getChildVertices(graph.getDefaultParent()));
+                    let removedCells = graph.removeCells(graph.getChildVertices(graph.getDefaultParent()));
+
+                    //remove clons if exist
+                    for (let i = 0; i < removedCells.length; i++) {
+                        if(removedCells[i].isVertex()){
+                            let clon = graph.getModel().getCell("clon"+removedCells[i].getId());
+                            if(clon){
+                                let cells = [];
+                                cells[0] = clon;
+                                graph.removeCells(cells);
+                            }
+                        }
+                    }
+
                     let encoder = new mxCodec();
                     let result = encoder.encode(model);
                     let xml = mxUtils.getPrettyXml(result);
