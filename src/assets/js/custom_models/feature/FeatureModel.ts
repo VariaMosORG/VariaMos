@@ -56,17 +56,21 @@ export class FeatureModel extends Model {
     }
 
     // constraints in element creation, only allow to create one root element in the model
-    public customConstraintsElementCreation(graph:any){
+    public customConstraintsElementCreation(graph:any, vertexToClone:any){
         let returnConstraintElementCreation = {};
 
-        let featureRoot = graph.getModel().getCell("feature");    
-        let featureVertices = graph.getModel().getChildVertices(featureRoot);
+        if(vertexToClone.getAttribute("type") == "root"){
+            let featureRoot = graph.getModel().getCell("feature");    
+            let featureVertices = graph.getModel().getChildVertices(featureRoot);
 
-        for (let i = 0; i < featureVertices.length; i++) {
-            if(featureVertices[i].getAttribute("type") == "root"){
-                returnConstraintElementCreation = {"message":"Only one Root element allowed in this model"};
+            for (let i = 0; i < featureVertices.length; i++) {
+                if(featureVertices[i].getAttribute("type") == "root"){
+                    returnConstraintElementCreation = {"message":"Only one Root element allowed in this model"};
+                    break;
+                }
             }
         }
+
         return returnConstraintElementCreation;
     }
     

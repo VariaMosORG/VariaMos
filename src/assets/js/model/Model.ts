@@ -76,7 +76,7 @@ export class Model {
         return {};
     }
 
-    public customConstraintsElementCreation(graph:any){
+    public customConstraintsElementCreation(graph:any, vertexToClone:any){
         //implemented in subclasses
         return {};
     }

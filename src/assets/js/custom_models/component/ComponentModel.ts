@@ -44,8 +44,9 @@ export class ComponentModel extends Model {
 			for (let j = 0; j < incoEgdes.length; j++) {
 				if(incoEgdes[j].source.getAttribute("type")=="custom"){
                     returnConstraintRelations = {
-                        "message":"Invalid connection only one Custom. file can be linked for this component"
+                        "message":"Invalid connection only one Custom. File can be linked for this component"
                     }
+                    break;
 				}
 			}
 		}
@@ -59,6 +60,7 @@ export class ComponentModel extends Model {
                     returnConstraintRelations = {
                         "message":"Invalid connection one Fragment can be only linked with one component"
                     }
+                    break;
 				}
 			}
 		}

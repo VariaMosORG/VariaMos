@@ -68,7 +68,7 @@ export class ConfigElements {
 
         let drapAndDropCreation = function(graph:any, evt:any, cell:any){
             //check custom model constraints in element creation
-            let customConstraintsElementCreation = currentModel.customConstraintsElementCreation(graph);
+            let customConstraintsElementCreation = currentModel.customConstraintsElementCreation(graph, vertexToClone);
             if(customConstraintsElementCreation.message){
                 modal.setData("error", "Error", customConstraintsElementCreation.message);
                 modal.click();
