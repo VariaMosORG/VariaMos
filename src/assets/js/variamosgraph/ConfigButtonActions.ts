@@ -278,7 +278,6 @@ export class ConfigButtonActions {
     //convert current model to png format and download it
     public img(currentButton:HTMLElement){
         let divContainer = this.divContainer;
-        let name = this.currentProject.getName();
         let graph = this.graph;
         currentButton.addEventListener('click', function () {
             if(divContainer){
@@ -287,5 +286,4 @@ export class ConfigButtonActions {
             }
         });
     }
-    
 }
