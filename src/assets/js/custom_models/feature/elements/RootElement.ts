@@ -1,6 +1,6 @@
-import { MElement } from "../../../model/MElement";
+import { ModelElement } from "../../../model/ModelElement";
 
-export class RootElement extends MElement {
+export class RootElement extends ModelElement {
     public constructor(currentModel:any){
         super(
             "rectangle3.png",

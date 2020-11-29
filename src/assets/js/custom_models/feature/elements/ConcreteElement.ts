@@ -1,8 +1,8 @@
-import { MElement } from "../../../model/MElement";
+import { ModelElement } from "../../../model/ModelElement";
 import { mxgraphFactory } from "ts-mxgraph";
 const {mxImage, mxCellOverlay } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
 
-export class ConcreteElement extends MElement {
+export class ConcreteElement extends ModelElement {
     public constructor(currentModel:any){
         super(
             "rectangle.png",

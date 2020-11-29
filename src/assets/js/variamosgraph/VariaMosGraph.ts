@@ -294,6 +294,15 @@ export class VariaMosGraph {
             const elementModule = await import('../'+"custom_models/"+this.modelType+"/elements/"+this.currentModel.elementClassNames[i]);
             this.currentModel.addElement(new elementModule[this.currentModel.elementClassNames[i]](this.currentModel));
         }
+
+        //load current model actions
+        try {
+            const modelActionsModule = await import('../'+"custom_models/"+this.modelType+"/"+this.className+"Actions");
+            this.currentModel.setActions(new modelActionsModule[this.className+"Actions"](this.currentModel));
+        }catch (e) {
+            //current model actions do not exists
+            this.currentModel.setActions(null);
+        }
     }
 
     //configure each element of the current model

@@ -1,4 +1,4 @@
-export class MElement { 
+export class ModelElement { 
     private icon: string;
     private type: string; 
     private width: number; 
