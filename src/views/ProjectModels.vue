@@ -24,6 +24,10 @@
             </button>
           </div>
 
+          <div id="vgraph-model-actions" class="btn-group flex-wrap plef10" role="group">
+            <!--<button class="btn btn-secondary btn-title csstooltip">Oli</button>-->
+          </div>
+
           <div class="card bg-light text-black shadow mtop">
             <div class="card-body">
               <div id="vgraph-container" class="model-area" v-bind:style="{ height: configApp.getModelAreaHeight() }"></div>
@@ -107,6 +111,7 @@ export default class ProjectModels extends Vue {
   public divNavigator:any; //div navigator (HTMLElement)
   public divElements:any; //div elements (HTMLElement)
   public divProperties:any; //div properties (HTMLElement)
+  public divModelActions:any; //div model actions (HTMLElement)
   public $store:any; //references vuex store
   public $modal:any; //references modalPlugin
   public navigationList:any = [
@@ -144,6 +149,7 @@ export default class ProjectModels extends Vue {
     this.divElements.innerHTML = "";
     this.divNavigator.innerHTML = "";
     this.divProperties.innerHTML = "";
+    this.divModelActions.innerHTML = "";
     this.variaMosGraph.removeAllButtonEventListeners();
     this.navigationList.pop();
     this.navigationList.push(
@@ -162,9 +168,10 @@ export default class ProjectModels extends Vue {
     this.divNavigator = document.getElementById("vgraph-navigator");
     this.divElements = document.getElementById("vgraph-elements");
     this.divProperties = document.getElementById("vgraph-properties");
+    this.divModelActions = document.getElementById("vgraph-model-actions");
     this.variaMosGraph.initializeGraph(
       this.modelType, this.currentProject, this.divContainer, this.divNavigator, 
-      this.divElements, this.divProperties, this.$modal, this.$store, caseLoad
+      this.divElements, this.divProperties, this.divModelActions, this.$modal, this.$store, caseLoad, 
     );
   }
 
@@ -308,6 +315,10 @@ ul.tab li a:focus, .active {
     padding-left: 10px;
     padding-right: 10px;
     margin-right: 2px;
+}
+
+.plef10{
+  padding-left: 10px;
 }
 /* buttons */
 
