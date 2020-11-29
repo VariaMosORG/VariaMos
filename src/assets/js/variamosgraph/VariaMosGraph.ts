@@ -62,6 +62,38 @@ export class VariaMosGraph {
         return this.model;
     }
 
+    public getStore(){
+        return this.$store;
+    }
+
+    public getModal(){
+        return this.$modal;
+    }
+
+    public getKeyHandler(){
+        return this.keyHandler;
+    }
+
+    public getCurrentProject(){
+        return this.currentProject;
+    }
+
+    public getCurrentModel(){
+        return this.currentModel;
+    }
+
+    public getDivContainer(){
+        return this.divContainer;
+    }
+
+    public getDivElements(){
+        return this.divElements;
+    }
+
+    public getDivProperties(){
+        return this.divProperties;
+    }
+
     public getModelUtil(){
         return this.modelUtil;
     }
@@ -138,7 +170,7 @@ export class VariaMosGraph {
 
     //create model util
     public setModelUtil(){
-        this.modelUtil = new ModelUtil(this.graph, this.model);
+        this.modelUtil = new ModelUtil(this);
     }
 
     //create a new mxgraph
@@ -151,7 +183,7 @@ export class VariaMosGraph {
     //set the keyboard key actions
     public setKeys(){
         this.keyHandler = new mxKeyHandler(this.graph);
-        this.configKeys = new ConfigKeys(this.graph, this.model, this.keyHandler, this.$modal);
+        this.configKeys = new ConfigKeys(this);
         this.configKeys.initializeKeys();
     }
 
@@ -162,7 +194,7 @@ export class VariaMosGraph {
 
     //configure the relations between the current model elements
     public setRelations(){
-        this.configRelations = new ConfigRelations(this.graph, this.model, this.$modal, this.currentModel);
+        this.configRelations = new ConfigRelations(this);
         this.configRelations.initializeRelations();
     }
 
@@ -204,15 +236,14 @@ export class VariaMosGraph {
 
     //initiliaze the button actions (buttons above the drawing area)
     public setButtonActions(){
-        let buttonsConcat = VariaMosGraph.buttons.buttonArea;
-        this.configButtonActions = new ConfigButtonActions(this.graph, this.model, this.$modal,
-            this.$store, this.currentProject, this.divContainer, buttonsConcat, this.modelUtil);
+        let buttons = VariaMosGraph.buttons.buttonArea;
+        this.configButtonActions = new ConfigButtonActions(this, buttons);
         this.configButtonActions.initializeActions();
     }
 
     //configure the properties for each model element
     public setProperties(){
-        this.configProperties = new ConfigProperties(this.graph, this.model, this.currentModel, this.divProperties);
+        this.configProperties = new ConfigProperties(this);
         this.configProperties.initializeProperties();
     }
 
@@ -251,7 +282,7 @@ export class VariaMosGraph {
 
     //configure each element of the current model
     public setElements(){
-        this.configElements = new ConfigElements(this.graph, this.model, this.currentModel, this.divElements, this.$modal);
+        this.configElements = new ConfigElements(this);
         this.configElements.initializeElements();
     }
 

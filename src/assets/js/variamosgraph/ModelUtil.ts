@@ -1,25 +1,19 @@
 export class ModelUtil {
 
-    private graph:any; //mxGraph (mxGraph)
-    private model:any; //mxGraphModel (mxGraphModel)
+    private vGraph:any; //VariaMos Graph
     
-    public constructor(graph:any, model:any) {
-        this.graph = graph;
-        this.model = model;
+    public constructor(vGraph:any) {
+        this.vGraph = vGraph;
     }
 
-    public getGraph(){
-        return this.graph;
-    }
-
-    public getModel(){
-        return this.model;
+    public getVGraph(){
+        return this.vGraph;
     }
 
     public searchCellsByType(rootToSearch:any, typeToSearch:any){
         let cells = [];
-        let root = this.model.getCell(rootToSearch);
-        let rootChildren = this.model.getChildVertices(root);
+        let root = this.vGraph.getModel().getCell(rootToSearch);
+        let rootChildren = this.vGraph.getModel().getChildVertices(root);
         for (let i = 0; i < rootChildren.length; i++) {
             let cell = rootChildren[i];
             let type = cell.getAttribute("type");
@@ -31,7 +25,7 @@ export class ModelUtil {
     }
 
     public existCloneCells(rootCell:any){
-        let rootChildren = this.model.getChildVertices(rootCell);
+        let rootChildren = this.vGraph.getModel().getChildVertices(rootCell);
         for (let i = 0; i < rootChildren.length; i++) {
             let cell = rootChildren[i];
             let id = cell.getId();

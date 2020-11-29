@@ -1,40 +1,20 @@
 import { Button } from './Button';
 import { mxgraphFactory } from "ts-mxgraph";
-const saveSVG = require("save-svg-as-png");
 const { mxCodec, mxUtils } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
+const saveSVG = require("save-svg-as-png");
 
 export class ConfigButtonActions {
 
     private buttons:Button[]; //model buttons
-    private graph:any; //mxGraph (mxGraph)
-    private model:any; //mxGraphModel (mxGraphModel)
-    private currentProject:any //current loaded project (ProjectClass)
-    private divContainer:any; //div container (HTMLElement)
-    private $store:any; //references vuex store
-    private $modal:any; //references modalPlugin
-    private modelUtil:any; // ModelUtil
+    private vGraph:any; //VariaMos Graph
 
-    public constructor(graph:any, model:any, modal:any, store:any, currentProject:any, divContainer:any, buttons:any, modelUtil:any) {
+    public constructor(vGraph:any, buttons:any) {
+        this.vGraph = vGraph;
         this.buttons = buttons;
-        this.graph = graph;
-        this.model = model;
-        this.currentProject = currentProject;
-        this.divContainer = divContainer;
-        this.$modal = modal;
-        this.$store = store;
-        this.modelUtil = modelUtil;
     }
 
     public getButtons(){
         return this.buttons;
-    }
-
-    public getGraph(){
-        return this.graph;
-    }
-
-    public getModel(){
-        return this.model;
     }
 
     //initialize button actions (onclick)
@@ -64,12 +44,12 @@ export class ConfigButtonActions {
 
     //remove current model for current project
     public resetCurrent(currentButton:HTMLElement){
-        const currentProject = this.currentProject;
-        const store = this.$store;
-        const modal = this.$modal;
-        const graph = this.graph;
-        const model = this.model;
-        const modelUtil = this.modelUtil;
+        const currentProject = this.vGraph.getCurrentProject();
+        const store = this.vGraph.getStore();
+        const modal = this.vGraph.getModal();
+        const graph = this.vGraph.getGraph();
+        const model = this.vGraph.getModel();
+        const modelUtil = this.vGraph.getModelUtil();
         let index = Object.getPrototypeOf(currentProject).constructor.getProjectIndexByName(store.getters.getProjects, currentProject.getName());
         if(index != -1){
             currentButton.addEventListener('click', function () {
@@ -108,9 +88,9 @@ export class ConfigButtonActions {
 
     //remove all models for current project
     public resetAll(currentButton:HTMLElement){
-        const currentProject = this.currentProject;
-        const store = this.$store;
-        const modal = this.$modal;
+        const currentProject = this.vGraph.getCurrentProject();
+        const store = this.vGraph.getStore();
+        const modal = this.vGraph.getModal();
         let index = Object.getPrototypeOf(currentProject).constructor.getProjectIndexByName(store.getters.getProjects, currentProject.getName());
         if(index != -1){
             currentButton.addEventListener('click', function () {
@@ -127,10 +107,10 @@ export class ConfigButtonActions {
 
     //save current project models in localstorage
     public save(currentButton:HTMLElement){
-        const currentProject = this.currentProject;
-        const model = this.model;
-        const store = this.$store;
-        const modal = this.$modal;
+        const currentProject = this.vGraph.getCurrentProject();
+        const model = this.vGraph.getModel();
+        const store = this.vGraph.getStore();
+        const modal = this.vGraph.getModal();
         let index = Object.getPrototypeOf(currentProject).constructor.getProjectIndexByName(store.getters.getProjects, currentProject.getName());
         if(index != -1){
             currentButton.addEventListener('click', function () {
@@ -147,8 +127,8 @@ export class ConfigButtonActions {
 
     //show current project models XML in popup
     public xml(currentButton:HTMLElement){
-        const model = this.model;
-        const modal = this.$modal;
+        const model = this.vGraph.getModel();
+        const modal = this.vGraph.getModal();
         currentButton.addEventListener('click', function () {
             let encoder = new mxCodec();
             let node = encoder.encode(model);
@@ -162,9 +142,9 @@ export class ConfigButtonActions {
 
     //import current project models XML from an XML file
     public import(currentButton:HTMLElement){
-        const store = this.$store;
-        const modal = this.$modal;
-        const currentProject = this.currentProject;
+        const store = this.vGraph.getStore();
+        const modal = this.vGraph.getModal();
+        const currentProject = this.vGraph.getCurrentProject();
         let index = Object.getPrototypeOf(currentProject).constructor.getProjectIndexByName(store.getters.getProjects, currentProject.getName());
         currentButton.addEventListener('click', function () {
             let inputFunction = function(e:any){
@@ -197,8 +177,8 @@ export class ConfigButtonActions {
 
     //export current project models XML in an XML file
     public export(currentButton:HTMLElement){
-        const model = this.model;
-        const name =  this.currentProject.getName();
+        const model = this.vGraph.getModel();
+        const name = this.vGraph.getCurrentProject().getName();
         currentButton.addEventListener('click', function () {
             let encoder = new mxCodec();
             let node = encoder.encode(model);
@@ -219,7 +199,7 @@ export class ConfigButtonActions {
 
     //zoom in model
     public zoomIn(currentButton:HTMLElement){
-        let graph = this.graph;
+        const graph = this.vGraph.getGraph();
         currentButton.addEventListener('click', function () {
             graph.zoomIn();
         });
@@ -227,8 +207,8 @@ export class ConfigButtonActions {
 
     //delete selected cells in current model
     public delete(currentButton:HTMLElement){
-        let graph = this.graph;
-        let modal = this.$modal;
+        const graph = this.vGraph.getGraph();
+        const modal = this.vGraph.getModal();
         currentButton.addEventListener('click', function () {
             if(graph.isEnabled()){
                 //avoid removing cloned elements directly
@@ -261,7 +241,7 @@ export class ConfigButtonActions {
 
     //zoom out model
     public zoomOut(currentButton:HTMLElement){
-        let graph = this.graph;
+        const graph = this.vGraph.getGraph();
         currentButton.addEventListener('click', function () {
             graph.zoomOut();
         });
@@ -269,7 +249,7 @@ export class ConfigButtonActions {
 
     //reset zoom model
     public zoomReset(currentButton:HTMLElement){
-        let graph = this.graph;
+        const graph = this.vGraph.getGraph();
         currentButton.addEventListener('click', function () {
             graph.view.scaleAndTranslate(1, 0, 0);
         });
@@ -277,8 +257,8 @@ export class ConfigButtonActions {
 
     //convert current model to png format and download it
     public img(currentButton:HTMLElement){
-        let divContainer = this.divContainer;
-        let graph = this.graph;
+        const divContainer = this.vGraph.getDivContainer();
+        const graph = this.vGraph.getGraph();
         currentButton.addEventListener('click', function () {
             if(divContainer){
                 const svg = divContainer.firstElementChild;

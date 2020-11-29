@@ -4,53 +4,34 @@ const { mxEvent, mxCellAttributeChange } = mxgraphFactory({mxLoadResources: fals
 
 export class ConfigProperties {
     
-    private currentModel:any; //current loaded model (FeatureModel)
-    private graph:any; //mxGraph (mxGraph)
-    private model:any; //mxGraphModel (mxGraphModel)
-    private divProperties:any; //div properties (HTMLElement)
+    private vGraph:any; //VariaMos Graph
 
-    public constructor(graph:any, model:any, currentModel:any, divProperties:any) {
-        this.currentModel = currentModel;
-        this.graph = graph;
-        this.model = model;
-        this.divProperties = divProperties;
+    public constructor(vGraph:any) {
+        this.vGraph = vGraph;
     }
 
-    public getCurrentModel(){
-        return this.currentModel;
-    }
-
-    public getGraph(){
-        return this.graph;
-    }
-
-    public getModel(){
-        return this.model;
-    }
-
-    public getDivProperties(){
-        return this.divProperties;
-    }
-
+    //initialize element properties
     public initializeProperties(){
         let configPropertiesObject = this;
         let selChanges = this.selectionChanged;
+        const graph = this.vGraph.getGraph();
 
-        if(this.graph.getSelectionModel().eventListeners.length > 3){ //remove previous listeners
-            this.graph.getSelectionModel().eventListeners.pop();
-            this.graph.getSelectionModel().eventListeners.pop();
+        if(graph.getSelectionModel().eventListeners.length > 3){ //remove previous listeners
+            graph.getSelectionModel().eventListeners.pop();
+            graph.getSelectionModel().eventListeners.pop();
         }
 
-        this.graph.getSelectionModel().addListener(mxEvent.CHANGE, function(sender:any, evt:any){
+        graph.getSelectionModel().addListener(mxEvent.CHANGE, function(sender:any, evt:any){
             selChanges(configPropertiesObject);
         });
     }
 
+    //method to display properties when element selected (cell)
     public selectionChanged(configPropertiesObject:any){
-        configPropertiesObject.graph.container.focus();
-        configPropertiesObject.divProperties.innerHTML = "";
-        let cell = configPropertiesObject.graph.getSelectionCell();
-        let elements = configPropertiesObject.currentModel.elements;
+        configPropertiesObject.vGraph.getGraph().container.focus();
+        configPropertiesObject.vGraph.getDivProperties().innerHTML = "";
+        let cell = configPropertiesObject.vGraph.getGraph().getSelectionCell();
+        let elements = configPropertiesObject.vGraph.getCurrentModel().elements;
         if(cell != null){
             if(cell.value.attributes){
                 let currentType = cell.getAttribute("type");
@@ -66,7 +47,7 @@ export class ConfigProperties {
                 }
 
                 if(cell.isEdge()){ //get properties for current edge
-                    currentProperties = configPropertiesObject.currentModel.relationProperties;
+                    currentProperties = configPropertiesObject.vGraph.getCurrentModel().relationProperties;
                 }
 
                 configPropertiesObject.setIdProperty(cell);
@@ -76,16 +57,16 @@ export class ConfigProperties {
                         if(currentProperties[j].id == attrs[i].nodeName){
                             switch (currentProperties[j].inputType) {
                                 case "text":
-                                    configPropertiesObject.createTextField(configPropertiesObject.graph, attrs[i], cell, currentProperties[j]);
+                                    configPropertiesObject.createTextField(configPropertiesObject.vGraph.getGraph(), attrs[i], cell, currentProperties[j]);
                                     break;
                                 case "select":
-                                    configPropertiesObject.createSelectField(configPropertiesObject.graph, attrs[i], cell, currentProperties[j]);
+                                    configPropertiesObject.createSelectField(configPropertiesObject.vGraph.getGraph(), attrs[i], cell, currentProperties[j]);
                                     break;
                                 case "checkbox":
-                                    configPropertiesObject.createCheckboxField(configPropertiesObject.graph, attrs[i], cell, currentProperties[j]);
+                                    configPropertiesObject.createCheckboxField(configPropertiesObject.vGraph.getGraph(), attrs[i], cell, currentProperties[j]);
                                     break;
                                 default:
-                                    configPropertiesObject.createTextField(configPropertiesObject.graph, attrs[i], cell, currentProperties[j]);
+                                    configPropertiesObject.createTextField(configPropertiesObject.vGraph.getGraph(), attrs[i], cell, currentProperties[j]);
                                     break;
                             }
                         }
@@ -95,6 +76,7 @@ export class ConfigProperties {
         }
     }
 
+    //set the porperty id, for vertex is id, for edge is source plus target
     public setIdProperty(cell:any){
         let idSection = document.createElement('div');
         idSection.className = "property-id-section";
@@ -103,9 +85,10 @@ export class ConfigProperties {
         }else{
             idSection.innerText = "Source: "+cell.source.getId()+" - Target: "+cell.target.getId();
         }
-        this.divProperties.appendChild(idSection);
+        this.vGraph.getDivProperties().appendChild(idSection);
     }
 
+    //create a checkbox field
     public createCheckboxField(graph:any, attribute:any, cell:any, currentProperties:any){
         let input = document.createElement('input');	
 	    input.setAttribute('type', "checkbox");
@@ -122,6 +105,7 @@ export class ConfigProperties {
         this.executeApplyHandler(graph, input, cell, attribute.nodeName, currentProperties);
     }
 
+    //create a select field
     public createSelectField(graph:any, attribute:any, cell:any, currentProperties:any){
         let values = currentProperties.input_values;
         let input = document.createElement("select");
@@ -142,6 +126,7 @@ export class ConfigProperties {
         this.executeApplyHandler(graph, input, cell, attribute.nodeName, currentProperties);
     }
 
+    //create a text field
     public createTextField(graph:any, attribute:any, cell:any, currentProperties:any){
         let input = document.createElement('input');	
 	    input.setAttribute('type', "text");
@@ -153,6 +138,7 @@ export class ConfigProperties {
         this.executeApplyHandler(graph, input, cell, attribute.nodeName, currentProperties);
     }
 
+    //verify if the property should be displayed or not
     public checkCustomDisplay(cell:any, currentProperties:any){
         if(currentProperties.display){
             if(currentProperties.display == "basedOnPropertyValue"){
@@ -168,6 +154,7 @@ export class ConfigProperties {
         return "true";
     }
 
+    //create a general div in which the input is stored
     public createField(attribute:any, input:any, label:any, disabled:any, display:any){
         let tr = document.createElement('div');
 
@@ -188,9 +175,10 @@ export class ConfigProperties {
         tr.appendChild(td);
         td.appendChild(input);
         tr.appendChild(td);
-        this.divProperties.appendChild(tr);
+        this.vGraph.getDivProperties().appendChild(tr);
     }
 
+    //execute actions if the content of the input is changed
     public executeApplyHandler(graph:any, input:any, cell:any, attributeNodeName:any, currentProperties:any){
         this.applyCustomFunctions(input, cell, currentProperties);
         let applyHandler = function(){
@@ -228,6 +216,7 @@ export class ConfigProperties {
         mxEvent.addListener(input, 'focusout', applyHandler);
     }
 
+    //apply the actions to the inputs
     public applyCustomFunctions(input:any, cell:any, currentProperties:any){
         if(currentProperties.onchange){
             input.setAttribute("data-cell-id",cell.getId());

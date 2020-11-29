@@ -3,35 +3,11 @@ const { mxUtils, mxCell, mxGeometry, mxToolbar, mxConstants } = mxgraphFactory({
 
 export class ConfigElements {
     
-    private currentModel:any; //current loaded model (FeatureModel)
-    private graph:any; //mxGraph (mxGraph)
-    private model:any; //mxGraphModel (mxGraphModel)
-    private divElements:any; //div elements (HTMLElement)
+    private vGraph:any; //VariaMos Graph
     private toolbar:any; //toolbar (mxToolbar)
-    private $modal:any; //references modalPlugin
 
-    public constructor(graph:any, model:any, currentModel:any, divElements:any, modal:any) {
-        this.currentModel = currentModel;
-        this.graph = graph;
-        this.model = model;
-        this.divElements = divElements;
-        this.$modal = modal;
-    }
-
-    public getCurrentModel(){
-        return this.currentModel;
-    }
-
-    public getGraph(){
-        return this.graph;
-    }
-
-    public getModel(){
-        return this.model;
-    }
-
-    public getDivElements(){
-        return this.divElements;
+    public constructor(vGraph:any) {
+        this.vGraph = vGraph;
     }
 
     public getToolbar(){
@@ -39,9 +15,10 @@ export class ConfigElements {
     }
 
     public initializeElements(){
-        this.toolbar = new mxToolbar(this.divElements);
-        for (let i = 0; i < this.currentModel.elements.length; i++) {
-            this.addVertex(this.currentModel.elements[i]);
+        this.toolbar = new mxToolbar(this.vGraph.getDivElements());
+        const currentModel = this.vGraph.getCurrentModel();
+        for (let i = 0; i < currentModel.elements.length; i++) {
+            this.addVertex(currentModel.elements[i]);
         }
     }
 
@@ -62,9 +39,9 @@ export class ConfigElements {
     }
 
     public addToolbarItem(vertexToClone:any, element:any){
-        const graph = this.graph;
-        const currentModel = this.currentModel;
-        const modal = this.$modal;
+        const graph = this.vGraph.getGraph();
+        const currentModel = this.vGraph.getCurrentModel();
+        const modal = this.vGraph.getModal();
 
         let drapAndDropCreation = function(graph:any, evt:any, cell:any){
             //check custom model constraints in element creation
@@ -104,7 +81,7 @@ export class ConfigElements {
         let mspan = document.createElement('span'); //tooltip
         mspan.classList.add("csstooltiptext2");
 
-        let img = this.toolbar.addMode(element.label, "/img/custom_models/"+this.currentModel.type+"/"+element.icon, drapAndDropCreation);
+        let img = this.toolbar.addMode(element.label, "/img/custom_models/"+this.vGraph.getCurrentModel().type+"/"+element.icon, drapAndDropCreation);
         mspan.innerText = img.getAttribute('title');
         img.removeAttribute('title');
 
@@ -114,6 +91,6 @@ export class ConfigElements {
         mdiv.classList.add("csstooltip");
         mdiv.appendChild(img);
         mdiv.appendChild(mspan);
-        this.divElements.appendChild(mdiv);
+        this.vGraph.getDivElements().appendChild(mdiv);
     }
 }

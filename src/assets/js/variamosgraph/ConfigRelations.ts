@@ -3,34 +3,16 @@ const { mxUtils } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: f
 
 export class ConfigRelations {
     
-    private currentModel: any; //current loaded model (FeatureModel)
-    private graph:any; //mxGraph (mxGraph)
-    private model:any; //mxGraphModel (mxGraphModel)
-    private $modal:any; //references modalPlugin
+    private vGraph:any; //VariaMos Graph
 
-    public constructor(graph:any, model:any, modal:any, currentModel:any) {
-        this.currentModel = currentModel;
-        this.graph = graph;
-        this.model = model;
-        this.$modal = modal;
-    }
-
-    public getCurrentModel(){
-        return this.currentModel;
-    }
-
-    public getGraph(){
-        return this.graph;
-    }
-
-    public getModel(){
-        return this.model;
+    public constructor(vGraph:any) {
+        this.vGraph = vGraph;
     }
 
     public initializeRelations(){
-        let graph = this.graph;
-        let currentModel = this.currentModel;
-        let modal = this.$modal;
+        let graph = this.vGraph.getGraph();
+        let currentModel = this.vGraph.getCurrentModel();
+        let modal = this.vGraph.getModal();
         graph.connectionHandler.insertEdge = function(parent:any, id:any, value:any, source:any, target:any, style:any){
             let doc = mxUtils.createXmlDocument();
             let node = doc.createElement('rel_' + source.getAttribute("type") + '_' + target.getAttribute("type"));

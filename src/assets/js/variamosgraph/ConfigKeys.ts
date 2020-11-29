@@ -3,28 +3,14 @@ const { mxEvent } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: f
 
 export class ConfigKeys {
     
-    private graph:any; //mxGraph (mxGraph)
-    private model:any; //mxGraphModel (mxGraphModel)
-    private keyHandler:any; //mxKeyHandler (mxKeyHandler)
-    private $modal:any; //references modalPlugin
+    private vGraph:any; //VariaMos Graph
 
-    public constructor(graph:any, model:any, keyHandler:any, modal:any) {
-        this.graph = graph;
-        this.model = model;
-        this.keyHandler = keyHandler;
-        this.$modal = modal;
+    public constructor(vGraph:any) {
+        this.vGraph = vGraph;
     }
 
-    public getGraph(){
-        return this.graph;
-    }
-
-    public getModel(){
-        return this.model;
-    }
-
-    public getKeyHandler(){
-        return this.keyHandler;
+    public getVGraph(){
+        return this.vGraph;
     }
 
     public initializeKeys(){
@@ -32,8 +18,8 @@ export class ConfigKeys {
     }
 
     public suprKey(){
-        let graph = this.graph;
-        let modal = this.$modal;
+        let graph = this.vGraph.getGraph();
+        let modal = this.vGraph.getModal();
         let suprFunction = function(evt:any){
 			if (graph.isEnabled())
 			{
@@ -63,6 +49,6 @@ export class ConfigKeys {
                 }
             }
         }
-        this.keyHandler.bindKey(46,suprFunction);
+        this.vGraph.getKeyHandler().bindKey(46,suprFunction);
     }
 }
