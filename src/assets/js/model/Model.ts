@@ -89,6 +89,10 @@ export class Model {
         //implemented in subclasses
     }
 
+    public customGraphConfig(){
+        //implemented in subclasses
+    }
+
     public customConstraintsRelations(graph:any, source:any, target:any){
         //implemented in subclasses
         return {};

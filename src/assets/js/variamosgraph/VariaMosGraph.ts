@@ -10,7 +10,8 @@ const { mxGraphModel, mxGraph, mxOutline,
     mxRubberband, mxRectangle, mxShape, 
     mxUtils, mxCellRenderer, mxConstants,
     mxStencilRegistry, mxStencil, mxCell, 
-    mxMultiplicity, mxKeyHandler, mxCodec } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
+    mxMultiplicity, mxKeyHandler, mxCodec, 
+    mxDragSource } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
 
 export class VariaMosGraph {
     private graph:any; //mxGraph (mxGraph)
@@ -150,6 +151,7 @@ export class VariaMosGraph {
         this.setRelations(); //set element relations
         this.setMainCellText(); //set the main text to be displayed for cells
         this.setCustomShapes(); //set custom shapes
+        this.setCustomGraphConfig(); //set custom model graph config
         this.setOverlay(); //set overlays functions
         this.setCurrentLayer(); //specific current layer to be shown and display it
     }
@@ -177,6 +179,15 @@ export class VariaMosGraph {
     public setGraph(){
         if (this.divContainer) {
             this.graph = new mxGraph(this.divContainer, this.model);
+
+            // Avoid that new elements (cells) can be placed inside existing elements (cells)
+			mxDragSource.prototype.getDropTarget = function(graph:any, x:any, y:any){
+				let cell = graph.getCellAt(x, y);
+				if (!graph.isValidDropTarget(cell)){
+					cell = null;
+				}
+				return cell;
+			};
         }
     }
 
@@ -191,6 +202,12 @@ export class VariaMosGraph {
     public setOverlay(){
         this.currentModel.overlayStart();
     }
+
+    //initialize the overlay function (if it is available for the current model)
+    public setCustomGraphConfig(){
+        this.currentModel.customGraphConfig();
+    }
+
 
     //configure the relations between the current model elements
     public setRelations(){
@@ -259,7 +276,8 @@ export class VariaMosGraph {
 		this.graph.setMultigraph(false);
 		this.graph.setAllowDanglingEdges(false);
 		this.graph.setCellsDisconnectable(false) // Avoid disconnect egdes
-		this.graph.setDisconnectOnMove(false);
+        this.graph.setDisconnectOnMove(false); // Avoid disconnect egdes
+        this.graph.setSplitEnabled(false); // Avoid a cell can split an edge is placed above it
 		this.graph.setPanning(true);
 		this.graph.setCellsEditable(false); // Avoid double click cells
 		new mxRubberband(this.graph); // Enables rectangular selection

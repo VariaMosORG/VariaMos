@@ -79,4 +79,9 @@ export class FeatureModel extends Model {
         return returnConstraintElementCreation;
     }
     
+    //example of custom graph config
+    /*public customGraphConfig(){
+        let graph = this.getModelUtil().getVGraph().getGraph();
+        graph.setSplitEnabled(false);
+    }*/
 }
