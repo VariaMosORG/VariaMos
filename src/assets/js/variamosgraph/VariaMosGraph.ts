@@ -271,16 +271,14 @@ export class VariaMosGraph {
 
     //establish the main mxgraph configuration
     public setConfigModel(){
-        this.graph.dropEnabled = true;
 		this.graph.setConnectable(true); // Enables new connections in the graph
-		this.graph.setMultigraph(false);
-		this.graph.setAllowDanglingEdges(false);
+		this.graph.setMultigraph(false); // Multiple edges in the same direction between the same pair of vertices are not allowed
+		this.graph.setAllowDanglingEdges(false);// Avoid disconnect egdes
 		this.graph.setCellsDisconnectable(false) // Avoid disconnect egdes
         this.graph.setDisconnectOnMove(false); // Avoid disconnect egdes
         this.graph.setSplitEnabled(false); // Avoid a cell can split an edge is placed above it
-		this.graph.setPanning(true);
 		this.graph.setCellsEditable(false); // Avoid double click cells
-		new mxRubberband(this.graph); // Enables rectangular selection
+        new mxRubberband(this.graph); // Enables rectangular selection
 		this.graph.maximumGraphBounds = new mxRectangle(0, 0, 4000, 4000);
     }
 
