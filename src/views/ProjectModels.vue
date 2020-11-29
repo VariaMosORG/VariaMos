@@ -62,7 +62,7 @@
               <h6 class="m-0 font-weight-bold text-primary">Navigation</h6>
             </div>
             <div class="card-body">
-              <div id="vgraph-navigator" class="navigator"></div>
+              <div id="vgraph-navigator" class="border"></div>
             </div>
           </div>
           <!-- End Navigation Section -->
@@ -264,11 +264,6 @@ ul.tab li a:focus, .active {
 .right-area{
   padding-right: 0px;
   padding-left: 10px;
-}
-
-.navigator{
-  margin-bottom: -30px;
-  margin-top: 10px;
 }
 
 .font13{
