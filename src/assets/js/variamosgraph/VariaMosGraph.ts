@@ -72,6 +72,10 @@ export class VariaMosGraph {
         return this.$modal;
     }
 
+    public getClassName(){
+        return this.className;
+    }
+
     public getKeyHandler(){
         return this.keyHandler;
     }
@@ -94,6 +98,10 @@ export class VariaMosGraph {
 
     public getDivProperties(){
         return this.divProperties;
+    }
+
+    public getDivModelActions(){
+        return this.divModelActions;
     }
 
     public getModelUtil(){
@@ -316,7 +324,7 @@ export class VariaMosGraph {
     //configure model actions
     public setModelActions(){
         if(this.currentModel.getActions()){
-            console.log("start model actions config"); //to be implemented
+            this.currentModel.getActions().initializeActions();
         }
     }
 

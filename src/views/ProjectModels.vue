@@ -24,7 +24,7 @@
             </button>
           </div>
 
-          <div id="vgraph-model-actions" class="btn-group flex-wrap plef10" role="group">
+          <div id="vgraph-model-actions" class="btn-group flex-wrap" role="group">
             <!--<button class="btn btn-secondary btn-title csstooltip">Oli</button>-->
           </div>
 
@@ -231,6 +231,9 @@ ul.tab li a:focus, .active {
   #vgraph-buttons button {
     margin-bottom: 5px;
   }
+  #vgraph-model-actions button {
+    margin-bottom: 5px;
+  }
 }
 
 @media (max-width: 992px){
@@ -317,8 +320,8 @@ ul.tab li a:focus, .active {
     margin-right: 2px;
 }
 
-.plef10{
-  padding-left: 10px;
+#vgraph-buttons button:last-child{
+  margin-right: 10px;
 }
 /* buttons */
 

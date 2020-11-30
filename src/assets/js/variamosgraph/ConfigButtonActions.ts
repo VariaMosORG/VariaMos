@@ -23,7 +23,7 @@ export class ConfigButtonActions {
             const functionToExecute = this.buttons[i].getId();
             if((this as any)[functionToExecute]){ // Verify if the function exists
                 const currentButton = document.getElementById(functionToExecute);
-                (this as any)[functionToExecute](currentButton); // Execute the function exists
+                (this as any)[functionToExecute](currentButton); // Execute the function that exists
             }
         }
     }
