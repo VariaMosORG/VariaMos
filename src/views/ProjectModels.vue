@@ -24,9 +24,7 @@
             </button>
           </div>
 
-          <div id="vgraph-model-actions" class="btn-group flex-wrap" role="group">
-            <!--<button class="btn btn-secondary btn-title csstooltip">Oli</button>-->
-          </div>
+          <div id="vgraph-model-actions" class="btn-group flex-wrap" role="group"></div>
 
           <div class="card bg-light text-black shadow mtop">
             <div class="card-body">
@@ -322,6 +320,10 @@ ul.tab li a:focus, .active {
 
 #vgraph-buttons button:last-child{
   margin-right: 10px;
+}
+
+.dropdown-pointer{
+  cursor:pointer;
 }
 /* buttons */
 

@@ -66,7 +66,7 @@ export class ModelActions {
         for (let i = 0; i < this.actions.length; i++) {
             let aElement = document.createElement("a");
             aElement.innerText = this.actions[i].label;
-            aElement.className = "dropdown-item";
+            aElement.className = "dropdown-item dropdown-pointer";
             aElement.id = "actions-" + this.actions[i].id;
             this.divDropdownActions.appendChild(aElement);
         }
