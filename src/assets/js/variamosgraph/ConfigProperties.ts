@@ -1,5 +1,4 @@
 import { mxgraphFactory } from "ts-mxgraph";
-import { initCustomFormatter } from 'vue';
 const { mxEvent, mxCellAttributeChange } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
 
 export class ConfigProperties {

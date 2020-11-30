@@ -1,6 +1,3 @@
-import { mxgraphFactory } from "ts-mxgraph";
-const { mxEvent } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
-
 export class ConfigKeys {
     
     private vGraph:any; //VariaMos Graph

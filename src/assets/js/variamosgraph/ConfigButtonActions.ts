@@ -1,11 +1,10 @@
-import { Button } from './Button';
 import { mxgraphFactory } from "ts-mxgraph";
 const { mxCodec, mxUtils } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
 const saveSVG = require("save-svg-as-png");
 
 export class ConfigButtonActions {
 
-    private buttons:Button[]; //model buttons
+    private buttons:any; //model buttons
     private vGraph:any; //VariaMos Graph
 
     public constructor(vGraph:any, buttons:any) {
