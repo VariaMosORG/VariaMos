@@ -35,6 +35,7 @@ export class VariaMosGraph {
     private $store:any; //references vuex store
     private $modal:any; //references modalPlugin
     private modelUtil:any; // ModelUtil
+    private customData:any = {}; //references customData to maintain while navigating between models
 
     public static buttons: any = {
         "buttonArea":[
@@ -106,6 +107,14 @@ export class VariaMosGraph {
 
     public getModelUtil(){
         return this.modelUtil;
+    }
+
+    public getCustomData(){
+        return this.customData;
+    }
+
+    public setCustomData(customData:any){
+        this.customData = customData;
     }
 
     //initiliaze the main model tree (an XML element which is used to store the model info)

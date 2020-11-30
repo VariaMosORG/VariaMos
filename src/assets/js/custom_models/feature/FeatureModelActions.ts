@@ -3,9 +3,6 @@ import { mxgraphFactory } from "ts-mxgraph";
 const {mxImage, mxCellOverlay } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
 
 export class FeatureModelActions extends ModelActions {
-    private errorOverlays:any = Array(); //error overlays
-    private errorCells:any = Array(); //error cells
-
     public constructor(currentModel:any){
         super(currentModel);
         let actions = [
@@ -25,6 +22,11 @@ export class FeatureModelActions extends ModelActions {
         this.createButtonDropdownBase();
         this.createLinksDropdownBase();
         this.applyFunctions();
+        let vGraph = this.getCurrentModel().getModelUtil().getVGraph();
+        if(!vGraph.getCustomData().errorCells){
+            let errorDict = {"errorCells":[],"errorOverlays":[]};
+            vGraph.setCustomData(errorDict); //custom data for this model actions
+        }
     }
 
     public applyFunctions(){
@@ -39,30 +41,32 @@ export class FeatureModelActions extends ModelActions {
     }
 
     //clear all the error overlays
-    public clearOverlays(graph:any, errorOverlays:any, errorCells:any){
+    public clearOverlays(vGraph:any){
+        let errorCells = vGraph.getCustomData().errorCells;
+        let errorOverlays = vGraph.getCustomData().errorOverlays;
         for (let i = 0; i < errorCells.length; i++) {
-            graph.removeCellOverlay(errorCells[i], errorOverlays[i]);
+            vGraph.getGraph().removeCellOverlay(errorCells[i], errorOverlays[i]);
         }
+        let errorDict = {"errorCells":[], "errorOverlays":[]};
+        vGraph.setCustomData(errorDict);
     }
 
     public clearErrors(currentLink:HTMLElement){
         const graph = this.getCurrentModel().getModelUtil().getVGraph().getGraph();
-        const errorOverlays = this.errorOverlays;
-        const errorCells = this.errorCells;
+        const vGraph = this.getCurrentModel().getModelUtil().getVGraph();
         const clearOverlaysFunction = this.clearOverlays;
         currentLink.addEventListener('click', function () {
-            clearOverlaysFunction(graph, errorOverlays, errorCells);
+            clearOverlaysFunction(vGraph);
         });
     }
 
     public checkUniqueLabels(currentLink:HTMLElement){
+        const vGraph = this.getCurrentModel().getModelUtil().getVGraph();
         const modal = this.getCurrentModel().getModelUtil().getVGraph().getModal();
         const graph = this.getCurrentModel().getModelUtil().getVGraph().getGraph();
-        const errorOverlays = this.errorOverlays;
-        const errorCells = this.errorCells;
         const clearOverlaysFunction = this.clearOverlays;
         currentLink.addEventListener('click', function () {
-            clearOverlaysFunction(graph, errorOverlays, errorCells); //remove previous overlays
+            clearOverlaysFunction(vGraph); //remove previous overlays
             let featureRoot = graph.getModel().getCell("feature");
             let childs = graph.getModel().getChildVertices(featureRoot);
             let labels = [];
@@ -73,8 +77,12 @@ export class FeatureModelActions extends ModelActions {
                     result += "- Duplicated Feature label: " + label + "<br />";
                     let overlay = new mxCellOverlay(new mxImage('img/error.gif', 16, 16), 'Overlay tooltip', 'right', 'top');
                     graph.addCellOverlay(childs[i], overlay);
-                    errorOverlays.push(overlay);
-                    errorCells.push(childs[i]);
+
+                    //insert overlay and error info in the custom data
+                    let customData = vGraph.getCustomData();
+                    customData.errorOverlays.push(overlay);
+                    customData.errorCells.push(childs[i]);
+                    vGraph.setCustomData(customData);
                 }else{
                     labels.push(label);
                 }
