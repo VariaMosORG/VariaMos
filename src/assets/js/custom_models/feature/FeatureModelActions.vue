@@ -38,10 +38,10 @@ export default class FeatureModelActions extends Vue {
     }
 
     //check unique feature model labels
-    public checkUniqueLabels(currentLink:HTMLElement){
+    public checkUniqueLabels(){
         const vGraph = this.variaMosGraph;
-        const modal = this.variaMosGraph.getCurrentModel().getModelUtil().getVGraph().getModal();
-        const graph = this.variaMosGraph.getCurrentModel().getModelUtil().getVGraph().getGraph();
+        const modal = this.variaMosGraph.getModal();
+        const graph = this.variaMosGraph.getGraph();
         this.clearErrors();
         let featureRoot = graph.getModel().getCell("feature");
         let childs = graph.getModel().getChildVertices(featureRoot);
