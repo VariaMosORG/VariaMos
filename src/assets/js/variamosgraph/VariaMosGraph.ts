@@ -25,7 +25,6 @@ export class VariaMosGraph {
     private divNavigator:any; //div navigator (HTMLElement)
     private divElements:any; //div elements (HTMLElement)
     private divProperties:any; //div properties (HTMLElement)
-    private divModelActions:any; //div model actions (HTMLElement)
     private configButtonActions:any; //configButtons (ConfigButtonActions)
     private configElements:any; //configElements (ConfigElements)
     private configProperties:any; //configProperties (ConfigProperties)
@@ -101,10 +100,6 @@ export class VariaMosGraph {
         return this.divProperties;
     }
 
-    public getDivModelActions(){
-        return this.divModelActions;
-    }
-
     public getModelUtil(){
         return this.modelUtil;
     }
@@ -143,14 +138,13 @@ export class VariaMosGraph {
 
     //initilize the VariaMosGraph and call the main functions
     public async initializeGraph(modelType:string, currentProject:any, divContainer:any, divNavigator:any, 
-            divElements:any, divProperties:any, divModelActions:any, modal:any, store:any, caseLoad:any){
+            divElements:any, divProperties:any, modal:any, store:any, caseLoad:any){
         this.modelType = modelType;
         this.className = this.getClassModelName(this.modelType);
         this.divElements = divElements;
         this.divContainer = divContainer;
         this.divNavigator = divNavigator;
         this.divProperties = divProperties;
-        this.divModelActions = divModelActions;
         this.currentProject = currentProject;
         this.$modal = modal;
         this.$store = store;
@@ -167,7 +161,6 @@ export class VariaMosGraph {
         this.setElements(); //load model elements (palette)
         this.setConstraints(); //set model elements constraints
         this.setProperties(); //set model element properties
-        this.setModelActions(); //set model actions
         this.setRelations(); //set element relations
         this.setMainCellText(); //set the main text to be displayed for cells
         this.setCustomShapes(); //set custom shapes
@@ -313,28 +306,12 @@ export class VariaMosGraph {
             const elementModule = await import('../'+"custom_models/"+this.modelType+"/elements/"+this.currentModel.elementClassNames[i]);
             this.currentModel.addElement(new elementModule[this.currentModel.elementClassNames[i]](this.currentModel));
         }
-
-        //load current model actions
-        try {
-            const modelActionsModule = await import('../'+"custom_models/"+this.modelType+"/"+this.className+"Actions");
-            this.currentModel.setActions(new modelActionsModule[this.className+"Actions"](this.currentModel));
-        }catch (e) {
-            //current model actions do not exists
-            this.currentModel.setActions(null);
-        }
     }
 
     //configure each element of the current model
     public setElements(){
         this.configElements = new ConfigElements(this);
         this.configElements.initializeElements();
-    }
-
-    //configure model actions
-    public setModelActions(){
-        if(this.currentModel.getActions()){
-            this.currentModel.getActions().initializeActions();
-        }
     }
 
     //establish the constraints between the model elements

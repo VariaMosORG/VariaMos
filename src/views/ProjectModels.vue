@@ -24,7 +24,7 @@
             </button>
           </div>
 
-          <div id="vgraph-model-actions" class="btn-group flex-wrap" role="group"></div>
+          <component :is="customComponentModelActions" :variaMosGraph="variaMosGraph" />
 
           <div class="card bg-light text-black shadow mtop">
             <div class="card-body">
@@ -80,14 +80,15 @@
 </template>
 
 <script lang="ts">
+import { defineAsyncComponent } from 'vue';
 import { Vue, Options } from 'vue-class-component';
 import { VariaMosGraph } from "@/assets/js/variamosgraph/VariaMosGraph";
-import { Project as ProjectClass } from '@/store/Project';
+import { Project } from '@/store/Project';
 import Breadcrumb from '@/components/Breadcrumb.vue';
 
 @Options({
   components: {
-    Breadcrumb
+    Breadcrumb,
   },
   watch:{
     $route (to, from){
@@ -109,9 +110,9 @@ export default class ProjectModels extends Vue {
   public divNavigator:any; //div navigator (HTMLElement)
   public divElements:any; //div elements (HTMLElement)
   public divProperties:any; //div properties (HTMLElement)
-  public divModelActions:any; //div model actions (HTMLElement)
   public $store:any; //references vuex store
   public $modal:any; //references modalPlugin
+  public customComponentModelActions:any; //dynamic model actions component to be loaded
   public navigationList:any = [
     {
         "title":"Home", "route":"/"
@@ -122,8 +123,9 @@ export default class ProjectModels extends Vue {
   ];
 
   public beforeMount(){
+    this.loadCustomComponentModelActions();
     this.configApp = this.$store.getters.getConfigApp;
-    this.currentProject = ProjectClass.getProjectByName(this.$store.getters.getProjects, this.$route.params.projectName);
+    this.currentProject = Project.getProjectByName(this.$store.getters.getProjects, this.$route.params.projectName);
     this.availableModels = this.currentProject.getAvailableModels();
     this.navigationList.push(
       {
@@ -137,6 +139,15 @@ export default class ProjectModels extends Vue {
     );
   }
 
+  public loadCustomComponentModelActions(){
+    let customComponent = defineAsyncComponent(() =>
+      import(`../assets/js/custom_models/${this.$route.params.modelType}/${this.getBeautyModelName(this.$route.params.modelType)}Actions.vue`)
+        .catch((error:any)=>{})
+    );
+    this.customComponentModelActions = customComponent;
+    //to fix console warning
+  }
+
   public mounted(){
     this.variaMosGraph.initTreeModel(this.availableModels, this.currentProject.getXml());
     this.$modal = <any> this.$refs.modalPlugin; //reference the modal plugin
@@ -144,10 +155,10 @@ export default class ProjectModels extends Vue {
   }
 
   public updatePageOnRouteChange(){
+    this.loadCustomComponentModelActions();
     this.divElements.innerHTML = "";
     this.divNavigator.innerHTML = "";
     this.divProperties.innerHTML = "";
-    this.divModelActions.innerHTML = "";
     this.variaMosGraph.removeAllButtonEventListeners();
     this.navigationList.pop();
     this.navigationList.push(
@@ -166,10 +177,9 @@ export default class ProjectModels extends Vue {
     this.divNavigator = document.getElementById("vgraph-navigator");
     this.divElements = document.getElementById("vgraph-elements");
     this.divProperties = document.getElementById("vgraph-properties");
-    this.divModelActions = document.getElementById("vgraph-model-actions");
     this.variaMosGraph.initializeGraph(
       this.modelType, this.currentProject, this.divContainer, this.divNavigator, 
-      this.divElements, this.divProperties, this.divModelActions, this.$modal, this.$store, caseLoad, 
+      this.divElements, this.divProperties, this.$modal, this.$store, caseLoad, 
     );
   }
 
