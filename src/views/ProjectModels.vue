@@ -24,6 +24,7 @@
             </button>
           </div>
 
+          <!-- dynamic component to be loaded -->
           <component :is="customComponentModelActions" :variaMosGraph="variaMosGraph" />
 
           <div class="card bg-light text-black shadow mtop">
@@ -139,15 +140,6 @@ export default class ProjectModels extends Vue {
     );
   }
 
-  public loadCustomComponentModelActions(){
-    let customComponent = defineAsyncComponent(() =>
-      import(`../assets/js/custom_models/${this.$route.params.modelType}/${this.getBeautyModelName(this.$route.params.modelType)}Actions.vue`)
-        .catch((error:any)=>{})
-    );
-    this.customComponentModelActions = customComponent;
-    //to fix console warning
-  }
-
   public mounted(){
     this.variaMosGraph.initTreeModel(this.availableModels, this.currentProject.getXml());
     this.$modal = <any> this.$refs.modalPlugin; //reference the modal plugin
@@ -168,6 +160,18 @@ export default class ProjectModels extends Vue {
       }
     );
     this.initGraph(2);
+  }
+
+  //load the custom component model action (if available for current model)
+  public loadCustomComponentModelActions(){
+    let fileToImport = "assets/js/custom_models/" + this.$route.params.modelType + "/" + this.getBeautyModelName(this.$route.params.modelType);
+    const customComponent = defineAsyncComponent({
+      loader: () => import("@/"+fileToImport+"Actions.vue"),
+      onError(error, retry, fail, attempts) {
+        return null; //do not dynamic load a custom component model action
+      }
+    });
+    this.customComponentModelActions = customComponent;
   }
 
   public initGraph(caseLoad:number){
