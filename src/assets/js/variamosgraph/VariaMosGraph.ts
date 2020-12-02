@@ -205,9 +205,14 @@ export class VariaMosGraph {
     }
 
     //set the keyboard key actions
-    public setKeys(){
+    public async setKeys(){
         this.keyHandler = new mxKeyHandler(this.graph);
-        this.configKeys = new ConfigKeys(this);
+        let modelModule = await this.loadModules("custom_models/"+this.modelType+"/config/ConfigKeys"); //load custom config if available
+        if(modelModule != null){
+            this.configKeys = new modelModule["ConfigKeys"](this);
+        }else{
+            this.configKeys = new ConfigKeys(this); //load default config
+        }
         this.configKeys.initializeKeys();
     }
 
@@ -222,8 +227,13 @@ export class VariaMosGraph {
     }
 
     //configure the relations between the current model elements
-    public setRelations(){
-        this.configRelations = new ConfigRelations(this);
+    public async setRelations(){
+        let modelModule = await this.loadModules("custom_models/"+this.modelType+"/config/ConfigRelations"); //load custom config if available
+        if(modelModule != null){
+            this.configRelations = new modelModule["ConfigRelations"](this);
+        }else{
+            this.configRelations = new ConfigRelations(this); //load default config
+        }
         this.configRelations.initializeRelations();
     }
 
@@ -264,15 +274,36 @@ export class VariaMosGraph {
     }
 
     //initiliaze the button actions (buttons above the drawing area)
-    public setButtonActions(){
+    public async setButtonActions(){
         let buttons = VariaMosGraph.buttons.buttonArea;
-        this.configButtonActions = new ConfigButtonActions(this, buttons);
+        let modelModule = await this.loadModules("custom_models/"+this.modelType+"/config/ConfigButtonActions"); //load custom config if available
+        if(modelModule != null){
+            this.configButtonActions = new modelModule["ConfigButtonActions"](this, buttons);
+        }else{
+            this.configButtonActions = new ConfigButtonActions(this, buttons); //load default config
+        }
         this.configButtonActions.initializeActions();
     }
 
+    public async loadModules(path:any){
+        let modelModule = null;
+        try{
+            modelModule = await import('../'+path); //load custom modules
+        }
+        catch(error){
+            //return null module
+        }
+        return modelModule;
+    }
+
     //configure the properties for each model element
-    public setProperties(){
-        this.configProperties = new ConfigProperties(this);
+    public async setProperties(){
+        let modelModule = await this.loadModules("custom_models/"+this.modelType+"/config/ConfigProperties"); //load custom config if available
+        if(modelModule != null){
+            this.configProperties = new modelModule["ConfigProperties"](this);
+        }else{
+            this.configProperties = new ConfigProperties(this); //load default config
+        }
         this.configProperties.initializeProperties();
     }
 
@@ -297,20 +328,25 @@ export class VariaMosGraph {
     //load and include all the element classes for the current model
     public async loadCurrentModelClasses(){
         //load current model class
-        const modelModule = await import('../'+"custom_models/"+this.modelType+"/"+this.className); //load current model Class
+        const modelModule = await this.loadModules("custom_models/"+this.modelType+"/"+this.className);
         this.currentModel = new modelModule[this.className]();
         this.currentModel.setModelUtil(this.modelUtil);
 
         for (let i = 0; i < this.currentModel.elementClassNames.length; i++) {
             //load current model element classes
-            const elementModule = await import('../'+"custom_models/"+this.modelType+"/elements/"+this.currentModel.elementClassNames[i]);
+            const elementModule = await this.loadModules("custom_models/"+this.modelType+"/elements/"+this.currentModel.elementClassNames[i]);
             this.currentModel.addElement(new elementModule[this.currentModel.elementClassNames[i]](this.currentModel));
         }
     }
 
     //configure each element of the current model
-    public setElements(){
-        this.configElements = new ConfigElements(this);
+    public async setElements(){
+        let modelModule = await this.loadModules("custom_models/"+this.modelType+"/config/ConfigElements"); //load custom config if available
+        if(modelModule != null){
+            this.configElements = new modelModule["ConfigElements"](this);
+        }else{
+            this.configElements = new ConfigElements(this); //load default config
+        }
         this.configElements.initializeElements();
     }
 
@@ -363,21 +399,5 @@ export class VariaMosGraph {
         }catch(error){
             //custom shapes not defined for current model
         }
-    }
-
-    public loadFileToElement(filename:any)
-    {
-        var xmlHTTP = new XMLHttpRequest();
-        try
-        {
-            xmlHTTP.open("GET", filename, false);
-            xmlHTTP.send(null);
-        }
-        catch (e) {
-            window.alert("Unable to load the requested file.");
-            return;
-        }
-
-        return xmlHTTP.responseText;
     }
 }
