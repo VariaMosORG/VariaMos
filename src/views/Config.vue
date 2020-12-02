@@ -8,21 +8,27 @@
         </div>
         <div class="card-body">
             <div class="form-group row">
-                <label for="staticEmail" class="col-sm-4 col-form-label">Model Area Height (400px):</label>
+                <label class="col-sm-4 col-form-label">Model Area Height (400px):</label>
                 <div class="col-sm-8">
                 <input type="text" class="form-control" v-model="configApp.modelAreaHeight">
                 </div>
             </div>
             <div class="form-group row">
-                <label for="inputPassword" class="col-sm-4 col-form-label">Sidebar background color (navy):</label>
+                <label class="col-sm-4 col-form-label">Sidebar background color (navy):</label>
                 <div class="col-sm-8">
                 <input type="text" class="form-control" v-model="configApp.sidebarBackgroundColor">
                 </div>
             </div>
             <div class="form-group row">
-                <label for="staticEmail" class="col-sm-4 col-form-label">Display Top Bar (flex):</label>
+                <label class="col-sm-4 col-form-label">Display Top Bar (flex):</label>
                 <div class="col-sm-8">
                 <input type="text" class="form-control" v-model="configApp.displayTopBar">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Custom Config:</label>
+                <div class="col-sm-8">
+                <textarea class="form-control" rows="3" v-model="configApp.customConfig"></textarea>
                 </div>
             </div>
           <button v-on:click="saveConfig" class="btn btn-info marr20">Save</button>

@@ -70,7 +70,6 @@
         </div>
       </div>
     </div>
-    
 
     <div class="col-xl-6 col-lg-6">
 
