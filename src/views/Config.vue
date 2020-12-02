@@ -4,7 +4,7 @@
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Config</h6>
+            <h6 class="m-0 font-weight-bold text-primary">General Config</h6>
         </div>
         <div class="card-body">
             <div class="form-group row">
@@ -26,6 +26,21 @@
                 </div>
             </div>
           <button v-on:click="saveConfig" class="btn btn-info marr20">Save</button>
+        </div>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Available Installed Models</h6>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                <li class="list-group-item" v-for="installedModel in configApp.installedModels" v-bind:key="installedModel">
+                    {{ installedModel }}
+                </li>
+            </ul>
+            <br />
+            <button v-on:click="identifyModels" class="btn btn-info marr20">Identify installed models</button>
         </div>
     </div>
 
@@ -61,6 +76,24 @@ export default class Config extends Vue {
 
     public mounted(){
         this.$modal = <any> this.$refs.modalPlugin; //reference the modal plugin
+    }
+
+    public identifyModels(){
+        const modelFiles = require.context('@/assets/js/custom_models', true, /\.ts$/);
+        const modelFilesKeys = modelFiles.keys();
+        let listOfModels:string[] = [];
+        for (let i = 0; i < modelFilesKeys.length; i++) {
+            let modelSplit = modelFilesKeys[i].split("/");
+            if(modelSplit.length == 3){
+                if (listOfModels.indexOf(modelSplit[1]) == -1) {
+                    listOfModels.push(modelSplit[1]);
+                }
+            }
+        }
+        this.configApp.setInstalledModels(listOfModels);
+        this.$store.commit("setConfigApp",this.configApp);
+        this.$modal.setData("success", "Success", "List of installed models updated");
+        this.$modal.click();
     }
 
     public saveConfig(){

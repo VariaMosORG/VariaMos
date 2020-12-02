@@ -5,7 +5,7 @@ import { ConfigApp } from './ConfigApp';
 export default createStore({
   state: {
     projects:[] as any,
-    configApp: new ConfigApp("400px","navy","flex")
+    configApp: new ConfigApp("400px","navy","flex",["feature","component","binding_feature_component"])
   },
 
   getters: {

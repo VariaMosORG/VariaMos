@@ -153,7 +153,7 @@ import Breadcrumb from '@/components/Breadcrumb.vue';
   }
 })
 export default class Projects extends Vue {
-  public avaModels:any = ["feature","component","binding_feature_component"];
+  public avaModels:any;
   public projectName:string = "";
   public projectAvailableModels:any = [];
   public projects:any = [];
@@ -170,6 +170,7 @@ export default class Projects extends Vue {
 
   public beforeMount(){
     this.projects = this.$store.getters.getProjects;
+    this.avaModels = this.$store.getters.getConfigApp.getInstalledModels();
   }
 
   public mounted(){
