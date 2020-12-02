@@ -341,18 +341,43 @@ export class VariaMosGraph {
         
         mxUtils.extend(CustomShape, mxShape);
         mxCellRenderer.registerShape('customShape', CustomShape);
+        try{
+            //load custom shapes file for current model
+            let xmlSrc = require("@/assets/js/custom_models/" + this.getCurrentModel().type + "/xml/custom_shapes.xml");
+            let parser = new DOMParser();
+            let xmlDoc = parser.parseFromString(xmlSrc.default, "text/xml");
+            let root = xmlDoc.firstChild;
+            if(root){
+                let shape = root.firstChild as any;
+                if(shape){ //if xml document contains shapes
+                    while (shape != null)
+                    {
+                        if (shape.nodeType == mxConstants.NODETYPE_ELEMENT)
+                        {
+                            mxStencilRegistry.addStencil(shape.getAttribute('name'), new mxStencil(shape));
+                        }
+                        shape = shape.nextSibling;
+                    }
+                }
+            }
+        }catch(error){
+            //custom shapes not defined for current model
+        }
+    }
 
-        let req = mxUtils.load('/xml/MX/' + this.modelType + '/custom_shapes.xml');
-		let root = req.getDocumentElement();
-        let shape = root.firstChild;
-        
-        while (shape != null)
-		{
-			if (shape.nodeType == mxConstants.NODETYPE_ELEMENT)
-			{
-				mxStencilRegistry.addStencil(shape.getAttribute('name'), new mxStencil(shape));
-			}
-			shape = shape.nextSibling;
-		}
+    public loadFileToElement(filename:any)
+    {
+        var xmlHTTP = new XMLHttpRequest();
+        try
+        {
+            xmlHTTP.open("GET", filename, false);
+            xmlHTTP.send(null);
+        }
+        catch (e) {
+            window.alert("Unable to load the requested file.");
+            return;
+        }
+
+        return xmlHTTP.responseText;
     }
 }
