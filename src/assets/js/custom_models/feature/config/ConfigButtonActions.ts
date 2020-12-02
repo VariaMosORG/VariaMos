@@ -6,7 +6,7 @@ export class ConfigButtonActions extends CBA {
         super(vGraph, buttons);
     }
 
-    //example of custom zoom button for this model
+    //example of custom 'zoom in' button for this model
     /*public zoomIn(currentButton:HTMLElement){
         currentButton.addEventListener('click', function () {
             console.log("custom zoom");
