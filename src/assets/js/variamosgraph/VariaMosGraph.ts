@@ -34,6 +34,7 @@ export class VariaMosGraph {
     private $store:any; //references vuex store
     private $modal:any; //references modalPlugin
     private modelUtil:any; // ModelUtil
+    private configApp:any; //references current configApp (ConfigApp)
     private customData:any = {}; //references customData to maintain while navigating between models
 
     public static buttons: any = {
@@ -108,6 +109,10 @@ export class VariaMosGraph {
         return this.customData;
     }
 
+    public getConfigApp(){
+        return this.configApp;
+    }
+
     public setCustomData(customData:any){
         this.customData = customData;
     }
@@ -138,7 +143,7 @@ export class VariaMosGraph {
 
     //initilize the VariaMosGraph and call the main functions
     public async initializeGraph(modelType:string, currentProject:any, divContainer:any, divNavigator:any, 
-            divElements:any, divProperties:any, modal:any, store:any, caseLoad:any){
+            divElements:any, divProperties:any, configApp:any, modal:any, store:any, caseLoad:any){
         this.modelType = modelType;
         this.className = this.getClassModelName(this.modelType);
         this.divElements = divElements;
@@ -146,6 +151,7 @@ export class VariaMosGraph {
         this.divNavigator = divNavigator;
         this.divProperties = divProperties;
         this.currentProject = currentProject;
+        this.configApp = configApp;
         this.$modal = modal;
         this.$store = store;
         if(caseLoad == 1){ //case 1 is called each time the ProjectModels view is mounted
