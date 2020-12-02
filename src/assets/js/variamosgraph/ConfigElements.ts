@@ -80,8 +80,8 @@ export class ConfigElements {
         let mdiv = document.createElement('div');
         let mspan = document.createElement('span'); //tooltip
         mspan.classList.add("csstooltiptext2");
-
-        let img = this.toolbar.addMode(element.label, "/img/custom_models/"+this.vGraph.getCurrentModel().type+"/"+element.icon, drapAndDropCreation);
+        let imgSrc = require("@/assets/js/custom_models/"+this.vGraph.getCurrentModel().type+"/img/"+element.icon);
+        let img = this.toolbar.addMode(element.label, imgSrc, drapAndDropCreation);
         mspan.innerText = img.getAttribute('title');
         img.removeAttribute('title');
 
