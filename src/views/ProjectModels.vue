@@ -95,6 +95,8 @@ import Breadcrumb from '@/components/Breadcrumb.vue';
     $route (to, from){
       if(this.$route.name === 'ProjectModel'){
         this.updatePageOnRouteChange();
+      }else{
+        this.$root.search = function(){}; //restart the search function
       }
     }
   } 
@@ -113,6 +115,7 @@ export default class ProjectModels extends Vue {
   public divProperties:any; //div properties (HTMLElement)
   public $store:any; //references vuex store
   public $modal:any; //references modalPlugin
+  public $root:any; //App.vue instance
   public customComponentModelActions:any; //dynamic model actions component to be loaded
   public navigationList:any = [
     {
@@ -144,6 +147,13 @@ export default class ProjectModels extends Vue {
     this.variaMosGraph.initTreeModel(this.availableModels, this.currentProject.getXml());
     this.$modal = <any> this.$refs.modalPlugin; //reference the modal plugin
     this.initGraph(1);
+
+    //re implement the search bar function
+    let root = this.$route.params.modelType;
+    let modelUtil = this.variaMosGraph.getModelUtil();
+    this.$root.search = function(){
+      modelUtil.searchFirstCellByLabel(root, this.$root.searchText);
+    }
   }
 
   public updatePageOnRouteChange(){

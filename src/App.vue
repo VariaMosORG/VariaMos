@@ -97,10 +97,9 @@
               <form
                   class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                   <div class="input-group">
-                      <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                          aria-label="Search" aria-describedby="basic-addon2">
+                      <input type="text" v-model="searchText" class="form-control bg-light border-0 small" placeholder="Search for...">
                       <div class="input-group-append">
-                          <button class="btn btn-primary" type="button">
+                          <button v-on:click="search" class="btn btn-primary" type="button">
                               <i class="fas fa-search fa-sm"></i>
                           </button>
                       </div>
@@ -121,11 +120,10 @@
                           aria-labelledby="searchDropdown">
                           <form class="form-inline mr-auto w-100 navbar-search">
                               <div class="input-group">
-                                  <input type="text" class="form-control bg-light border-0 small"
-                                      placeholder="Search for..." aria-label="Search"
-                                      aria-describedby="basic-addon2">
+                                  <input type="text" v-model="searchText" class="form-control bg-light border-0 small"
+                                      placeholder="Search for...">
                                   <div class="input-group-append">
-                                      <button class="btn btn-primary" type="button">
+                                      <button v-on:click="search" class="btn btn-primary" type="button">
                                           <i class="fas fa-search fa-sm"></i>
                                       </button>
                                   </div>
@@ -181,6 +179,7 @@ export default class App extends Vue {
     public $store:any; //references vuex store
     public projects:any = []; //references current projects (Project[])
     public configApp:any; //references current configApp (ConfigApp)
+    public searchText:string = ""; //search text
 
     public beforeMount(){
         this.projects = this.$store.getters.initializeProjects; //initialize projects for the entire app
@@ -202,6 +201,10 @@ export default class App extends Vue {
         if(mainIcon){
             mainIcon.classList.toggle('display-icon-yes');
         }
+    }
+
+    public search(){
+        //to be redefined in the child components
     }
 }
 </script>

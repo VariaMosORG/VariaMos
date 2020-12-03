@@ -46,7 +46,7 @@
                 </li>
             </ul>
             <br />
-            <button v-on:click="identifyModels" class="btn btn-info marr20">Identify installed models</button>
+            <button v-on:click="discoverModels" class="btn btn-info marr20">Discover installed models</button>
         </div>
     </div>
 
@@ -84,7 +84,7 @@ export default class Config extends Vue {
         this.$modal = <any> this.$refs.modalPlugin; //reference the modal plugin
     }
 
-    public identifyModels(){
+    public discoverModels(){
         const modelFiles = require.context('@/assets/js/custom_models', true, /\.ts$/);
         const modelFilesKeys = modelFiles.keys();
         let listOfModels:string[] = [];
