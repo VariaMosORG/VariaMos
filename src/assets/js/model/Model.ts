@@ -1,4 +1,4 @@
-export class Model {
+export abstract class Model {
     private type:string; //for example feature
     private elementClassNames:string[];
     private elements:any = Array(); // ModelElement[]

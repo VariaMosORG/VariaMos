@@ -33,6 +33,7 @@ export class ModelUtil {
             label = label.toLowerCase();
             labelToSearch = labelToSearch.toLowerCase();
             if(label.includes(labelToSearch)){
+                //this.vGraph.getGraph().getView().setTranslate(-cell.getGeometry().x, -cell.getGeometry().y);
                 this.vGraph.getGraph().getSelectionModel().setCell(cell);
                 break;
             }

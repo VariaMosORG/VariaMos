@@ -1,12 +1,12 @@
-export class ModelElement { 
-    private icon: string;
-    private type: string; 
-    private width: number; 
-    private height: number;
-    private style: string;
-    private label: string;
-    private currentModel: any; //references the current model
-    private properties: any = Array();
+export abstract class ModelElement { 
+    private icon:string;
+    private type:string; 
+    private width:number; 
+    private height:number;
+    private style:string;
+    private label:string;
+    private currentModel:any; //references the current model
+    private properties:any = Array();
 
     public constructor(icon:string, type:string, width:number, height:number, 
         style:string, label:string, currentModel:any) {
