@@ -2,6 +2,7 @@
 <div class="btn-group flex-wrap show" role="group">
     <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" id="btnGroupActions1">Model Actions</button>
     <div id="divDropdownActions" class="dropdown-menu" aria-labelledby="btnGroupActions1">
+        <a class="dropdown-item dropdown-pointer" v-on:click="testComponentBackend">Test Component Management Backend</a>
         <a class="dropdown-item dropdown-pointer" v-on:click="hideFragmentRelations">Hide all fragment alter relations</a>
         <a class="dropdown-item dropdown-pointer" v-on:click="showFragmentRelations">Show all fragment alter relations</a>
         <a class="dropdown-item dropdown-pointer" v-on:click="showFragmentRelationsSelected">Show alter relations for current fragments</a>
@@ -11,12 +12,36 @@
 
 <script lang="ts">
 import { Vue, Options } from 'vue-class-component';
+import axios from "axios";
 
 @Options({
   props: ['variaMosGraph']
 })
 export default class ComponentModelActions extends Vue {
     public variaMosGraph:any; //VariaMosGraph object
+    public customConfig:any; //CustomConfig for component model
+
+    public mounted(){
+        this.customConfig = this.variaMosGraph.configApp.getCustomConfigAsJsonObject().component;
+    }
+
+    public testComponentBackend(){
+        let modal = this.variaMosGraph.getModal();
+        axios.get(this.customConfig.backendURL+'test')
+            .then(function (response) {
+                if(response.data == "Ok"){
+                    modal.setData("success", "Success", "Backend connection is Ok");
+                    modal.click();
+                }else{
+                    modal.setData("error", "Error", "Wrong backend connection");
+                    modal.click();
+                }
+            })
+            .catch(function (error) {
+                modal.setData("error", "Error", "Wrong backend connection. "+error);
+                modal.click();
+            });
+    }
 
     public hideFragmentRelations(){
         const graph = this.variaMosGraph.getGraph();
