@@ -96,7 +96,7 @@ import Breadcrumb from '@/components/Breadcrumb.vue';
       if(this.$route.name === 'ProjectModel'){
         this.updatePageOnRouteChange();
       }else{
-        this.$root.search = function(){}; //restart the search function
+        this.$root.search = function(){}; //restart the search function of the App.vue instance
       }
     }
   } 
@@ -147,15 +147,19 @@ export default class ProjectModels extends Vue {
     this.variaMosGraph.initTreeModel(this.availableModels, this.currentProject.getXml());
     this.$modal = <any> this.$refs.modalPlugin; //reference the modal plugin
     this.initGraph(1);
+    this.implementSearchBarFunction();
+  }
 
-    //re implement the search bar function
-    let root = this.$route.params.modelType;
+  //now the search bar allows to search for cells
+  public implementSearchBarFunction(){
+    let root = this.$route.params.modelType; 
     let modelUtil = this.variaMosGraph.getModelUtil();
-    this.$root.search = function(){
+    this.$root.search = function(){ //modify search function of the App.vue instance
       modelUtil.searchFirstCellByLabel(root, this.$root.searchText);
     }
   }
 
+  //update model info and functions
   public updatePageOnRouteChange(){
     this.loadCustomComponentModelActions();
     this.divElements.innerHTML = "";
@@ -170,6 +174,7 @@ export default class ProjectModels extends Vue {
       }
     );
     this.initGraph(2);
+    this.implementSearchBarFunction();
   }
 
   //load the custom component model action (if available for current model)
