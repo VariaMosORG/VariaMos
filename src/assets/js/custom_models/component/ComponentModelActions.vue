@@ -4,6 +4,8 @@
     <div id="divDropdownActions" class="dropdown-menu" aria-labelledby="btnGroupActions1">
         <a class="dropdown-item dropdown-pointer" v-on:click="testComponentBackend">Test Component Management Backend</a>
         <a class="dropdown-item dropdown-pointer" v-on:click="showFileCode">Show File Code</a>
+        <a class="dropdown-item dropdown-pointer" v-on:click="executeDerivation">Execute Derivation</a>
+        <a class="dropdown-item dropdown-pointer" v-on:click="verifyDerivation">Verify Derivation</a>
         <a class="dropdown-item dropdown-pointer" v-on:click="hideFragmentRelations">Hide all fragment alter relations</a>
         <a class="dropdown-item dropdown-pointer" v-on:click="showFragmentRelations">Show all fragment alter relations</a>
         <a class="dropdown-item dropdown-pointer" v-on:click="showFragmentRelationsSelected">Show alter relations for current fragments</a>
@@ -13,6 +15,7 @@
 
 <script lang="ts">
 import { Vue, Options } from 'vue-class-component';
+import { ComponentFunctions } from './custom/ComponentFunctions';
 import axios from "axios";
 
 @Options({
@@ -72,13 +75,51 @@ export default class ComponentModelActions extends Vue {
                     let stringBody = "<div class='vertical-scroll border'><pre><code>" + htmlEntities(response.data) + "</code></pre></div>";
                     modal.setData("", "File code", stringBody);
                     modal.click();
-                    console.log(response);
                 })
                 .catch(function (error) {
                     modal.setData("error", "Error", "Wrong backend connection. " + error);
                     modal.click();
                 });
 
+        }
+    }
+
+    public executeDerivation(){
+        let modal = this.variaMosGraph.getModal();
+        if (this.customConfig.backendURL != "" && this.customConfig.backendPoolFolder && this.customConfig.backendDerivationFolder){
+            let modelData = JSON.stringify(ComponentFunctions.execute(this.variaMosGraph.getGraph()));
+            axios.post(this.customConfig.backendURL + 'ComponentImplementation/execute', {
+                    data: modelData,
+                    p_pool: this.customConfig.backendPoolFolder,
+                    p_derived: this.customConfig.backendDerivationFolder
+                })
+                .then(function (response) {
+                    modal.setData("success", "Success", response.data);
+                    modal.click();
+                })
+                .catch(function (error) {
+                    modal.setData("error", "Error", "Wrong backend connection. " + error);
+                    modal.click();
+                });
+        }
+    }
+
+    public verifyDerivation(){
+        let modal = this.variaMosGraph.getModal();
+        if (this.customConfig.backendURL != "" && this.customConfig.backendPoolFolder && this.customConfig.backendDerivationFolder){
+            let modelData = JSON.stringify(ComponentFunctions.verify(this.variaMosGraph.getGraph()));
+            axios.post(this.customConfig.backendURL + 'ComponentImplementation/verify', {
+                    data: modelData,
+                    p_derived: this.customConfig.backendDerivationFolder
+                })
+                .then(function (response) {
+                    modal.setData("success", "Success", response.data);
+                    modal.click();
+                })
+                .catch(function (error) {
+                    modal.setData("error", "Error", "Wrong backend connection. " + error);
+                    modal.click();
+                });
         }
     }
 
