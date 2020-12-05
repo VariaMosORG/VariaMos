@@ -8,7 +8,7 @@
           <div id="main-icon" class="sidebar-brand-icon rotate-n-15 display-icon">
               V
            </div>
-          <div class="sidebar-brand-text mx-3">VariaMos <sup>Basic</sup></div>
+          <div class="sidebar-brand-text mx-3">VariaMos</div>
       </a>
       </router-link>
 

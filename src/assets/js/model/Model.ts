@@ -2,7 +2,6 @@ export abstract class Model {
     private type:string; //for example feature
     private elementClassNames:string[];
     private elements:any = Array(); // ModelElement[]
-    private actions:any; // ModelActions
     private elementClones:any = {}; // element clones
     private constraints?:any = Array(); //list of constraints between elements
     private modelUtil?:any; // ModelUtil
@@ -28,10 +27,6 @@ export abstract class Model {
 
     public getElements(){
         return this.elements;
-    }
-
-    public getActions(){
-        return this.actions;
     }
 
     public getElementClones(){
@@ -88,10 +83,6 @@ export abstract class Model {
 
     public setElements(elements:any){
         this.elements = elements;
-    }
-
-    public setActions(actions:any){
-        this.actions = actions;
     }
 
     public overlayStart(){

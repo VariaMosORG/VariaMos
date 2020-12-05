@@ -43,6 +43,10 @@ export default class AppModal extends Vue {
     let confirmButton = document.getElementById("gmodal-button-confirm");
     let modalBody = document.getElementById("gmodal-body");
 
+    if(confirmButton){
+      confirmButton.innerHTML = "Confirm";
+    }
+
     //set content
     if(modalBody){
       modalBody.innerHTML = "";
@@ -74,6 +78,13 @@ export default class AppModal extends Vue {
 
   public setSecondaryMessage(secondary:boolean){
     this.secondaryMessage = secondary;
+  }
+
+  public setConfirmButtonText(text:string){
+    let confirmButton = document.getElementById("gmodal-button-confirm");
+    if(confirmButton){
+      confirmButton.innerHTML = text;
+    }
   }
 
   public setType(type:string){
