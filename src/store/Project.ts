@@ -1,3 +1,6 @@
+/**
+ * @author Daniel Correa <dcorreab@eafit.edu.co>
+ */
 export class Project {
   private name:string;
   private xml:string;

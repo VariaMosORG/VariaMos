@@ -2,6 +2,9 @@ import { mxgraphFactory } from "ts-mxgraph";
 const { mxCodec, mxUtils } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
 const saveSVG = require("save-svg-as-png");
 
+/**
+ * @author Daniel Correa <dcorreab@eafit.edu.co>
+ */
 export class ConfigButtonActions {
 
     private buttons:any; //model buttons

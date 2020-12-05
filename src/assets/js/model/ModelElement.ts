@@ -1,3 +1,6 @@
+/**
+ * @author Daniel Correa <dcorreab@eafit.edu.co>
+ */
 export abstract class ModelElement { 
     private icon:string;
     private type:string; 

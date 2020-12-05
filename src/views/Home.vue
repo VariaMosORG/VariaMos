@@ -1,3 +1,6 @@
+<!--
+ @author Daniel Correa <dcorreab@eafit.edu.co>
+-->
 <template>
 
   <Breadcrumb :navigationList="navigationList" />

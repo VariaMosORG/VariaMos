@@ -1,3 +1,6 @@
+/**
+ * @author Daniel Correa <dcorreab@eafit.edu.co>
+ */
 export class Button {
     private id:string;
     private label:string;

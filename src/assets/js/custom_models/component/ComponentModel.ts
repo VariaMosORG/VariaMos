@@ -1,5 +1,8 @@
 import { Model } from "../../model/Model";
 
+/**
+ * @author Daniel Correa <dcorreab@eafit.edu.co>
+ */
 export class ComponentModel extends Model {
 
     public constructor() {

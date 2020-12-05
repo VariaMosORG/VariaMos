@@ -1,3 +1,6 @@
+/**
+ * @author Daniel Correa <dcorreab@eafit.edu.co>
+ */
 export class ConfigKeys {
     
     private vGraph:any; //VariaMos Graph

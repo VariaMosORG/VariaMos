@@ -1,3 +1,6 @@
+<!--
+ @author Daniel Correa <dcorreab@eafit.edu.co>
+-->
 <template>
 <div class="btn-group" role="group">
     <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" id="btnGroupActions1">Derivation</button>

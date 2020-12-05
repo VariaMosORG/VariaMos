@@ -1,3 +1,6 @@
+<!--
+ @author Daniel Correa <dcorreab@eafit.edu.co>
+-->
 <template>
 <div class="btn-group flex-wrap" role="group">
     <div class="btn-group" role="group">

@@ -1,3 +1,6 @@
+/**
+ * @author Daniel Correa <dcorreab@eafit.edu.co>
+ */
 export class ModelUtil {
 
     private vGraph:any; //VariaMos Graph

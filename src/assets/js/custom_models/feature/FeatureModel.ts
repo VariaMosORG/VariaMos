@@ -2,6 +2,9 @@ import { Model } from "../../model/Model";
 import { mxgraphFactory } from "ts-mxgraph";
 const {mxImage, mxCellOverlay } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
 
+/**
+ * @author Daniel Correa <dcorreab@eafit.edu.co>
+ */
 export class FeatureModel extends Model {
 
     public constructor() {

@@ -1,3 +1,6 @@
+/**
+ * @author Daniel Correa <dcorreab@eafit.edu.co>
+ */
 export class ComponentFunctions {
 
     public static customize(graph:any){

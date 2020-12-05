@@ -13,6 +13,9 @@ const { mxGraphModel, mxGraph, mxOutline,
     mxMultiplicity, mxKeyHandler, mxCodec, 
     mxDragSource } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
 
+/**
+ * @author Daniel Correa <dcorreab@eafit.edu.co>
+ */
 export class VariaMosGraph {
     private graph:any; //mxGraph (mxGraph)
     private model:any; //mxGraphModel (mxGraphModel)

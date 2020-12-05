@@ -2,6 +2,9 @@ import { createStore } from 'vuex';
 import { Project } from './Project';
 import { ConfigApp } from './ConfigApp';
 
+/**
+ * @author Daniel Correa <dcorreab@eafit.edu.co>
+ */
 export default createStore({
   state: {
     projects:[] as any,

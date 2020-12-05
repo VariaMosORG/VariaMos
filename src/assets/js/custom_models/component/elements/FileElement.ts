@@ -1,5 +1,8 @@
 import { ModelElement } from "../../../model/ModelElement";
 
+/**
+ * @author Daniel Correa <dcorreab@eafit.edu.co>
+ */
 export class FileElement extends ModelElement {
     public constructor(currentModel:any){
         super(

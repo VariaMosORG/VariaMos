@@ -1,3 +1,7 @@
+/**
+ * @author Daniel Correa <dcorreab@eafit.edu.co>
+ */
+
 import GlobalModal from '../components/GlobalModal.vue';
 
 const ModalPlugin = {

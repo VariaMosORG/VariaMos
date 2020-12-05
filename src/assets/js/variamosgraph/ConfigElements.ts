@@ -1,6 +1,9 @@
 import { mxgraphFactory } from "ts-mxgraph";
 const { mxUtils, mxCell, mxGeometry, mxToolbar, mxConstants } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
 
+/**
+ * @author Daniel Correa <dcorreab@eafit.edu.co>
+ */
 export class ConfigElements {
     
     private vGraph:any; //VariaMos Graph

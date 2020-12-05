@@ -2,6 +2,9 @@ import { ModelElement } from "../../../model/ModelElement";
 import { mxgraphFactory } from "ts-mxgraph";
 const {mxImage, mxCellOverlay } = mxgraphFactory({mxLoadResources: false, mxLoadStylesheets: false});
 
+/**
+ * @author Daniel Correa <dcorreab@eafit.edu.co>
+ */
 export class ConcreteElement extends ModelElement {
     public constructor(currentModel:any){
         super(

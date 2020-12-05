@@ -1,3 +1,6 @@
+/**
+ * @author Daniel Correa <dcorreab@eafit.edu.co>
+ */
 export abstract class Model {
     private type:string; //for example feature
     private elementClassNames:string[];

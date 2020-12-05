@@ -1,3 +1,6 @@
+/**
+ * @author Daniel Correa <dcorreab@eafit.edu.co>
+ */
 export class ConfigApp {
   private modelAreaHeight:string;
   private sidebarBackgroundColor:string;

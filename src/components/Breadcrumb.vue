@@ -1,3 +1,6 @@
+<!--
+ @author Daniel Correa <dcorreab@eafit.edu.co>
+-->
 <template>
 <nav aria-label="breadcrumb" class="breadcrumb-font">
     <ol class="breadcrumb">

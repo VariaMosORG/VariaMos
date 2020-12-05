@@ -1,3 +1,7 @@
+/**
+ * @author Daniel Correa <dcorreab@eafit.edu.co>
+ */
+
 import { createRouter, createWebHashHistory } from 'vue-router';
 import Home from '@/views/Home.vue';
 import Docs from '@/views/Docs.vue';

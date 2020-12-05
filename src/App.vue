@@ -1,3 +1,6 @@
+<!--
+ @author Daniel Correa <dcorreab@eafit.edu.co>
+-->
 <template>
   <!-- Sidebar -->
   <ul v-bind:style="{ background: configApp.getSidebarBackgroundColor() }" class="navbar-nav sidebar sidebar-dark accordion"  id="accordionSidebar">

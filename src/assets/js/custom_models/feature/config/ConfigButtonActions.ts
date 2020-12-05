@@ -1,5 +1,8 @@
 import { ConfigButtonActions as CBA } from "../../../variamosgraph/ConfigButtonActions";
 
+/**
+ * @author Daniel Correa <dcorreab@eafit.edu.co>
+ */
 export class ConfigButtonActions extends CBA {
 
     public constructor(vGraph:any, buttons:any) {
