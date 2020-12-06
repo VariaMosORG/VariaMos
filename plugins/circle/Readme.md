@@ -10,6 +10,9 @@ This model only contains a CircleElement (with a circle figure) that can be plac
 - Verify that the model allows you to create circles.
 - Congratulations, plugin installed.
 
+# Unistall
+- Remove the src/assets/js/custom_models/circle/ folder and that's it.
+
 # Autor
 - Daniel Correa (dcorreab@eafit.edu.co)
 
