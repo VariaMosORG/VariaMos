@@ -30,6 +30,10 @@ export default class ComponentDerivation extends Vue {
     public customizationCusPos:any;
     public customizationCusMaxPos:any;
     public customizationCompMaxPos:any;
+    public previousDest:any;
+    public previousCPoint:any;
+    public previousPlan:any;
+    public fileDest:any;
 
     public mounted(){
         this.customConfig = this.variaMosGraph.configApp.getCustomConfigAsJsonObject().component;
@@ -127,7 +131,6 @@ export default class ComponentDerivation extends Vue {
                     })
                     .then(function (response) {
                         self.customizationResponse = response.data;
-                        self.customizationResponse = response.data;
                         self.customizationCompPos = 0;
                         self.customizationCusPos = 0;
                         self.customizationCusMaxPos = 0;
@@ -148,7 +151,8 @@ export default class ComponentDerivation extends Vue {
                             "notification",
                         ];
                         let body = modalCustomization(texts, inputs, defaultVals);
-                        let confirmAction = function(){console.log("oli");};
+                        //let confirmAction = function(){console.log("oli");};
+                        let confirmAction = self.executeCustomization;
                         modal.setData("", "Customization process", body, "confirm", confirmAction);
                         modal.setConfirmButtonText("Start/Next");
                         modal.setSecondaryMessage(true);
@@ -162,56 +166,142 @@ export default class ComponentDerivation extends Vue {
         }
     }
 
-    /*public customizeDerivation(){
-        let modal = this.variaMosGraph.getModal();
-        let customizationResponse = this.customizationResponse;
-        console.log(this.customizationResponse);
-        if (this.customConfig.backendURL != "" && this.customConfig.backendPoolFolder && this.customConfig.backendDerivationFolder){
-            let modelData = ComponentFunctions.customize(this.variaMosGraph.getGraph());
-            if (modelData.length == 0) {
-                modal.setData("error", "Error", "No files to customize");
-                modal.click();
+    public executeCustomization(){
+        let fileToUploadTr = document.getElementById("filetouploadtr") as any;
+        let customizedTextArea = document.getElementById("customized") as any;
+
+        if(fileToUploadTr){
+            fileToUploadTr.style.display = "none";
+        }
+
+        if(customizedTextArea){
+            customizedTextArea.disabled = false;
+        }
+
+        if (this.customizationCompPos < this.customizationCompMaxPos) {
+            this.customizationCusMaxPos = this.customizationResponse[this.customizationCompPos][1];
+            if (this.customizationCusPos < this.customizationCusMaxPos) {
+                let currentPos = 2 + this.customizationCusPos * 3;
+                let notificationTextArea = document.getElementById("notification") as any;
+                let defaultTextArea = document.getElementById("default") as any;
+                let currentInput = document.getElementById("current") as any;
+                notificationTextArea.value = "";
+                defaultTextArea.value = "";
+                let customizedContent = "";
+                if (this.previousDest != "") {
+                    customizedContent = customizedTextArea.value;
+                }
+                customizedTextArea.value = "";
+                let currentValue = this.customizationResponse[this.customizationCompPos][currentPos];
+                currentInput.value = currentValue;
+
+                let destination = this.findDestinationFile(currentValue);
+
+                if (destination == "") {
+                    this.previousDest = "";
+                    notificationTextArea.value = "Current file not found, verify the component diagram";
+                }else{
+                    currentInput.value = "ID: " + currentValue + " - DEST: " + destination;
+                    let modelDatax = [] as any;
+                    modelDatax[0] = destination;
+                    modelDatax[1] = this.customizationResponse[this.customizationCompPos][currentPos+1];
+                    modelDatax[2] = this.customizationResponse[this.customizationCompPos][currentPos+2];
+                    if(this.previousDest && this.previousDest != ""){
+                        modelDatax[3] = this.previousDest;
+                        modelDatax[4] = this.previousCPoint;
+                        modelDatax[5] = this.previousPlan;
+                        modelDatax[6] = customizedContent;
+                    }
+
+                    let modelData = JSON.stringify(modelDatax);
+                    let startNext = document.getElementById("gmodal-button-confirm") as any;
+                    let customizedArea = document.getElementById("customized") as any;
+                    startNext.disabled = true;
+                    let self = this;
+
+                    axios.post(this.customConfig.backendURL + 'ComponentImplementation/customize/next', {
+                            data: modelData,
+                            p_pool: this.customConfig.backendPoolFolder,
+                            p_derived: this.customConfig.backendDerivationFolder
+                        })
+                        .then(function (response) {
+                            startNext.disabled = false;
+                            if(response.data == ""){
+                                self.previousDest = "";
+                                notificationTextArea.value = "Customization point not found, verify current file";
+                            }else if(response.data == "file"){
+                                self.fileDest = destination;
+                                fileToUploadTr.style.display = "";
+                                customizedArea.disabled = true;
+                            }else{
+                                self.previousDest = destination;
+                                self.previousCPoint = modelDatax[1];
+                                self.previousPlan = modelDatax[2];
+                                defaultTextArea.value = response.data;
+                                customizedArea.value = response.data;
+                            }
+                        })
+                        .catch(function (error) {
+                            self.previousDest = "";
+                            startNext.disabled = false;
+                        });
+                }
+                this.customizationCusPos++;
             }else{
-                let modalCustomization = this.modalCustomization;
-                axios.post(this.customConfig.backendURL + 'ComponentImplementation/customize/start', {
-                        data: JSON.stringify(modelData),
-                        p_pool: this.customConfig.backendPoolFolder,
-                        p_derived: this.customConfig.backendDerivationFolder
-                    })
-                    .then(function (response) {
-                        customizationResponse = response.data;
-                        console.log(customizationResponse);
-                        this.customization_response = response.data;
-                        this.customization_comp_pos = 0;
-                        this.customization_cus_pos = 0;
-                        this.customization_cus_max_pos = 0;
-                        this.customization_comp_max_pos = this.customization_response.length;
-                        let defaultVals = ["", "", "", "", ""];
-                        let texts = [
-                            "Current file",
-                            "Default content",
-                            "New customized content",
-                            "File to upload",
-                            "Notification",
-                        ];
-                        let inputs = [
-                            "current",
-                            "default",
-                            "customized",
-                            "filetoupload",
-                            "notification",
-                        ];
-                        let stringBody = modalCustomization(texts, inputs, defaultVals);
-                        modal.setData("", "Customization process", stringBody);
-                        modal.click();
-                    })
-                    .catch(function (error) {
-                        modal.setData("error", "Error", "Wrong backend connection. " + error);
-                        modal.click();
-                    });
+                let customizedArea = document.getElementById("customized") as any;
+                let notificationTextArea = document.getElementById("notification") as any;
+                let defaultTextArea = document.getElementById("default") as any;
+                let currentInput = document.getElementById("current") as any;
+                let customizedContent = customizedArea.value;
+                if (this.previousDest && this.previousDest != "" && customizedContent != "") {
+                    let modelDatax = [] as any;
+                    modelDatax[0] = this.previousDest;
+                    modelDatax[1] = this.previousCPoint;
+                    modelDatax[2] = this.previousPlan;
+                    modelDatax[3] = customizedContent;
+                    let modelData = JSON.stringify(modelDatax);
+                    let self = this;
+
+                    axios.post(this.customConfig.backendURL + 'ComponentImplementation/customize/onlysave', {
+                            data: modelData,
+                            p_pool: this.customConfig.backendPoolFolder,
+                            p_derived: this.customConfig.backendDerivationFolder
+                        })
+                        .then(function (response) {
+                            //nothing
+                        })
+                        .catch(function (error) {
+                            self.previousDest = "";
+                        });
+                }
+                this.previousDest = "";
+                customizedArea.value = "";
+                currentInput.value = "";
+                defaultTextArea.value = "";
+                notificationTextArea.value = "Component succesfully customized, click Start/Next to continue with another component";
+                this.customizationCusPos = 0;
+                this.customizationCompPos++;
+            }
+        }else{
+            let modal = this.variaMosGraph.getModal();
+            modal.setData("success", "Success", "Customization completed!");
+        }
+    }
+
+    public findDestinationFile(id:any){
+        //collect the information of the components and files to be customized
+        let componentRoot = this.variaMosGraph.getModel().getCell("component");
+        let componentRelations = this.variaMosGraph.getModel().getChildEdges(componentRoot);
+        let destination = "";
+        for (let i = 0; i < componentRelations.length; i++) {
+            let source = componentRelations[i].source.getAttribute("label");
+            if (source == id) {
+                return componentRelations[i].source.getAttribute("destination");
+                break;
             }
         }
-    }*/
+        return "";
+    }
 
     public modalCustomization(texts:any, inputs:any, defaultVals:any){
         let table = document.createElement('table');
