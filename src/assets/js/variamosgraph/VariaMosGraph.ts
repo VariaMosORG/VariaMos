@@ -144,7 +144,7 @@ export class VariaMosGraph {
         }
     }
 
-    //initilize the VariaMosGraph and call the main functions
+    //initialize the VariaMosGraph and call the main functions
     public async initializeGraph(modelType:string, currentProject:any, divContainer:any, divNavigator:any, 
             divElements:any, divProperties:any, configApp:any, modal:any, store:any, caseLoad:any){
         this.modelType = modelType;
@@ -230,7 +230,7 @@ export class VariaMosGraph {
         this.currentModel.overlayStart();
     }
 
-    //initialize the overlay function (if it is available for the current model)
+    //initialize the custom graph config (if it is available for the current model)
     public setCustomGraphConfig(){
         this.currentModel.customGraphConfig();
     }

@@ -10,6 +10,7 @@
         <a class="dropdown-item dropdown-pointer" v-on:click="executeDerivation">Execute Derivation</a>
         <a class="dropdown-item dropdown-pointer" v-on:click="customizeDerivation">Customize Derivation</a>
         <a class="dropdown-item dropdown-pointer" v-on:click="verifyDerivation">Verify Derivation</a>
+        <a class="dropdown-item dropdown-pointer" v-on:click="obtainProduct">Obtain product (.zip)</a>
     </div>
 </div>
 </template>
@@ -365,6 +366,26 @@ export default class ComponentDerivation extends Vue {
 
     public htmlEntities(str:string) {
         return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    public obtainProduct(){
+        let modal = this.variaMosGraph.getModal();
+        axios.post(this.customConfig.backendURL + 'ComponentImplementation/getDerivedProduct', {
+                p_derived: this.customConfig.backendDerivationFolder
+            }, {  responseType: 'blob' })
+            .then(function (response) {
+                let blob = new Blob([response.data], { type: 'application/zip' });
+                const downloadUrl = URL.createObjectURL(blob);
+                let a = document.createElement("a"); 
+                a.href = downloadUrl;
+                a.download = "product.zip";
+                document.body.appendChild(a);
+                a.click();
+            })
+            .catch(function (error) {
+                modal.setData("error", "Error", "Wrong backend connection. " + error);
+                modal.click();
+            });
     }
 }
 </script>
