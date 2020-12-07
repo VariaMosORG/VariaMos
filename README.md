@@ -1,6 +1,6 @@
 # VariaMos
 
-VariaMos a is modeling tool, that can be easily extended, and that allows you to define your own models.
+VariaMos a is modeling tool and a framework, that can be easily extended, and that allows you to define your own models.
 
 ## VariaMos online
 You can check the VariaMos application here: [www.variamos.tk](http://variamos.tk/)
