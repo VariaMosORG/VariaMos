@@ -109,7 +109,7 @@ export class ConfigProperties {
 
     //create a select field
     public createSelectField(graph:any, attribute:any, cell:any, currentProperties:any){
-        let values = currentProperties.input_values;
+        let values = currentProperties.inputValues;
         let input = document.createElement("select");
         input.id = "property-" + attribute.nodeName;
 
