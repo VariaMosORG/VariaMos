@@ -145,16 +145,17 @@
 </template>
 
 <script lang="ts">
-import { Vue, Options } from 'vue-class-component';
+import { Vue, Options, mixins } from 'vue-class-component';
 import { Project as ProjectClass } from '@/store/Project';
 import Breadcrumb from '@/components/Breadcrumb.vue';
+import GlobalVueFunctions from '../mixins/GlobalVueFunctions';
 
 @Options({
   components: {
     Breadcrumb
   }
 })
-export default class Projects extends Vue {
+export default class Projects extends mixins(GlobalVueFunctions) {
   public avaModels:any;
   public projectName:string = "";
   public projectAvailableModels:any = [];
@@ -316,20 +317,6 @@ export default class Projects extends Vue {
     }
     this.$modal.setData("warning", "Warning", "Are you sure you want to remove this project?", "confirm", confirmAction);
     this.$modal.click();
-  }
-
-  public getBeautyModelName(name:string){
-    if(name.includes("_")){
-      let parts = name.split("_");
-      let completeName = "";
-      for (let i = 0; i < parts.length; i++) {
-        completeName = completeName + parts[i].charAt(0).toUpperCase() + parts[i].slice(1);
-      }
-      completeName = completeName + "Model";
-      return completeName;
-    }else{
-      return name.charAt(0).toUpperCase() + name.slice(1) + "Model";
-    }
   }
 }
 </script>

@@ -85,10 +85,11 @@
 
 <script lang="ts">
 import { defineAsyncComponent } from 'vue';
-import { Vue, Options } from 'vue-class-component';
+import { Vue, Options, mixins } from 'vue-class-component';
 import { VariaMosGraph } from "@/assets/js/variamosgraph/VariaMosGraph";
 import { Project } from '@/store/Project';
 import Breadcrumb from '@/components/Breadcrumb.vue';
+import GlobalVueFunctions from '../mixins/GlobalVueFunctions';
 
 @Options({
   components: {
@@ -104,7 +105,7 @@ import Breadcrumb from '@/components/Breadcrumb.vue';
     }
   } 
 })
-export default class ProjectModels extends Vue {
+export default class ProjectModels extends mixins(GlobalVueFunctions) {
   public modelType:any = ""; //example feature
   public modelTypeLabel:any = ""; //example FeatureModel
   public currentProject:any; //currentProject (ProjectClass)
@@ -203,20 +204,6 @@ export default class ProjectModels extends Vue {
       this.modelType, this.currentProject, this.divContainer, this.divNavigator, 
       this.divElements, this.divProperties, this.configApp, this.$modal, this.$store, caseLoad, 
     );
-  }
-
-  public getBeautyModelName(name:any){
-    if(name.includes("_")){
-      let parts = name.split("_");
-      let completeName = "";
-      for (let i = 0; i < parts.length; i++) {
-        completeName = completeName + parts[i].charAt(0).toUpperCase() + parts[i].slice(1);
-      }
-      completeName = completeName + "Model";
-      return completeName;
-    }else{
-      return name.charAt(0).toUpperCase() + name.slice(1) + "Model";
-    }
   }
 }
 </script>

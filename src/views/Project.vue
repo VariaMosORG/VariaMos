@@ -32,9 +32,10 @@
 </template>
 
 <script lang="ts">
-import { Vue, Options } from 'vue-class-component';
+import { Vue, Options, mixins } from 'vue-class-component';
 import { Project as ProjectClass } from '@/store/Project';
 import Breadcrumb from '@/components/Breadcrumb.vue';
+import GlobalVueFunctions from '../mixins/GlobalVueFunctions';
 
 @Options({
   components: {
@@ -48,7 +49,7 @@ import Breadcrumb from '@/components/Breadcrumb.vue';
     }
   } 
 })
-export default class Project extends Vue {
+export default class Project extends mixins(GlobalVueFunctions) {
   public currentProject:any = "";
   public $store:any; //references vuex store
   public navigationList:any = [
@@ -85,7 +86,7 @@ export default class Project extends Vue {
     pseudoelement.click();
   }
 
-  public getBeautyModelName(name:string){
+  /*public getBeautyModelName(name:string){
     if(name.includes("_")){
       let parts = name.split("_");
       let completeName = "";
@@ -97,7 +98,7 @@ export default class Project extends Vue {
     }else{
       return name.charAt(0).toUpperCase() + name.slice(1) + "Model";
     }
-  }
+  }*/
 }
 </script>
 
