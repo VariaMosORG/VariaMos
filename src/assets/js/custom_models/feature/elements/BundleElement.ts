@@ -20,7 +20,7 @@ export class BundleElement extends ModelElement {
             { 
                 "id":"bundleType", "label": "Bundle Type", "defValue":"AND", 
                 "inputType":"select", "inputValues":["AND","OR","XOR","RANGE"],
-                "display":"true", "onchange":this.getOnChangeBundleTypeFunction()
+                "display":"true", "onChange":this.getOnChangeBundleTypeFunction()
             },
             { 
                 "id":"lowRange", "label": "Low Range", "defValue":"1", 

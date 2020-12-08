@@ -22,7 +22,7 @@ export class ConcreteElement extends ModelElement {
             { 
                 "id":"selected", "label": "Selected", "defValue":"false", 
                 "inputType":"checkbox", "disabled":"false", "display":"true", 
-                "onchange":this.getOnChangeSelectedFunction()
+                "onChange":this.getOnChangeSelectedFunction()
             }
         );
         this.setProperties(properties);

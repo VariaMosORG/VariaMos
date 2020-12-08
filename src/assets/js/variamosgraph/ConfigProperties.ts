@@ -220,9 +220,9 @@ export class ConfigProperties {
 
     //apply the actions to the inputs
     public applyCustomFunctions(input:any, cell:any, currentProperties:any){
-        if(currentProperties.onchange){
+        if(currentProperties.onChange){
             input.setAttribute("data-cell-id",cell.getId());
-            input.onchange = currentProperties.onchange;
+            input.onchange = currentProperties.onChange;
         }
 
         if(currentProperties.customTypeText){
