@@ -9,6 +9,7 @@ import Config from '@/views/Config.vue';
 import Project from '@/views/Project.vue';
 import Projects from '@/views/Projects.vue';
 import ProjectModels from '@/views/ProjectModels.vue';
+import NotFound from '@/views/NotFound.vue';
 
 const routes = [
   {
@@ -40,6 +41,11 @@ const routes = [
     path: '/projects',
     name: 'Projects',
     component: Projects,
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: NotFound,
   }
 ];
 

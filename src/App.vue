@@ -89,7 +89,7 @@
       <div id="content">
 
           <!-- Topbar -->
-          <nav v-bind:style="{ display: configApp.getDisplayTopBar() }" class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+          <nav id="page-navbar" v-bind:style="{ display: configApp.getDisplayTopBar() }" class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
               <!-- Sidebar Toggle (Topbar) -->
               <button v-on:click="hideSidebar" id="sidebarToggleTop" class="btn btn-link rounded-circle d-md-none mr-3">
@@ -148,7 +148,7 @@
           <!-- End of Topbar -->
 
           <!-- Begin Page Content -->
-          <div class="container-fluid mar20">
+          <div id="page-content" class="container-fluid mar20">
 
               <!-- Content Row -->
               <div class="row">
@@ -298,4 +298,15 @@ a:hover{
   opacity: 1;
 }
 /* end tooltip */
+
+/* begin 404 */
+.nopad404{
+    padding: 0px !important;
+    margin-top: 0px !important;
+}
+
+.nomarbo404{
+    margin-bottom: 0px !important;
+}
+/* end 404 */
 </style>
