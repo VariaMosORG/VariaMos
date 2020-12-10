@@ -5,7 +5,7 @@
 
   <Breadcrumb :navigationList="navigationList" />
 
-  <div class="card shadow mb-4">
+  <div v-if="currentProject !== null" class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary">Project: {{ currentProject.getName() }} </h6>
     </div>
@@ -17,7 +17,7 @@
     </div>
   </div>
 
-  <div class="card shadow mb-4">
+  <div v-if="currentProject !== null" class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary">XML code </h6>
     </div>
@@ -63,13 +63,21 @@ export default class Project extends mixins(GlobalVueFunctions) {
 
   public beforeMount(){
     this.currentProject = ProjectClass.getProjectByName(this.$store.getters.getProjects, this.$route.params.projectName);
-    this.navigationList.push({"title":this.currentProject.getName(), "route":""});
+    if(this.currentProject == null){ //redirect if project not found
+      this.$router.push({ name:"NotFound" });
+    }else{
+      this.navigationList.push({"title":this.currentProject.getName(), "route":""});
+    }
   }
 
   public updatePageOnRouteChange(){
     this.currentProject = ProjectClass.getProjectByName(this.$store.getters.getProjects, this.$route.params.projectName);
-    this.navigationList.pop();
-    this.navigationList.push({"title":this.currentProject.getName(), "route":""});
+    if(this.currentProject == null){ //redirect if project not found
+      this.$router.push({ name:"NotFound" });
+    }else{
+      this.navigationList.pop();
+      this.navigationList.push({"title":this.currentProject.getName(), "route":""});
+    }
   }
 
   public exportProject(index:any){
