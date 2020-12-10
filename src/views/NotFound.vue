@@ -6,16 +6,16 @@
 <div class="master404">
     <div class="stars">
         <div class="central-body">
-            <img class="image-404" src="img/404.svg" width="300px">
+            <img id="image_404" class="image-404" :src="errorSVG">
         </div>
         <div class="objects">
-            <img class="object_rocket" src="img/rocket.svg" width="40px">
+            <img id="object_rocket" class="object_rocket" :src="rocketSVG">
             <div class="earth-moon">
-                <img class="object_earth" src="img/earth.svg" width="100px">
-                <img class="object_moon" src="img/moon.svg" width="80px">
+                <img id="object_earth" class="object_earth" :src="earthSVG">
+                <img id="object_moon" class="object_moon" :src="moonSVG">
             </div>
             <div class="box_astronaut">
-                <img class="object_astronaut" src="img/astronaut.svg" width="140px">
+                <img id="object_astronaut" class="object_astronaut" :src="astronautSVG">
             </div>
         </div>
     </div>
@@ -37,7 +37,28 @@ import { Vue, Options } from 'vue-class-component';
   } 
 })
 export default class NotFound extends Vue {
+    public errorSVG:any = require("@/assets/img/404.svg") as string;
+    public earthSVG:any = require("@/assets/img/earth.svg") as string;
+    public moonSVG:any = require("@/assets/img/moon.svg") as string;
+    public astronautSVG:any = require("@/assets/img/astronaut.svg") as string;
+    public rocketSVG:any = require("@/assets/img/rocket.svg") as string;
+
     public mounted(){
+        let objectEarth = document.getElementById('object_earth') as any;
+        objectEarth.style.width= "100px";
+
+        let image404 = document.getElementById('image_404') as any;
+        image404.style.width= "300px";
+
+        let objectAstronaut = document.getElementById('object_astronaut') as any;
+        objectAstronaut.style.width= "140px";
+
+        let objectMoon = document.getElementById('object_moon') as any;
+        objectMoon.style.width= "80px";
+
+        let objectRocket = document.getElementById('object_rocket') as any;
+        objectRocket.style.width= "40px";
+        
         let pageContent = document.getElementById('page-content') as any;
         pageContent.classList.add('nopad404');
 
