@@ -1,24 +1,19 @@
+/**
+ * @author Daniel Correa <dcorreab@eafit.edu.co>
+ */
+
 import { createStore } from 'vuex';
 import { Project } from './Project';
 import { ConfigApp } from './ConfigApp';
 
-/**
- * @author Daniel Correa <dcorreab@eafit.edu.co>
- */
-export default createStore({
-  state: {
+//Begin Project Module
+const moduleProject = {
+  state: { 
     projects:[] as any,
-    configApp: new ConfigApp(
-      "400px",
-      "navy",
-      "flex",
-      ["feature","component","binding_feature_component"],
-      "{}")
   },
 
-  getters: {
-    /* begin project section*/
-    initializeProjects: state => {
+  getters: { 
+    initializeProjects: (state:any) => {
       const localProjectsJSON = localStorage.getItem('variamosProjects');
       if(typeof localProjectsJSON === 'string') {
         let genericProjects = JSON.parse(localProjectsJSON);
@@ -27,35 +22,18 @@ export default createStore({
       }
       return state.projects;
     },
-    getProjects: state => {
+    getProjects: (state:any) => {
       return state.projects;
     },
-    getProjectJson: (state) => (index:any) => {
+    getProjectJson: (state:any) => (index:any) => {
       return JSON.stringify(state.projects[index]);
     },
-    getAllProjects: state => {
+    getAllProjects: (state:any) => {
       return JSON.stringify(state.projects);
     },
-    /* end project section*/
-
-    /* begin configApp section*/
-    initializeConfigApp: state => {
-      const localConfigAppJSON = localStorage.getItem('variamosConfigApp');
-      if(typeof localConfigAppJSON === 'string') {
-        let genericProjects = JSON.parse(localConfigAppJSON);
-        let configAppNew = ConfigApp.objectToThisClass(genericProjects);
-        state.configApp = configAppNew;
-      }
-      return state.configApp;
-    },
-    getConfigApp: state => {
-      return state.configApp;
-    },
-    /* end configApp section*/
   },
 
   mutations: {
-    /* begin project section*/
     addProject (state:any, project:Project) {
       state.projects.push(project);
       localStorage.setItem('variamosProjects', JSON.stringify(state.projects));
@@ -68,23 +46,52 @@ export default createStore({
       state.projects = [];
       localStorage.setItem('variamosProjects', "[]");
     },
-    updateProject (state:any, {project, index}) {
+    updateProject (state:any, {project, index}:any) {
       state.projects[index] = project;
       localStorage.setItem('variamosProjects', JSON.stringify(state.projects));
     },
-    /* end project section*/
+  },
+}
+//End Project Module
 
-    /* begin configApp section*/
+//Begin ConfigApp Module
+const moduleConfigApp = {
+  state: { 
+    configApp: new ConfigApp(
+      "400px",
+      "navy",
+      "flex",
+      ["feature","component","binding_feature_component"],
+      "{}"),
+  },
+
+  getters: { 
+    initializeConfigApp: (state:any) => {
+      const localConfigAppJSON = localStorage.getItem('variamosConfigApp');
+      if(typeof localConfigAppJSON === 'string') {
+        let genericProjects = JSON.parse(localConfigAppJSON);
+        let configAppNew = ConfigApp.objectToThisClass(genericProjects);
+        state.configApp = configAppNew;
+      }
+      return state.configApp;
+    },
+    getConfigApp: (state:any) => {
+      return state.configApp;
+    },
+  },
+
+  mutations: {
     setConfigApp (state:any, configApp:ConfigApp) {
       state.configApp = configApp;
       localStorage.setItem('variamosConfigApp', JSON.stringify(state.configApp));
     },
-    /* end configApp section*/
   },
+}
+//End ConfigApp Module
 
-  actions: {
-  },
-
+export default createStore({
   modules: {
-  },
+    project: moduleProject,
+    configApp: moduleConfigApp
+  }
 });
