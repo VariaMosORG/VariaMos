@@ -62,7 +62,7 @@ export default class Project extends mixins(GlobalVueFunctions) {
   ];
 
   public beforeMount(){
-    this.currentProject = ProjectClass.getProjectByName(this.$store.getters.getProjects, this.$route.params.projectName);
+    this.currentProject = ProjectClass.getProjectByName(this.$store.getters['projects/getProjects'], this.$route.params.projectName);
     if(this.currentProject == null){ //redirect if project not found
       this.$router.push({ name:"NotFound" });
     }else{
@@ -71,7 +71,7 @@ export default class Project extends mixins(GlobalVueFunctions) {
   }
 
   public updatePageOnRouteChange(){
-    this.currentProject = ProjectClass.getProjectByName(this.$store.getters.getProjects, this.$route.params.projectName);
+    this.currentProject = ProjectClass.getProjectByName(this.$store.getters['projects/getProjects'], this.$route.params.projectName);
     if(this.currentProject == null){ //redirect if project not found
       this.$router.push({ name:"NotFound" });
     }else{
@@ -81,7 +81,7 @@ export default class Project extends mixins(GlobalVueFunctions) {
   }
 
   public exportProject(index:any){
-    let jsonProject = this.$store.getters.getProjectJson(index);
+    let jsonProject = this.$store.getters['projects/getProjectJson'](index);
     let pseudoelement = document.createElement("a");
     let filename = "project.json";
     let blob = new Blob([ jsonProject ], { type: "application/json" });

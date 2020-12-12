@@ -132,8 +132,8 @@ export default class ProjectModels extends mixins(GlobalVueFunctions) {
 
   public beforeMount(){
     this.loadCustomComponentModelActions();
-    this.configApp = this.$store.getters.getConfigApp;
-    this.currentProject = Project.getProjectByName(this.$store.getters.getProjects, this.$route.params.projectName);
+    this.configApp = this.$store.getters['configApp/getConfigApp'];
+    this.currentProject = Project.getProjectByName(this.$store.getters['projects/getProjects'], this.$route.params.projectName);
     this.availableModels = this.currentProject.getAvailableModels();
     this.navigationList.push(
       {

@@ -80,7 +80,7 @@ export default class Config extends Vue {
     ];
 
     public beforeMount(){
-        this.configApp = this.$store.getters.getConfigApp;
+        this.configApp = this.$store.getters['configApp/getConfigApp'];
     }
 
     public mounted(){
@@ -100,13 +100,13 @@ export default class Config extends Vue {
             }
         }
         this.configApp.setInstalledModels(listOfModels);
-        this.$store.commit("setConfigApp",this.configApp);
+        this.$store.commit("configApp/setConfigApp",this.configApp);
         this.$modal.setData("success", "Success", "List of installed models updated");
         this.$modal.click();
     }
 
     public saveConfig(){
-        this.$store.commit("setConfigApp",this.configApp);
+        this.$store.commit("configApp/setConfigApp",this.configApp);
         this.$modal.setData("success", "Success", "Config set successfully");
         this.$modal.click();
     }

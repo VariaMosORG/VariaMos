@@ -185,8 +185,8 @@ export default class App extends Vue {
     public searchText:string = ""; //search text
 
     public beforeMount(){
-        this.projects = this.$store.getters.initializeProjects; //initialize projects for the entire app
-        this.configApp = this.$store.getters.initializeConfigApp; //initialize configApp for the entire app
+        this.projects = this.$store.getters['projects/initializeProjects']; //initialize projects for the entire app
+        this.configApp = this.$store.getters['configApp/initializeConfigApp']; //initialize configApp for the entire app
     }
 
     public hideSidebar(){

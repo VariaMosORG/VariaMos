@@ -172,8 +172,8 @@ export default class Projects extends mixins(GlobalVueFunctions) {
   ];
 
   public beforeMount(){
-    this.projects = this.$store.getters.getProjects;
-    this.avaModels = this.$store.getters.getConfigApp.getInstalledModels();
+    this.projects = this.$store.getters['projects/getProjects'];
+    this.avaModels = this.$store.getters['configApp/getConfigApp'].getInstalledModels();
   }
 
   public mounted(){
@@ -194,7 +194,7 @@ export default class Projects extends mixins(GlobalVueFunctions) {
     }else{
       if(this.projectAvailableModels.length > 0){
         let project = new ProjectClass(this.projectName, "", this.projectAvailableModels);
-        this.$store.commit("addProject",project);
+        this.$store.commit("projects/addProject",project);
         this.$modal.setData("success", "Success", "Project created successfully");
         this.$modal.click();
       }else{
@@ -227,7 +227,7 @@ export default class Projects extends mixins(GlobalVueFunctions) {
       return;
     }
     else{
-      store.commit("removeAllProjects"); //remove all projects
+      store.commit("projects/removeAllProjects"); //remove all projects
       let fileToLoad = files[0];
       let fileReader = new FileReader();
       let projects = this.projects;
@@ -238,7 +238,7 @@ export default class Projects extends mixins(GlobalVueFunctions) {
         for (let i = 0; i < jsonText.length; i++) { //import new projects
           if(jsonText[i].hasOwnProperty('name') && jsonText[i].hasOwnProperty('xml') && jsonText[i].hasOwnProperty('availableModels')){
             let project = new ProjectClass(jsonText[i].name, jsonText[i].xml, jsonText[i].availableModels);
-            store.commit("addProject",project);
+            store.commit("projects/addProject",project);
           }
         }
         location.reload(); //reload page
@@ -270,7 +270,7 @@ export default class Projects extends mixins(GlobalVueFunctions) {
             modal.click();
           }else{
             let project = new ProjectClass(newProjectName, jsonText.xml, jsonText.availableModels);
-            store.commit("addProject",project);
+            store.commit("projects/addProject",project);
             modal.setData("success", "Success", "Project created successfully");
             modal.click();
           }
@@ -286,13 +286,13 @@ export default class Projects extends mixins(GlobalVueFunctions) {
 
   //export all projects in json format
   public exportAllProjects(){
-    let jsonAllProjects = this.$store.getters.getAllProjects;
+    let jsonAllProjects = this.$store.getters['projects/getAllProjects'];
     this.generateJsonFile(jsonAllProjects, "MultiProject-MultiProjects.json");
   }
 
   //export project in json format
   public exportProject(index:any, name:any){
-    let jsonProject = this.$store.getters.getProjectJson(index);
+    let jsonProject = this.$store.getters['projects/getProjectJson'](index);
     this.generateJsonFile(jsonProject, "Project-"+name+".json");
   }
 
@@ -313,7 +313,7 @@ export default class Projects extends mixins(GlobalVueFunctions) {
   public removeProject(index:any){
     let store = this.$store;
     let confirmAction = function(){
-      store.commit("removeProject", index);
+      store.commit("projects/removeProject", index);
     }
     this.$modal.setData("warning", "Warning", "Are you sure you want to remove this project?", "confirm", confirmAction);
     this.$modal.click();

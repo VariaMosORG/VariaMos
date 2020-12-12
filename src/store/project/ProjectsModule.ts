@@ -4,6 +4,8 @@
 import { Project } from './Project';
 
 const module = {
+    namespaced: true, 
+
     state: { 
         projects:[] as any,
     },

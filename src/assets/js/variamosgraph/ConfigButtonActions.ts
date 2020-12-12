@@ -52,7 +52,7 @@ export class ConfigButtonActions {
         const graph = this.vGraph.getGraph();
         const model = this.vGraph.getModel();
         const modelUtil = this.vGraph.getModelUtil();
-        let index = Object.getPrototypeOf(currentProject).constructor.getProjectIndexByName(store.getters.getProjects, currentProject.getName());
+        let index = Object.getPrototypeOf(currentProject).constructor.getProjectIndexByName(store.getters['projects/getProjects'], currentProject.getName());
         if(index != -1){
             currentButton.addEventListener('click', function () {
                 let confirmAction = function(){
@@ -78,7 +78,7 @@ export class ConfigButtonActions {
                         let result = encoder.encode(model);
                         let xml = mxUtils.getPrettyXml(result);
                         currentProject.setXml(xml);
-                        store.commit("updateProject", {"project":currentProject, "index":index});
+                        store.commit("projects/updateProject", {"project":currentProject, "index":index});
                         location.reload();
                     }
                 }
@@ -93,12 +93,12 @@ export class ConfigButtonActions {
         const currentProject = this.vGraph.getCurrentProject();
         const store = this.vGraph.getStore();
         const modal = this.vGraph.getModal();
-        let index = Object.getPrototypeOf(currentProject).constructor.getProjectIndexByName(store.getters.getProjects, currentProject.getName());
+        let index = Object.getPrototypeOf(currentProject).constructor.getProjectIndexByName(store.getters['projects/getProjects'], currentProject.getName());
         if(index != -1){
             currentButton.addEventListener('click', function () {
                 let confirmAction = function(){
                     currentProject.setXml("");
-                    store.commit("updateProject", {"project":currentProject, "index":index});
+                    store.commit("projects/updateProject", {"project":currentProject, "index":index});
                     location.reload();
                 }
                 modal.setData("warning", "Warning", "Are you sure you want to remove all models of this project?", "confirm", confirmAction);
@@ -113,14 +113,14 @@ export class ConfigButtonActions {
         const model = this.vGraph.getModel();
         const store = this.vGraph.getStore();
         const modal = this.vGraph.getModal();
-        let index = Object.getPrototypeOf(currentProject).constructor.getProjectIndexByName(store.getters.getProjects, currentProject.getName());
+        let index = Object.getPrototypeOf(currentProject).constructor.getProjectIndexByName(store.getters['projects/getProjects'], currentProject.getName());
         if(index != -1){
             currentButton.addEventListener('click', function () {
                 let encoder = new mxCodec();
                 let result = encoder.encode(model);
                 let xml = mxUtils.getPrettyXml(result);
                 currentProject.setXml(xml);
-                store.commit("updateProject", {"project":currentProject, "index":index});
+                store.commit("projects/updateProject", {"project":currentProject, "index":index});
                 modal.setData("success", "Success", "All models saved succesfully!");
                 modal.click();
             });
@@ -147,7 +147,7 @@ export class ConfigButtonActions {
         const store = this.vGraph.getStore();
         const modal = this.vGraph.getModal();
         const currentProject = this.vGraph.getCurrentProject();
-        let index = Object.getPrototypeOf(currentProject).constructor.getProjectIndexByName(store.getters.getProjects, currentProject.getName());
+        let index = Object.getPrototypeOf(currentProject).constructor.getProjectIndexByName(store.getters['projects/getProjects'], currentProject.getName());
         currentButton.addEventListener('click', function () {
             let inputFunction = function(e:any){
                 let files = e.target.files || e.dataTransfer.files;
@@ -160,7 +160,7 @@ export class ConfigButtonActions {
                     {
                         let xml = fileLoadedEvent.target.result;
                         currentProject.setXml(xml);
-                        store.commit("updateProject", {"project":currentProject, "index":index});
+                        store.commit("projects/updateProject", {"project":currentProject, "index":index});
                         location.reload(); //reload page
                     }
                     fileReader.readAsText(fileToLoad, "UTF-8");
