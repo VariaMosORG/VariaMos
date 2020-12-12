@@ -72,10 +72,10 @@ export default class Config extends Vue {
     public $modal:any; //references modalPlugin
     public navigationList:any = [
         {
-            "title":"Home", "route":"/"
+            title:"Home", route:"/"
         },
         {
-            "title":"Config", "route":""
+            title:"Config", route:""
         },
     ];
 

@@ -157,10 +157,10 @@ export default class Projects extends mixins(GlobalVueFunctions) {
     public $modal:any; //references modalPlugin
     public navigationList:any = [
         {
-            "title":"Home", "route":"/"
+            title:"Home", route:"/"
         },
         {
-            "title":"Projects", "route":""
+            title:"Projects", route:""
         },
     ];
 

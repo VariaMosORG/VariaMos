@@ -29,10 +29,10 @@ import Breadcrumb from '@/components/Breadcrumb.vue';
 export default class About extends Vue {
     public navigationList:any = [
         {
-            "title":"Home", "route":"/"
+            title:"Home", route:"/"
         },
         {
-            "title":"Docs", "route":""
+            title:"Docs", route:""
         },
     ];
 }

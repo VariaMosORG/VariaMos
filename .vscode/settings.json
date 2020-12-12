@@ -1,0 +1,14 @@
+{
+    "[typescript]": {
+        "editor.tabSize": 4
+    },
+    "[xml]": {
+        "editor.tabSize": 4
+    },
+    "[javascript]": {
+        "editor.tabSize": 4
+    },
+    "[vue]": {
+        "editor.tabSize": 4
+    },
+}

@@ -54,10 +54,10 @@ export default class Project extends mixins(GlobalVueFunctions) {
     public $store:any; //references vuex store
     public navigationList:any = [
         {
-            "title":"Home", "route":"/"
+            title:"Home", route:"/"
         },
         {
-            "title":"Projects", "route":"/projects"
+            title:"Projects", route:"/projects"
         }
     ];
 

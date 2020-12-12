@@ -39,7 +39,7 @@ import Breadcrumb from '@/components/Breadcrumb.vue';
 export default class Home extends Vue {
     public navigationList:any = [
         {
-            "title":"Home", "route":""
+            title:"Home", route:""
         }
     ];
 }
