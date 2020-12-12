@@ -10,8 +10,8 @@
             <h6 class="m-0 font-weight-bold text-primary">Docs</h6>
         </div>
         <div class="card-body">
-            <p>Get the latest documentation in the VariaMos website.</p>
-            <a target="_blank" rel="nofollow" href="https://variamos.com/">VariaMos website</a>
+            <p>Get the latest documentation in the VariaMos wiki.</p>
+            <a target="_blank" rel="nofollow" href="https://github.com/danielgara/VariaMos/wiki">VariaMos wiki</a>
         </div>
     </div>
 
