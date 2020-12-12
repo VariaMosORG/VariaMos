@@ -20,9 +20,9 @@ export class ConcreteElement extends ModelElement {
         let properties = this.getProperties();
         properties.push(
             { 
-                "id":"selected", "label": "Selected", "defValue":"false", 
-                "inputType":"checkbox", "disabled":"false", "display":"true", 
-                "onChange":this.getOnChangeSelectedFunction()
+                id:"selected", label:"Selected", defValue:"false", 
+                inputType:"checkbox", disabled:"false", display:"true", 
+                onChange:this.getOnChangeSelectedFunction()
             }
         );
         this.setProperties(properties);

@@ -18,19 +18,19 @@ export class BundleElement extends ModelElement {
         let properties = this.getProperties();
         properties.push(
             { 
-                "id":"bundleType", "label": "Bundle Type", "defValue":"AND", 
-                "inputType":"select", "inputValues":["AND","OR","XOR","RANGE"],
-                "display":"true", "onChange":this.getOnChangeBundleTypeFunction()
+                id:"bundleType", label:"Bundle Type", defValue:"AND", 
+                inputType:"select", inputValues:["AND","OR","XOR","RANGE"],
+                display:"true", onChange:this.getOnChangeBundleTypeFunction()
             },
             { 
-                "id":"lowRange", "label": "Low Range", "defValue":"1", 
-                "inputType":"text", "customTypeText":"number", "display":"basedOnPropertyValue", 
-                "displayCheckProperty":"bundleType", "displayIfValue":"RANGE",
+                id:"lowRange", label:"Low Range", defValue:"1", 
+                inputType:"text", customTypeText:"number", display:"basedOnPropertyValue", 
+                displayCheckProperty:"bundleType", displayIfValue:"RANGE",
             },
             { 
-                "id":"highRange", "label": "High Range", "defValue":"1", 
-                "inputType":"text", "customTypeText":"number", "display":"basedOnPropertyValue", 
-                "displayCheckProperty":"bundleType", "displayIfValue":"RANGE",
+                id:"highRange", label:"High Range", defValue:"1", 
+                inputType:"text", customTypeText:"number", display:"basedOnPropertyValue", 
+                displayCheckProperty:"bundleType", displayIfValue:"RANGE",
             },
         );
         this.setProperties(properties);

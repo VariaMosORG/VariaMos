@@ -18,8 +18,8 @@ export class FragmentElement extends ModelElement {
         let properties = this.getProperties();
         properties.push(
             { 
-                "id":"filename", "label":"Filename", "defValue":"", 
-                "inputType":"text", "disabled":"false", "display":"true"
+                id:"filename", label:"Filename", defValue:"", 
+                inputType:"text", disabled:"false", display:"true"
             }
         );
         this.setProperties(properties);

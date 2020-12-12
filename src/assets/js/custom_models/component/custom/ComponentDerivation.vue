@@ -1,5 +1,5 @@
 <!--
- @author Daniel Correa <dcorreab@eafit.edu.co>
+    @author Daniel Correa <dcorreab@eafit.edu.co>
 -->
 <template>
 <div class="btn-group" role="group">
@@ -21,7 +21,7 @@ import { ComponentFunctions } from '../custom/ComponentFunctions';
 import axios from "axios";
 
 @Options({
-  props: ['variaMosGraph']
+    props: ['variaMosGraph']
 })
 export default class ComponentDerivation extends Vue {
     public variaMosGraph:any; //VariaMosGraph object

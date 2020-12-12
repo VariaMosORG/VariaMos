@@ -24,7 +24,10 @@ export default class FeatureModelActions extends Vue {
 
     public mounted(){
         if(!this.variaMosGraph.getCustomData().errorCells){
-            let errorDict = {"errorCells":[],"errorOverlays":[]};
+            let errorDict = {
+                errorCells:[],
+                errorOverlays:[]
+            };
             this.variaMosGraph.setCustomData(errorDict); //custom data for this model actions
         }
     }
@@ -36,7 +39,10 @@ export default class FeatureModelActions extends Vue {
         for (let i = 0; i < errorCells.length; i++) {
             this.variaMosGraph.getGraph().removeCellOverlay(errorCells[i], errorOverlays[i]);
         }
-        let errorDict = {"errorCells":[], "errorOverlays":[]};
+        let errorDict = {
+            errorCells:[],
+            errorOverlays:[]
+        };
         this.variaMosGraph.setCustomData(errorDict);
     }
 
@@ -76,6 +82,3 @@ export default class FeatureModelActions extends Vue {
     }
 }
 </script>
-
-<style>
-</style>

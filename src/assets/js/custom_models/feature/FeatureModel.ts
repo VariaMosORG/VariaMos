@@ -16,14 +16,14 @@ export class FeatureModel extends Model {
         let constraints = this.getConstraints();
         constraints = [
             {
-                "source":"true", "type":"root", "attr":null,
-                "value":null, "min":0, "max":0, "validNeighbors":null,
-                "countError":"Invalid connection", "typeError":"Only shape targets allowed"
+                source:"true", type:"root", attr:null,
+                value:null, min:0, max:0, validNeighbors:null,
+                countError:"Invalid connection", typeError:"Only shape targets allowed"
             },
             {
-                "source":"true", "type":"bundle", "attr":null,
-                "value":null, "min":0, "max":1, "validNeighbors":["root","abstract"],
-                "countError":"Only 1 target allowed", "typeError":"Only shape targets allowed"
+                source:"true", type:"bundle", attr:null,
+                value:null, min:0, max:1, validNeighbors:["root","abstract"],
+                countError:"Only 1 target allowed", typeError:"Only shape targets allowed"
             }
         ];
         this.setConstraints(constraints);
@@ -31,22 +31,22 @@ export class FeatureModel extends Model {
         let relationProperties = this.getRelationProperties();
         relationProperties.push(
             { 
-                "id":"relType", "label":"RelType", "defValue":"mandatory", "inputType":"select",
-                "inputValues":["mandatory","optional","requires","excludes"], "display":"true",
-                "conditions":{
-                    "type":"and", 
-                    "source":["abstract","concrete","bundle"], 
-                    "target":["abstract","concrete","root"]
+                id:"relType", label:"RelType", defValue:"mandatory", inputType:"select",
+                inputValues:["mandatory","optional","requires","excludes"], display:"true",
+                conditions:{
+                    type:"and", 
+                    source:["abstract","concrete","bundle"], 
+                    target:["abstract","concrete","root"]
                 }
             }
         );
         this.setRelationProperties(relationProperties);
         
-        let customElementTexts = {"bundle":"bundleType"}; //default element to be shown in drawing area is bundleType (for bundle elements)
+        let customElementTexts = {bundle:"bundleType"}; //default element to be shown in drawing area is bundleType (for bundle elements)
         this.setCustomElementTexts(customElementTexts);
 
         let elementClones = { //clone concrete cells in binding_feature_component model if available
-            "concrete":"binding_feature_component"
+            concrete:"binding_feature_component"
         }
         this.setElementClones(elementClones);
     }
@@ -73,7 +73,9 @@ export class FeatureModel extends Model {
 
             for (let i = 0; i < featureVertices.length; i++) {
                 if(featureVertices[i].getAttribute("type") == "root"){
-                    returnConstraintElementCreation = {"message":"Only one Root element allowed in this model"};
+                    returnConstraintElementCreation = {
+                        message:"Only one Root element allowed in this model"
+                    };
                     break;
                 }
             }

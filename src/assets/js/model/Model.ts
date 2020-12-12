@@ -16,7 +16,7 @@ export abstract class Model {
         this.type = type;
         this.elementClassNames = elementClassNames;
         this.relationProperties = [
-            { "id":"type", "label": "Type", "defValue":"relation", "inputType":"text", "disabled":"true", "display":"true"},
+            { id:"type", label: "Type", defValue:"relation", inputType:"text", disabled:"true", display:"true"},
         ];
     }
 
