@@ -2,53 +2,53 @@
  * @author Daniel Correa <dcorreab@eafit.edu.co>
  */
 export class ConfigApp {
-  private modelAreaHeight:string;
-  private sidebarBackgroundColor:string;
-  private displayTopBar:string;
-  private installedModels:any;
-  private customConfig:string;
-  
-  public constructor(modelAreaHeight:string, sidebarBackgroundColor:string,
-       displayTopBar:string, installedModels:any, customConfig:string) {
-      this.modelAreaHeight = modelAreaHeight;
-      this.sidebarBackgroundColor = sidebarBackgroundColor;
-      this.displayTopBar = displayTopBar;
-      this.installedModels = installedModels;
-      this.customConfig = customConfig;
-  }
+    private modelAreaHeight:string;
+    private sidebarBackgroundColor:string;
+    private displayTopBar:string;
+    private installedModels:any;
+    private customConfig:string;
 
-  public getModelAreaHeight(){
-    return this.modelAreaHeight;
-  }
+    public constructor(modelAreaHeight:string, sidebarBackgroundColor:string,
+        displayTopBar:string, installedModels:any, customConfig:string) {
+        this.modelAreaHeight = modelAreaHeight;
+        this.sidebarBackgroundColor = sidebarBackgroundColor;
+        this.displayTopBar = displayTopBar;
+        this.installedModels = installedModels;
+        this.customConfig = customConfig;
+    }
 
-  public getSidebarBackgroundColor(){
-    return this.sidebarBackgroundColor;
-  }
+    public getModelAreaHeight(){
+        return this.modelAreaHeight;
+    }
 
-  public getDisplayTopBar(){
-    return this.displayTopBar;
-  }
+    public getSidebarBackgroundColor(){
+        return this.sidebarBackgroundColor;
+    }
 
-  public getInstalledModels(){
-    return this.installedModels;
-  }
+    public getDisplayTopBar(){
+        return this.displayTopBar;
+    }
 
-  public getCustomConfig(){
-    return this.customConfig;
-  }
+    public getInstalledModels(){
+        return this.installedModels;
+    }
 
-  public getCustomConfigAsJsonObject(){
-    let jsonObject = JSON.parse(this.customConfig);
-    return jsonObject;
-  }
+    public getCustomConfig(){
+        return this.customConfig;
+    }
 
-  public setInstalledModels(installedModels:string[]){
-    this.installedModels = installedModels;
-  }
+    public getCustomConfigAsJsonObject(){
+        let jsonObject = JSON.parse(this.customConfig);
+        return jsonObject;
+    }
 
-  public static objectToThisClass(dataJson:any){
-    let object = new ConfigApp(dataJson.modelAreaHeight, dataJson.sidebarBackgroundColor, 
-      dataJson.displayTopBar, dataJson.installedModels, dataJson.customConfig);
-    return object;
-  }
+    public setInstalledModels(installedModels:string[]){
+        this.installedModels = installedModels;
+    }
+
+    public static objectToThisClass(dataJson:any){
+        let object = new ConfigApp(dataJson.modelAreaHeight, dataJson.sidebarBackgroundColor, 
+        dataJson.displayTopBar, dataJson.installedModels, dataJson.customConfig);
+        return object;
+    }
 }

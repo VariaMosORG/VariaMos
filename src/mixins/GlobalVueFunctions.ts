@@ -5,7 +5,6 @@
 import { Vue } from 'vue-class-component';
 
 export default class GlobalVueFunctions extends Vue {
-
     //returns the model name in a beauty way
     public getBeautyModelName(name:any){
         if(name.includes("_")){
@@ -20,5 +19,4 @@ export default class GlobalVueFunctions extends Vue {
             return name.charAt(0).toUpperCase() + name.slice(1) + "Model";
         }
     }
-    
 }
