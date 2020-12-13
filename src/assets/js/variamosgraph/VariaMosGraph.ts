@@ -421,6 +421,7 @@ export class VariaMosGraph {
     mxCellRenderer.registerShape('customShape', CustomShape);
     try {
       // load custom shapes file for current model
+      /* eslint import/no-dynamic-require: "off" */
       const xmlSrc = require(`@/assets/js/custom_models/${this.getCurrentModel().type}/xml/custom_shapes.xml`);
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(xmlSrc.default, 'text/xml');

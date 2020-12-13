@@ -82,7 +82,7 @@ export class ConfigButtonActions {
             const xml = mxUtils.getPrettyXml(result);
             currentProject.setXml(xml);
             store.commit('projects/updateProject', { project: currentProject, index });
-            location.reload();
+            window.location.reload();
           }
         };
         modal.setData('warning', 'Warning', 'Are you sure you want to remove the current model of this project?', 'confirm', confirmAction);
@@ -102,7 +102,7 @@ export class ConfigButtonActions {
         const confirmAction = function anonymousConfirm() {
           currentProject.setXml('');
           store.commit('projects/updateProject', { project: currentProject, index });
-          location.reload();
+          window.location.reload();
         };
         modal.setData('warning', 'Warning', 'Are you sure you want to remove all models of this project?', 'confirm', confirmAction);
         modal.click();
@@ -164,7 +164,7 @@ export class ConfigButtonActions {
             const xml = fileLoadedEvent.target.result;
             currentProject.setXml(xml);
             store.commit('projects/updateProject', { project: currentProject, index });
-            location.reload(); // reload page
+            window.location.reload(); // reload page
           };
           fileReader.readAsText(fileToLoad, 'UTF-8');
         }

@@ -12,15 +12,13 @@ module.exports = {
   rules: {
     eqeqeq: 'off',
     'no-unused-vars': 'off',
-    'import/no-extraneous-dependencies': 'off',
     'prefer-destructuring': 'off',
     'no-prototype-builtins': 'off',
-    'import/no-dynamic-require': 'off',
-    'no-restricted-globals': 'off',
-    'global-require': 'off',
-    'import/prefer-default-export': 'off',
-    'new-cap': 'off',
-    'class-methods-use-this': 'off',
+    'global-require': 'off', // sometimes requires depend on method data
+    'import/prefer-default-export': 'off', // not recommended
+    'new-cap': 'off', // because of ts-mxgraph classes
+    'class-methods-use-this': 'off', // because of inheritance false positives
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
   },

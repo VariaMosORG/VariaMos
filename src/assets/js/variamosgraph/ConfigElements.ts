@@ -99,6 +99,7 @@ export class ConfigElements {
     const mspan = document.createElement('span'); // tooltip
     mspan.classList.add('csstooltiptext2');
     const typeG = this.vGraph.getCurrentModel().type;
+    /* eslint import/no-dynamic-require: "off" */
     const imgSrc = require(`@/assets/js/custom_models/${typeG}/img/${element.icon}`);
     const img = this.toolbar.addMode(element.label, imgSrc, dragAndDropCreation);
     mspan.innerText = img.getAttribute('title');

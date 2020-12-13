@@ -262,7 +262,7 @@ export default class Projects extends mixins(GlobalVueFunctions) {
             store.commit('projects/addProject', project);
           }
         }
-        location.reload(); // reload page
+        window.location.reload(); // reload page
       };
       fileReader.readAsText(fileToLoad, 'UTF-8');
     }

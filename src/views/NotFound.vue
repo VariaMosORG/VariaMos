@@ -25,6 +25,12 @@
 <script lang="ts">
 import { Vue, Options } from 'vue-class-component';
 
+const svg404 = require('@/assets/img/404.svg') as string;
+const svgEarth = require('@/assets/img/earth.svg') as string;
+const svgMoon = require('@/assets/img/moon.svg') as string;
+const svgAstronaut = require('@/assets/img/astronaut.svg') as string;
+const svgRocket = require('@/assets/img/rocket.svg') as string;
+
 @Options({
   watch: {
     $route(to, from) {
@@ -37,15 +43,15 @@ import { Vue, Options } from 'vue-class-component';
   },
 })
 export default class NotFound extends Vue {
-  public errorSVG:any = require('@/assets/img/404.svg') as string;
+  public errorSVG:any = svg404;
 
-  public earthSVG:any = require('@/assets/img/earth.svg') as string;
+  public earthSVG:any = svgEarth;
 
-  public moonSVG:any = require('@/assets/img/moon.svg') as string;
+  public moonSVG:any = svgMoon;
 
-  public astronautSVG:any = require('@/assets/img/astronaut.svg') as string;
+  public astronautSVG:any = svgAstronaut;
 
-  public rocketSVG:any = require('@/assets/img/rocket.svg') as string;
+  public rocketSVG:any = svgRocket;
 
   public mounted() {
     const objectEarth = document.getElementById('object_earth') as any;
