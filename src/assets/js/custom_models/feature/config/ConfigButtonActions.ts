@@ -4,6 +4,7 @@ import { ConfigButtonActions as CBA } from '../../../variamosgraph/ConfigButtonA
  * @author Daniel Correa <dcorreab@eafit.edu.co>
  */
 export class ConfigButtonActions extends CBA {
+  /* eslint no-useless-constructor: "off" */
   public constructor(vGraph:any, buttons:any) {
     super(vGraph, buttons);
   }

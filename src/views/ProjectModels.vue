@@ -98,7 +98,7 @@ import GlobalVueFunctions from '../mixins/GlobalVueFunctions';
       if (this.$route.name === 'ProjectModel') {
         this.updatePageOnRouteChange();
       } else {
-        this.$root.search = function () {}; // restart the search function of the App.vue instance
+        this.$root.search = function anonymousSearch() {}; // restart the search function of the App.vue instance
       }
     },
   },
@@ -171,7 +171,7 @@ export default class ProjectModels extends mixins(GlobalVueFunctions) {
   public implementSearchBarFunction() {
     const root = this.$route.params.modelType;
     const modelUtil = this.variaMosGraph.getModelUtil();
-    this.$root.search = function () { // modify search function of the App.vue instance
+    this.$root.search = function anonymousSearch() { // modify search function of the App.vue instance
       modelUtil.searchFirstCellByLabel(root, this.$root.searchText);
     };
   }

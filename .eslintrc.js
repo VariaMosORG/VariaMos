@@ -13,6 +13,7 @@ module.exports = {
     eqeqeq: 'off',
     'no-unused-vars': 'off',
     'import/no-extraneous-dependencies': 'off',
+    'prefer-destructuring': 'off',
     'no-prototype-builtins': 'off',
     'import/no-dynamic-require': 'off',
     'no-restricted-globals': 'off',

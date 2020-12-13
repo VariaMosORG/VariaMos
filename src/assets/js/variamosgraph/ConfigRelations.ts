@@ -16,7 +16,7 @@ export class ConfigRelations {
     const graph = this.vGraph.getGraph();
     const currentModel = this.vGraph.getCurrentModel();
     const modal = this.vGraph.getModal();
-    graph.connectionHandler.insertEdge = function (parent:any, id:any, value:any, source:any, target:any, style:any) {
+    graph.connectionHandler.insertEdge = function anonymousInsertEdge(parent:any, id:any, value:any, source:any, target:any, style:any) {
       const doc = mxUtils.createXmlDocument();
       const node = doc.createElement(`rel_${source.getAttribute('type')}_${target.getAttribute('type')}`);
 
@@ -55,19 +55,21 @@ export class ConfigRelations {
         }
       }
 
+      let currentStyle = style;
+
       // set custom relation styles
       const currentRelStyles = currentModel.relationStyles;
       for (let i = 0; i < currentRelStyles.length; i++) {
         if (currentRelStyles[i].type == 'and') {
           if ((currentRelStyles[i].source.indexOf(source.getAttribute('type')) > -1) && (currentRelStyles[i].target.indexOf(target.getAttribute('type')) > -1)) {
-            style = currentRelStyles[i].style;
+            currentStyle = currentRelStyles[i].style;
           }
         } else if ((currentRelStyles[i].source.indexOf(source.getAttribute('type')) > -1) || (currentRelStyles[i].target.indexOf(target.getAttribute('type')) > -1)) {
-          style = currentRelStyles[i].style;
+          currentStyle = currentRelStyles[i].style;
         }
       }
 
-      const cell = graph.insertEdge(parent, id, node, source, target, style);
+      const cell = graph.insertEdge(parent, id, node, source, target, currentStyle);
       return cell;
     };
   }

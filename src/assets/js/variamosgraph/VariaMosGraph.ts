@@ -226,7 +226,7 @@ export class VariaMosGraph {
       this.graph = new mxGraph(this.divContainer, this.model);
 
       // Avoid that new elements (cells) can be placed inside existing elements (cells)
-      mxDragSource.prototype.getDropTarget = function (graph:any, x:any, y:any) {
+      mxDragSource.prototype.getDropTarget = function anonymousDrop(graph:any, x:any, y:any) {
         let cell = graph.getCellAt(x, y);
         if (!graph.isValidDropTarget(cell)) {
           cell = null;
@@ -272,7 +272,7 @@ export class VariaMosGraph {
   // define the default attribute to be shown is drawing area for each element
   public setMainCellText() {
     const { currentModel } = this;
-    this.graph.convertValueToString = function (cell:any) {
+    this.graph.convertValueToString = function anonymousValueToString(cell:any) {
       const customTexts = currentModel.getCustomElementTexts();
       if (customTexts && customTexts[cell.getAttribute('type')]) {
         return cell.getAttribute(customTexts[cell.getAttribute('type')], ''); // default attribute showed in drawing area was customized in model
@@ -286,8 +286,9 @@ export class VariaMosGraph {
 
   // hide all layers
   public hideAllLayers() {
-    for (const layer in this.layers) {
-      this.model.setVisible(this.layers[layer], false);
+    const keys = Object.keys(this.layers);
+    for (let i = 0; i < keys.length; i += 1) {
+      this.model.setVisible(this.layers[keys[i]], false);
     }
   }
 
@@ -364,6 +365,7 @@ export class VariaMosGraph {
 
     for (let i = 0; i < this.currentModel.elementClassNames.length; i++) {
       // load current model element classes
+      /* eslint no-await-in-loop: "off" */
       const elementModule = await this.loadModules(`custom_models/${this.modelType}/elements/${this.currentModel.elementClassNames[i]}`);
       this.currentModel.addElement(new elementModule[this.currentModel.elementClassNames[i]](this.currentModel));
     }

@@ -52,7 +52,7 @@ export class BundleElement extends ModelElement {
 
   // if bundle type is changed to range, then display the high range and low range properties
   public getOnChangeBundleTypeFunction() {
-    const OnChangeBundleTypeFunction = function (this:any) {
+    const OnChangeBundleTypeFunction = function anonymousOnChange(this:any) {
       const trLowRange = document.getElementById('tr-lowRange');
       const trHighRange = document.getElementById('tr-highRange');
       if (trLowRange !== null && trHighRange !== null) {

@@ -4,22 +4,22 @@
 export class ComponentFunctions {
   public static customize(graph:any) {
     // collect the information of the components and files to be customized
-    const binding_root = graph.getModel().getCell('binding_feature_component');
-    const binding_relations = graph.getModel().getChildEdges(binding_root);
+    const bindingRoot = graph.getModel().getCell('binding_feature_component');
+    const bindingRelations = graph.getModel().getChildEdges(bindingRoot);
 
     const customizations = [];
 
-    for (let i = 0; i < binding_relations.length; i++) {
-      const { source } = binding_relations[i];
-      const { target } = binding_relations[i];
+    for (let i = 0; i < bindingRelations.length; i++) {
+      const { source } = bindingRelations[i];
+      const { target } = bindingRelations[i];
       if (source.getAttribute('selected') == 'true') { // only selected concrete features are analyzed
         const label = target.getAttribute('label');
-        const clon_id = target.getId();
-        const id = clon_id.replace('clon', '');
-        const inco_egdes = graph.getModel().getIncomingEdges(graph.getModel().getCell(id));
-        for (let j = 0; j < inco_egdes.length; j++) {
-          const file_source = inco_egdes[j].source;
-          if (file_source.getAttribute('type') == 'custom') {
+        const clonId = target.getId();
+        const id = clonId.replace('clon', '');
+        const incoEgdes = graph.getModel().getIncomingEdges(graph.getModel().getCell(id));
+        for (let j = 0; j < incoEgdes.length; j++) {
+          const fileSource = incoEgdes[j].source;
+          if (fileSource.getAttribute('type') == 'custom') {
             customizations.push(label);
           }
         }
@@ -31,24 +31,24 @@ export class ComponentFunctions {
 
   public static verify(graph:any) {
     // collect the information of the components and files to be derived
-    const binding_root = graph.getModel().getCell('binding_feature_component');
-    const binding_relations = graph.getModel().getChildEdges(binding_root);
+    const bindingRoot = graph.getModel().getCell('binding_feature_component');
+    const bindingRelations = graph.getModel().getChildEdges(bindingRoot);
 
     const destinations = [];
 
-    for (let i = 0; i < binding_relations.length; i++) {
-      const { source } = binding_relations[i];
-      const { target } = binding_relations[i];
+    for (let i = 0; i < bindingRelations.length; i++) {
+      const { source } = bindingRelations[i];
+      const { target } = bindingRelations[i];
       if (source.getAttribute('selected') == 'true') { // only selected concrete features are analyzed
         const label = target.getAttribute('label');
-        const clon_id = target.getId();
-        const id = clon_id.replace('clon', '');
-        const inco_egdes = graph.getModel().getIncomingEdges(graph.getModel().getCell(id));
-        for (let j = 0; j < inco_egdes.length; j++) {
-          const file_source = inco_egdes[j].source;
-          if (file_source.getAttribute('type') == 'file') {
+        const clonId = target.getId();
+        const id = clonId.replace('clon', '');
+        const incoEgdes = graph.getModel().getIncomingEdges(graph.getModel().getCell(id));
+        for (let j = 0; j < incoEgdes.length; j++) {
+          const fileSource = incoEgdes[j].source;
+          if (fileSource.getAttribute('type') == 'file') {
             const data = { destination: '' };
-            data.destination = file_source.getAttribute('destination');
+            data.destination = fileSource.getAttribute('destination');
             destinations.push(data.destination);
           }
         }
@@ -60,33 +60,33 @@ export class ComponentFunctions {
 
   public static execute(graph:any) {
     // collect the information of the components and files to be derived
-    const binding_root = graph.getModel().getCell('binding_feature_component');
-    const binding_relations = graph.getModel().getChildEdges(binding_root);
+    const bindingRoot = graph.getModel().getCell('binding_feature_component');
+    const bindingRelations = graph.getModel().getChildEdges(bindingRoot);
     const files = [];
-    for (let i = 0; i < binding_relations.length; i++) {
+    for (let i = 0; i < bindingRelations.length; i++) {
       let source:any;
       let target:any;
       try {
-        source = binding_relations[i].source;
-        target = binding_relations[i].target;
+        source = bindingRelations[i].source;
+        target = bindingRelations[i].target;
         if (source.getAttribute('selected') == 'true') { // only selected concrete features are analyzed
           const label = target.getAttribute('label');
-          const clon_id = target.getId();
-          const id = clon_id.replace('clon', '');
-          const inco_egdes = graph.getModel().getIncomingEdges(graph.getModel().getCell(id));
-          for (let j = 0; j < inco_egdes.length; j++) {
-            const file_source = inco_egdes[j].source;
-            if (file_source.getAttribute('type') != 'custom') {
+          const clonId = target.getId();
+          const id = clonId.replace('clon', '');
+          const incoEgdes = graph.getModel().getIncomingEdges(graph.getModel().getCell(id));
+          for (let j = 0; j < incoEgdes.length; j++) {
+            const fileSource = incoEgdes[j].source;
+            if (fileSource.getAttribute('type') != 'custom') {
               const data = {
                 component_folder: '', ID: '', filename: '', destination: '',
               };
               data.component_folder = label;
-              data.ID = file_source.getAttribute('label');
-              data.filename = file_source.getAttribute('filename');
-              if (file_source.getAttribute('type') == 'file') {
-                data.destination = file_source.getAttribute('destination');
+              data.ID = fileSource.getAttribute('label');
+              data.filename = fileSource.getAttribute('filename');
+              if (fileSource.getAttribute('type') == 'file') {
+                data.destination = fileSource.getAttribute('destination');
               } else {
-                data.destination == '';
+                data.destination = '';
               }
               files.push(data);
             }
@@ -95,14 +95,14 @@ export class ComponentFunctions {
       } catch {
         // remove strange generated rels
         const cells = [];
-        cells[0] = binding_relations[i];
+        cells[0] = bindingRelations[i];
         graph.removeCells(cells);
       }
     }
 
-    const complete_data = [];
-    complete_data[0] = files;
+    const completeData = [];
+    completeData[0] = files;
 
-    return complete_data;
+    return completeData;
   }
 }

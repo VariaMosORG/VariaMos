@@ -307,7 +307,6 @@ export default class ComponentDerivation extends Vue {
       const source = componentRelations[i].source.getAttribute('label');
       if (source == id) {
         return componentRelations[i].source.getAttribute('destination');
-        break;
       }
     }
     return '';

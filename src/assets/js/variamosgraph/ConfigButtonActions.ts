@@ -56,7 +56,7 @@ export class ConfigButtonActions {
     const index = Object.getPrototypeOf(currentProject).constructor.getProjectIndexByName(store.getters['projects/getProjects'], currentProject.getName());
     if (index != -1) {
       currentButton.addEventListener('click', () => {
-        const confirmAction = function () {
+        const confirmAction = function anonymousConfirm() {
           const existCloneCells = modelUtil.existCloneCells(graph.getDefaultParent());
           if (existCloneCells) {
             modal.setData('error', 'Error', 'Models that contains cloned cells cannot be removed');
@@ -97,7 +97,7 @@ export class ConfigButtonActions {
     const index = Object.getPrototypeOf(currentProject).constructor.getProjectIndexByName(store.getters['projects/getProjects'], currentProject.getName());
     if (index != -1) {
       currentButton.addEventListener('click', () => {
-        const confirmAction = function () {
+        const confirmAction = function anonymousConfirm() {
           currentProject.setXml('');
           store.commit('projects/updateProject', { project: currentProject, index });
           location.reload();
@@ -151,14 +151,14 @@ export class ConfigButtonActions {
     const currentProject = this.vGraph.getCurrentProject();
     const index = Object.getPrototypeOf(currentProject).constructor.getProjectIndexByName(store.getters['projects/getProjects'], currentProject.getName());
     currentButton.addEventListener('click', () => {
-      const inputFunction = function (e:any) {
+      const inputFunction = function anonymousInput(e:any) {
         const files = e.target.files || e.dataTransfer.files;
         if (!files.length) {
           // nothing
         } else {
           const fileToLoad = files[0];
           const fileReader = new FileReader();
-          fileReader.onload = function (fileLoadedEvent:any) {
+          fileReader.onload = function anonymousFileReader(fileLoadedEvent:any) {
             const xml = fileLoadedEvent.target.result;
             currentProject.setXml(xml);
             store.commit('projects/updateProject', { project: currentProject, index });
@@ -214,6 +214,7 @@ export class ConfigButtonActions {
     const modal = this.vGraph.getModal();
     currentButton.addEventListener('click', () => {
       if (graph.isEnabled()) {
+        let validRemove = true;
         // avoid removing cloned elements directly
         const cells = graph.getSelectionCells();
         for (let i = 0; i < cells.length; i++) {
@@ -221,20 +222,22 @@ export class ConfigButtonActions {
             if (cells[i].getId().includes('clon')) {
               modal.setData('error', 'Error', 'Cloned elements cannot be removed directly');
               modal.click();
-              return null;
+              validRemove = false;
             }
           }
         }
 
-        // remove clons if exist
-        const removedCells = graph.removeCells();
-        for (let i = 0; i < removedCells.length; i++) {
-          if (removedCells[i].isVertex()) {
-            const clon = graph.getModel().getCell(`clon${removedCells[i].getId()}`);
-            if (clon) {
-              const cells2 = [];
-              cells2[0] = clon;
-              graph.removeCells(cells2);
+        if (validRemove) {
+          // remove clons if exist
+          const removedCells = graph.removeCells();
+          for (let i = 0; i < removedCells.length; i++) {
+            if (removedCells[i].isVertex()) {
+              const clon = graph.getModel().getCell(`clon${removedCells[i].getId()}`);
+              if (clon) {
+                const cells2 = [];
+                cells2[0] = clon;
+                graph.removeCells(cells2);
+              }
             }
           }
         }

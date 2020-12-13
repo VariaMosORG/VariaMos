@@ -205,10 +205,10 @@ export default class Projects extends mixins(GlobalVueFunctions) {
   public importAllProjectCheck(e:any) {
     const store = this.$store;
     const vueComponent = this;
-    const confirmAction = function () {
+    const confirmAction = function anonymousConfirm() {
       vueComponent.importAllProjects(e, store);
     };
-    const secondaryAction = function () {
+    const secondaryAction = function anonymousSecond() {
       const inputFileAll = document.getElementById('fileAll') as any;
       if (inputFileAll) {
         inputFileAll.value = '';
@@ -228,7 +228,7 @@ export default class Projects extends mixins(GlobalVueFunctions) {
       const fileToLoad = files[0];
       const fileReader = new FileReader();
       const { projects } = this;
-      fileReader.onload = function (fileLoadedEvent:any) {
+      fileReader.onload = function anonymousLoader(fileLoadedEvent:any) {
         const textFromFileLoaded = fileLoadedEvent.target.result;
         const jsonText = JSON.parse(textFromFileLoaded);
         for (let i = 0; i < jsonText.length; i++) { // import new projects
@@ -254,7 +254,7 @@ export default class Projects extends mixins(GlobalVueFunctions) {
       const { projects } = this;
       const modal = this.$modal;
       const store = this.$store;
-      fileReader.onload = function (fileLoadedEvent:any) {
+      fileReader.onload = function anonymousLoader(fileLoadedEvent:any) {
         const textFromFileLoaded = fileLoadedEvent.target.result;
         const jsonText = JSON.parse(textFromFileLoaded);
         if (jsonText.hasOwnProperty('name') && jsonText.hasOwnProperty('xml') && jsonText.hasOwnProperty('availableModels')) {
@@ -305,7 +305,7 @@ export default class Projects extends mixins(GlobalVueFunctions) {
   // remove selected project
   public removeProject(index:any) {
     const store = this.$store;
-    const confirmAction = function () {
+    const confirmAction = function anonymousConfirm() {
       store.commit('projects/removeProject', index);
     };
     this.$modal.setData('warning', 'Warning', 'Are you sure you want to remove this project?', 'confirm', confirmAction);

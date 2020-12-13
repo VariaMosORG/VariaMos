@@ -19,8 +19,9 @@ export class ConfigKeys {
   public suprKey() {
     const graph = this.vGraph.getGraph();
     const modal = this.vGraph.getModal();
-    const suprFunction = function (evt:any) {
+    const suprFunction = function anonymousSupr(evt:any) {
       if (graph.isEnabled()) {
+        let validRemove = true;
         // avoid removing cloned elements directly
         const cells = graph.getSelectionCells();
         for (let i = 0; i < cells.length; i++) {
@@ -28,20 +29,22 @@ export class ConfigKeys {
             if (cells[i].getId().includes('clon')) {
               modal.setData('error', 'Error', 'Cloned elements cannot be removed directly');
               modal.click();
-              return null;
+              validRemove = false;
             }
           }
         }
 
         // remove clons if exist
-        const removedCells = graph.removeCells();
-        for (let i = 0; i < removedCells.length; i++) {
-          if (removedCells[i].isVertex()) {
-            const clon = graph.getModel().getCell(`clon${removedCells[i].getId()}`);
-            if (clon) {
-              const cells2 = [];
-              cells2[0] = clon;
-              graph.removeCells(cells2);
+        if (validRemove) {
+          const removedCells = graph.removeCells();
+          for (let i = 0; i < removedCells.length; i++) {
+            if (removedCells[i].isVertex()) {
+              const clon = graph.getModel().getCell(`clon${removedCells[i].getId()}`);
+              if (clon) {
+                const cells2 = [];
+                cells2[0] = clon;
+                graph.removeCells(cells2);
+              }
             }
           }
         }

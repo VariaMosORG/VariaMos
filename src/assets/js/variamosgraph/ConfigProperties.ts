@@ -181,7 +181,7 @@ export class ConfigProperties {
   // execute actions if the content of the input is changed
   public executeApplyHandler(graph:any, input:any, cell:any, attributeNodeName:any, currentProperties:any) {
     this.applyCustomFunctions(input, cell, currentProperties);
-    const applyHandler = function () {
+    const applyHandler = function anonymousApplyHandler() {
       const oldValue = cell.getAttribute(attributeNodeName, '');
       let newValue = input.value;
 
@@ -218,6 +218,7 @@ export class ConfigProperties {
   public applyCustomFunctions(input:any, cell:any, currentProperties:any) {
     if (currentProperties.onChange) {
       input.setAttribute('data-cell-id', cell.getId());
+      /* eslint no-param-reassign: "off" */
       input.onchange = currentProperties.onChange;
     }
 

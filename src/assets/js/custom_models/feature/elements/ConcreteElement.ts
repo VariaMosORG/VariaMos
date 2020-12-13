@@ -36,7 +36,7 @@ export class ConcreteElement extends ModelElement {
   // if concrete element is selected, then put a green mark as an overlay, otherwise remove it
   public getOnChangeSelectedFunction() {
     const graph = this.getCurrentModel().getModelUtil().getVGraph().getGraph();
-    const onChangeSelectedFunction = function (this:any) {
+    const onChangeSelectedFunction = function anonymousOnChange(this:any) {
       const overlay = new mxCellOverlay(new mxImage('/img/check.png', 16, 16), 'Overlay tooltip');
       const dataCellId = this.getAttribute('data-cell-id');
       if (this.checked) {

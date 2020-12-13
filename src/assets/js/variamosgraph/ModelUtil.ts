@@ -33,8 +33,8 @@ export class ModelUtil {
       const cell = rootChildren[i];
       let label = cell.getAttribute('label');
       label = label.toLowerCase();
-      labelToSearch = labelToSearch.toLowerCase();
-      if (label.includes(labelToSearch)) {
+      const currentLabelToSearch = labelToSearch.toLowerCase();
+      if (label.includes(currentLabelToSearch)) {
         // this.vGraph.getGraph().getView().setTranslate(-cell.getGeometry().x, -cell.getGeometry().y);
         this.vGraph.getGraph().getSelectionModel().setCell(cell);
         break;

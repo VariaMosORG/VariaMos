@@ -45,53 +45,57 @@ export class ConfigElements {
   }
 
   public addToolbarItem(vertexToClone:any, element:any) {
-    const graph = this.vGraph.getGraph();
     const currentModel = this.vGraph.getCurrentModel();
     const modal = this.vGraph.getModal();
 
-    const drapAndDropCreation = function (graph:any, evt:any, cell:any) {
+    const dragAndDropCreation = function anonymousDragAndDrop(graph:any, evt:any, cell:any) {
+      let validDragAndDrop = true;
       // check custom model constraints in element creation
       const customConstraintsElementCreation = currentModel.customConstraintsElementCreation(graph, vertexToClone);
       if (customConstraintsElementCreation.message) {
         modal.setData('error', 'Error', customConstraintsElementCreation.message);
         modal.click();
-        return null;
+        validDragAndDrop = false;
       }
 
-      graph.stopEditing(false);
-      const pt = graph.getPointForEvent(evt);
-      const vertex = graph.getModel().cloneCell(vertexToClone);
-      vertex.geometry.x = pt.x;
-      vertex.geometry.y = pt.y;
-      const newCells = graph.importCells([vertex], 0, 0, cell);
-      graph.setSelectionCells(newCells);
+      if (validDragAndDrop) {
+        graph.stopEditing(false);
+        const pt = graph.getPointForEvent(evt);
+        const vertex = graph.getModel().cloneCell(vertexToClone);
+        vertex.geometry.x = pt.x;
+        vertex.geometry.y = pt.y;
+        const newCells = graph.importCells([vertex], 0, 0, cell);
+        graph.setSelectionCells(newCells);
 
-      // start cloning feature
-      const clonesInfo = currentModel.getElementClones();
-      if (clonesInfo[vertex.getAttribute('type')]) { // check if clone is defined for current element
-        const clonDestinationModel = clonesInfo[vertex.getAttribute('type')];
-        if (graph.getModel().getCell(clonDestinationModel)) { // if the destination model is available
-          graph.getModel().prefix = 'clon'; // cloned cell contains clon prefix
-          graph.getModel().nextId = graph.getModel().nextId - 1;
-          const vertex2 = graph.getModel().cloneCell(newCells[0]);
-          const parent2 = graph.getModel().getCell(clonDestinationModel);
-          graph.setCellStyles(mxConstants.STYLE_FILLCOLOR, '#DCDCDC', [vertex2]); // different background for a cloned cell
-          graph.importCells([vertex2], 0, 0, parent2);
-          graph.getModel().prefix = ''; // restart prefix
+        // start cloning feature
+        const clonesInfo = currentModel.getElementClones();
+        if (clonesInfo[vertex.getAttribute('type')]) { // check if clone is defined for current element
+          const clonDestinationModel = clonesInfo[vertex.getAttribute('type')];
+          if (graph.getModel().getCell(clonDestinationModel)) { // if the destination model is available
+            /* eslint no-param-reassign: "off" */
+            graph.getModel().prefix = 'clon'; // cloned cell contains clon prefix
+            graph.getModel().nextId = graph.getModel().nextId - 1;
+            const vertex2 = graph.getModel().cloneCell(newCells[0]);
+            const parent2 = graph.getModel().getCell(clonDestinationModel);
+            graph.setCellStyles(mxConstants.STYLE_FILLCOLOR, '#DCDCDC', [vertex2]); // different background for a cloned cell
+            graph.importCells([vertex2], 0, 0, parent2);
+            graph.getModel().prefix = ''; // restart prefix
+          }
         }
+        // end cloning feature
       }
-      // end cloning feature
     };
 
+    const graph = this.vGraph.getGraph();
     const mdiv = document.createElement('div');
     const mspan = document.createElement('span'); // tooltip
     mspan.classList.add('csstooltiptext2');
     const imgSrc = require(`@/assets/js/custom_models/${this.vGraph.getCurrentModel().type}/img/${element.icon}`);
-    const img = this.toolbar.addMode(element.label, imgSrc, drapAndDropCreation);
+    const img = this.toolbar.addMode(element.label, imgSrc, dragAndDropCreation);
     mspan.innerText = img.getAttribute('title');
     img.removeAttribute('title');
 
-    mxUtils.makeDraggable(img, graph, drapAndDropCreation);
+    mxUtils.makeDraggable(img, graph, dragAndDropCreation);
 
     mdiv.classList.add('pallete-div');
     mdiv.classList.add('csstooltip');
