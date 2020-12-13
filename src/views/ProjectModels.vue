@@ -84,7 +84,7 @@
 <script lang="ts">
 import { defineAsyncComponent } from 'vue';
 import { Vue, Options, mixins } from 'vue-class-component';
-import { VariaMosGraph } from "@/assets/js/variamosgraph/VariaMosGraph";
+import { VariaMosGraph } from '@/assets/js/variamosgraph/VariaMosGraph';
 import { Project } from '@/store/project/Project';
 import Breadcrumb from '@/components/Breadcrumb.vue';
 import GlobalVueFunctions from '../mixins/GlobalVueFunctions';
@@ -93,114 +93,129 @@ import GlobalVueFunctions from '../mixins/GlobalVueFunctions';
   components: {
     Breadcrumb,
   },
-  watch:{
-    $route (to, from){
-      if(this.$route.name === 'ProjectModel'){
+  watch: {
+    $route(to, from) {
+      if (this.$route.name === 'ProjectModel') {
         this.updatePageOnRouteChange();
-      }else{
-        this.$root.search = function(){}; //restart the search function of the App.vue instance
+      } else {
+        this.$root.search = function () {}; // restart the search function of the App.vue instance
       }
-    }
-  } 
+    },
+  },
 })
 export default class ProjectModels extends mixins(GlobalVueFunctions) {
-  public modelType:any = ""; //example feature
-  public modelTypeLabel:any = ""; //example FeatureModel
-  public currentProject:any; //currentProject (ProjectClass)
-  public configApp:any; //references current configApp (ConfigApp)
+  public modelType:any = ''; // example feature
+
+  public modelTypeLabel:any = ''; // example FeatureModel
+
+  public currentProject:any; // currentProject (ProjectClass)
+
+  public configApp:any; // references current configApp (ConfigApp)
+
   public availableModels:any = [];
+
   public variaMosGraph = new VariaMosGraph();
+
   public buttonsArea = VariaMosGraph.buttons.buttonArea; // buttons
-  public divContainer:any; //div container (HTMLElement)
-  public divNavigator:any; //div navigator (HTMLElement)
-  public divElements:any; //div elements (HTMLElement)
-  public divProperties:any; //div properties (HTMLElement)
-  public $store:any; //references vuex store
-  public $modal:any; //references modalPlugin
-  public $root:any; //App.vue instance
-  public customComponentModelActions:any; //dynamic model actions component to be loaded
+
+  public divContainer:any; // div container (HTMLElement)
+
+  public divNavigator:any; // div navigator (HTMLElement)
+
+  public divElements:any; // div elements (HTMLElement)
+
+  public divProperties:any; // div properties (HTMLElement)
+
+  public $store:any; // references vuex store
+
+  public $modal:any; // references modalPlugin
+
+  public $root:any; // App.vue instance
+
+  public customComponentModelActions:any; // dynamic model actions component to be loaded
+
   public navigationList:any = [
     {
-      title:"Home", route:"/"
+      title: 'Home', route: '/',
     },
     {
-      title:"Projects", route:"/projects"
-    }
+      title: 'Projects', route: '/projects',
+    },
   ];
 
-  public beforeMount(){
+  public beforeMount() {
     this.loadCustomComponentModelActions();
     this.configApp = this.$store.getters['configApp/getConfigApp'];
     this.currentProject = Project.getProjectByName(this.$store.getters['projects/getProjects'], this.$route.params.projectName);
     this.availableModels = this.currentProject.getAvailableModels();
     this.navigationList.push(
       {
-        title:this.$route.params.projectName, 
-        route:"/projects/"+this.$route.params.projectName
+        title: this.$route.params.projectName,
+        route: `/projects/${this.$route.params.projectName}`,
       },
       {
-        title:this.getBeautyModelName(this.$route.params.modelType),
-        route:""
-      }
+        title: this.getBeautyModelName(this.$route.params.modelType),
+        route: '',
+      },
     );
   }
 
-  public mounted(){
+  public mounted() {
     this.variaMosGraph.initTreeModel(this.availableModels, this.currentProject.getXml());
-    this.$modal = <any> this.$refs.modalPlugin; //reference the modal plugin
+    this.$modal = this.$refs.modalPlugin; // reference the modal plugin
     this.initGraph(1);
     this.implementSearchBarFunction();
   }
 
-  //now the search bar allows to search for cells
-  public implementSearchBarFunction(){
-    let root = this.$route.params.modelType; 
-    let modelUtil = this.variaMosGraph.getModelUtil();
-    this.$root.search = function(){ //modify search function of the App.vue instance
+  // now the search bar allows to search for cells
+  public implementSearchBarFunction() {
+    const root = this.$route.params.modelType;
+    const modelUtil = this.variaMosGraph.getModelUtil();
+    this.$root.search = function () { // modify search function of the App.vue instance
       modelUtil.searchFirstCellByLabel(root, this.$root.searchText);
-    }
+    };
   }
 
-  //update model info and functions
-  public updatePageOnRouteChange(){
+  // update model info and functions
+  public updatePageOnRouteChange() {
     this.loadCustomComponentModelActions();
-    this.divElements.innerHTML = "";
-    this.divNavigator.innerHTML = "";
-    this.divProperties.innerHTML = "";
+    this.divElements.innerHTML = '';
+    this.divNavigator.innerHTML = '';
+    this.divProperties.innerHTML = '';
     this.variaMosGraph.removeAllButtonEventListeners();
     this.navigationList.pop();
     this.navigationList.push(
       {
-        title:this.getBeautyModelName(this.$route.params.modelType),
-        route:""
-      }
+        title: this.getBeautyModelName(this.$route.params.modelType),
+        route: '',
+      },
     );
     this.initGraph(2);
     this.implementSearchBarFunction();
   }
 
-  //load the custom component model action (if available for current model)
-  public loadCustomComponentModelActions(){
-    let fileToImport = "assets/js/custom_models/" + this.$route.params.modelType + "/" + this.getBeautyModelName(this.$route.params.modelType);
+  // load the custom component model action (if available for current model)
+  public loadCustomComponentModelActions() {
+    const fileToImport = `assets/js/custom_models/${this.$route.params.modelType}/${this.getBeautyModelName(this.$route.params.modelType)}`;
     const customComponent = defineAsyncComponent({
-      loader: () => import("@/"+fileToImport+"Actions.vue"),
+      loader: () => import(`@/${fileToImport}Actions.vue`),
       onError(error, retry, fail, attempts) {
-        return null; //do not dynamic load a custom component model action
-      }
+        return null; // do not dynamic load a custom component model action
+      },
     });
     this.customComponentModelActions = customComponent;
   }
 
-  public initGraph(caseLoad:number){
+  public initGraph(caseLoad:number) {
     this.modelType = String(this.$route.params.modelType);
-    this.modelTypeLabel = this.modelType.charAt(0).toUpperCase() + this.modelType.slice(1) + "Model";
-    this.divContainer = document.getElementById("vgraph-container");
-    this.divNavigator = document.getElementById("vgraph-navigator");
-    this.divElements = document.getElementById("vgraph-elements");
-    this.divProperties = document.getElementById("vgraph-properties");
+    this.modelTypeLabel = `${this.modelType.charAt(0).toUpperCase() + this.modelType.slice(1)}Model`;
+    this.divContainer = document.getElementById('vgraph-container');
+    this.divNavigator = document.getElementById('vgraph-navigator');
+    this.divElements = document.getElementById('vgraph-elements');
+    this.divProperties = document.getElementById('vgraph-properties');
     this.variaMosGraph.initializeGraph(
-      this.modelType, this.currentProject, this.divContainer, this.divNavigator, 
-      this.divElements, this.divProperties, this.configApp, this.$modal, this.$store, caseLoad, 
+      this.modelType, this.currentProject, this.divContainer, this.divNavigator,
+      this.divElements, this.divProperties, this.configApp, this.$modal, this.$store, caseLoad,
     );
   }
 }
@@ -268,7 +283,7 @@ ul.tab li a:focus, .active {
   overflow-y: auto;
   background:url("../assets/img/grid.gif");
   cursor:default;
-  padding-right: 0px; 
+  padding-right: 0px;
   padding-left: 0px;
 }
 

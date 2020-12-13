@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Options, mixins } from 'vue-class-component';
+import { Options, mixins } from 'vue-class-component';
 import { Project as ProjectClass } from '@/store/project/Project';
 import Breadcrumb from '@/components/Breadcrumb.vue';
 import GlobalVueFunctions from '../mixins/GlobalVueFunctions';

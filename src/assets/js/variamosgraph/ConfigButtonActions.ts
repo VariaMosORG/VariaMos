@@ -232,9 +232,9 @@ export class ConfigButtonActions {
           if (removedCells[i].isVertex()) {
             const clon = graph.getModel().getCell(`clon${removedCells[i].getId()}`);
             if (clon) {
-              const cells = [];
-              cells[0] = clon;
-              graph.removeCells(cells);
+              const cells2 = [];
+              cells2[0] = clon;
+              graph.removeCells(cells2);
             }
           }
         }

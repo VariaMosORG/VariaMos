@@ -106,7 +106,7 @@
 
             <div class="card-body">
               <div class="form-group">
-                <button v-on:click="exportAllProjects" class="btn btn-info marr20">Export All Projects</button>         
+                <button v-on:click="exportAllProjects" class="btn btn-info marr20">Export All Projects</button>
               </div>
             </div>
           </div>
@@ -145,168 +145,170 @@ import GlobalVueFunctions from '../mixins/GlobalVueFunctions';
 
 @Options({
   components: {
-    Breadcrumb
-  }
+    Breadcrumb,
+  },
 })
 export default class Projects extends mixins(GlobalVueFunctions) {
   public avaModels:any;
-  public projectName:string = "";
+
+  public projectName:string = '';
+
   public projectAvailableModels:any = [];
+
   public projects:any = [];
-  public $store:any; //references vuex store
-  public $modal:any; //references modalPlugin
+
+  public $store:any; // references vuex store
+
+  public $modal:any; // references modalPlugin
+
   public navigationList:any = [
     {
-      title:"Home", route:"/"
+      title: 'Home', route: '/',
     },
     {
-      title:"Projects", route:""
+      title: 'Projects', route: '',
     },
   ];
 
-  public beforeMount(){
+  public beforeMount() {
     this.projects = this.$store.getters['projects/getProjects'];
     this.avaModels = this.$store.getters['configApp/getConfigApp'].getInstalledModels();
   }
 
-  public mounted(){
-    this.$modal = <any> this.$refs.modalPlugin; //reference the modal plugin
+  public mounted() {
+    // reference the modal plugin
+    this.$modal = this.$refs.modalPlugin;
   }
 
-  //create a new project
-  public createProject(){
-    if (this.projectName == "") {
-      this.$modal.setData("error", "Error", "Please enter a project name");
+  // create a new project
+  public createProject() {
+    if (this.projectName == '') {
+      this.$modal.setData('error', 'Error', 'Please enter a project name');
       this.$modal.click();
     } else if (/\s/.test(this.projectName)) {
-      this.$modal.setData("error", "Error", "Blank spaces not allowed in project name");
+      this.$modal.setData('error', 'Error', 'Blank spaces not allowed in project name');
       this.$modal.click();
-    } else if(ProjectClass.checkIfProjectExists(this.projects, this.projectName)){
-      this.$modal.setData("error", "Error", "A project with that name already exists");
+    } else if (ProjectClass.checkIfProjectExists(this.projects, this.projectName)) {
+      this.$modal.setData('error', 'Error', 'A project with that name already exists');
+      this.$modal.click();
+    } else if (this.projectAvailableModels.length > 0) {
+      const project = new ProjectClass(this.projectName, '', this.projectAvailableModels);
+      this.$store.commit('projects/addProject', project);
+      this.$modal.setData('success', 'Success', 'Project created successfully');
       this.$modal.click();
     } else {
-      if (this.projectAvailableModels.length > 0) {
-        let project = new ProjectClass(this.projectName, "", this.projectAvailableModels);
-        this.$store.commit("projects/addProject",project);
-        this.$modal.setData("success", "Success", "Project created successfully");
-        this.$modal.click();
-      } else {
-        this.$modal.setData("error", "Error", "You must select at least one model");
-        this.$modal.click();
-      }
+      this.$modal.setData('error', 'Error', 'You must select at least one model');
+      this.$modal.click();
     }
   }
 
-  public importAllProjectCheck(e:any){
-    let store = this.$store;
-    let vueComponent = this;
-    let confirmAction = function(){
+  public importAllProjectCheck(e:any) {
+    const store = this.$store;
+    const vueComponent = this;
+    const confirmAction = function () {
       vueComponent.importAllProjects(e, store);
-    }
-    let secondaryAction = function(){
-      let inputFileAll = document.getElementById("fileAll") as any;
+    };
+    const secondaryAction = function () {
+      const inputFileAll = document.getElementById('fileAll') as any;
       if (inputFileAll) {
         inputFileAll.value = '';
       }
-    }
-    this.$modal.setData("warning", "Warning", "Are you sure you want to remove ALL current projects?", "confirm", confirmAction, secondaryAction);
+    };
+    this.$modal.setData('warning', 'Warning', 'Are you sure you want to remove ALL current projects?', 'confirm', confirmAction, secondaryAction);
     this.$modal.click();
   }
 
-  //remove all projects and import projects from json file
-  public importAllProjects(e:any, store:any){
-    let files = e.target.files || e.dataTransfer.files;
+  // remove all projects and import projects from json file
+  public importAllProjects(e:any, store:any) {
+    const files = e.target.files || e.dataTransfer.files;
     if (!files.length) {
-      return;
+      // nothing
     } else {
-      store.commit("projects/removeAllProjects"); //remove all projects
-      let fileToLoad = files[0];
-      let fileReader = new FileReader();
-      let projects = this.projects;
-      fileReader.onload = function(fileLoadedEvent:any) 
-      {
-        let textFromFileLoaded = fileLoadedEvent.target.result;
-        let jsonText = JSON.parse(textFromFileLoaded);
-        for (let i = 0; i < jsonText.length; i++) { //import new projects
+      store.commit('projects/removeAllProjects'); // remove all projects
+      const fileToLoad = files[0];
+      const fileReader = new FileReader();
+      const { projects } = this;
+      fileReader.onload = function (fileLoadedEvent:any) {
+        const textFromFileLoaded = fileLoadedEvent.target.result;
+        const jsonText = JSON.parse(textFromFileLoaded);
+        for (let i = 0; i < jsonText.length; i++) { // import new projects
           if (jsonText[i].hasOwnProperty('name') && jsonText[i].hasOwnProperty('xml') && jsonText[i].hasOwnProperty('availableModels')) {
-            let project = new ProjectClass(jsonText[i].name, jsonText[i].xml, jsonText[i].availableModels);
-            store.commit("projects/addProject",project);
+            const project = new ProjectClass(jsonText[i].name, jsonText[i].xml, jsonText[i].availableModels);
+            store.commit('projects/addProject', project);
           }
         }
-        location.reload(); //reload page
+        location.reload(); // reload page
       };
-      fileReader.readAsText(fileToLoad, "UTF-8");
+      fileReader.readAsText(fileToLoad, 'UTF-8');
     }
   }
 
-  //export existing project (json format)
-  public importProject(e:any){
-    let files = e.target.files || e.dataTransfer.files;
+  // export existing project (json format)
+  public importProject(e:any) {
+    const files = e.target.files || e.dataTransfer.files;
     if (!files.length) {
-      return;
+      // nothing
     } else {
-      let fileToLoad = files[0];
-      let fileReader = new FileReader();
-      let projects = this.projects;
-      let modal = this.$modal;
-      let store = this.$store;
-      fileReader.onload = function(fileLoadedEvent:any) 
-      {
-        let textFromFileLoaded = fileLoadedEvent.target.result;
-        let jsonText = JSON.parse(textFromFileLoaded);
-        if(jsonText.hasOwnProperty('name') && jsonText.hasOwnProperty('xml') && jsonText.hasOwnProperty('availableModels')){
-          let newProjectName = jsonText.name;
-          if(ProjectClass.checkIfProjectExists(projects, newProjectName)){
-            modal.setData("error", "Error", "A project called '"+newProjectName+"' already exists");
+      const fileToLoad = files[0];
+      const fileReader = new FileReader();
+      const { projects } = this;
+      const modal = this.$modal;
+      const store = this.$store;
+      fileReader.onload = function (fileLoadedEvent:any) {
+        const textFromFileLoaded = fileLoadedEvent.target.result;
+        const jsonText = JSON.parse(textFromFileLoaded);
+        if (jsonText.hasOwnProperty('name') && jsonText.hasOwnProperty('xml') && jsonText.hasOwnProperty('availableModels')) {
+          const newProjectName = jsonText.name;
+          if (ProjectClass.checkIfProjectExists(projects, newProjectName)) {
+            modal.setData('error', 'Error', `A project called '${newProjectName}' already exists`);
             modal.click();
-          }else{
-            let project = new ProjectClass(newProjectName, jsonText.xml, jsonText.availableModels);
-            store.commit("projects/addProject",project);
-            modal.setData("success", "Success", "Project created successfully");
+          } else {
+            const project = new ProjectClass(newProjectName, jsonText.xml, jsonText.availableModels);
+            store.commit('projects/addProject', project);
+            modal.setData('success', 'Success', 'Project created successfully');
             modal.click();
           }
-        }
-        else{
-          modal.setData("error", "Error", "Invalid JSON format, it must contain 'name', 'xml', and 'availableModels' keys");
+        } else {
+          modal.setData('error', 'Error', "Invalid JSON format, it must contain 'name', 'xml', and 'availableModels' keys");
           modal.click();
         }
       };
-      fileReader.readAsText(fileToLoad, "UTF-8");
+      fileReader.readAsText(fileToLoad, 'UTF-8');
     }
   }
 
-  //export all projects in json format
-  public exportAllProjects(){
-    let jsonAllProjects = this.$store.getters['projects/getAllProjects'];
-    this.generateJsonFile(jsonAllProjects, "MultiProject-MultiProjects.json");
+  // export all projects in json format
+  public exportAllProjects() {
+    const jsonAllProjects = this.$store.getters['projects/getAllProjects'];
+    this.generateJsonFile(jsonAllProjects, 'MultiProject-MultiProjects.json');
   }
 
-  //export project in json format
-  public exportProject(index:any, name:any){
-    let jsonProject = this.$store.getters['projects/getProjectJson'](index);
-    this.generateJsonFile(jsonProject, "Project-"+name+".json");
+  // export project in json format
+  public exportProject(index:any, name:any) {
+    const jsonProject = this.$store.getters['projects/getProjectJson'](index);
+    this.generateJsonFile(jsonProject, `Project-${name}.json`);
   }
 
-  //generate and download json file
-  public generateJsonFile(text:string, filename:string){
-    let pseudoelement = document.createElement("a");
-    let blob = new Blob([ text ], { type: "application/json" });
+  // generate and download json file
+  public generateJsonFile(text:string, filename:string) {
+    const pseudoelement = document.createElement('a');
+    const blob = new Blob([text], { type: 'application/json' });
 
-    pseudoelement.setAttribute("href", window.URL.createObjectURL(blob));
-    pseudoelement.setAttribute("download", filename);
-    pseudoelement.dataset.downloadurl = ["application/json", pseudoelement.download, pseudoelement.href].join(":");
+    pseudoelement.setAttribute('href', window.URL.createObjectURL(blob));
+    pseudoelement.setAttribute('download', filename);
+    pseudoelement.dataset.downloadurl = ['application/json', pseudoelement.download, pseudoelement.href].join(':');
     pseudoelement.draggable = true;
-    pseudoelement.classList.add("dragout");
+    pseudoelement.classList.add('dragout');
     pseudoelement.click();
   }
 
-  //remove selected project
-  public removeProject(index:any){
-    let store = this.$store;
-    let confirmAction = function(){
-      store.commit("projects/removeProject", index);
+  // remove selected project
+  public removeProject(index:any) {
+    const store = this.$store;
+    const confirmAction = function () {
+      store.commit('projects/removeProject', index);
     };
-    this.$modal.setData("warning", "Warning", "Are you sure you want to remove this project?", "confirm", confirmAction);
+    this.$modal.setData('warning', 'Warning', 'Are you sure you want to remove this project?', 'confirm', confirmAction);
     this.$modal.click();
   }
 }

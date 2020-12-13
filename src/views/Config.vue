@@ -63,52 +63,56 @@ import Breadcrumb from '@/components/Breadcrumb.vue';
 
 @Options({
   components: {
-    Breadcrumb
-  }
+    Breadcrumb,
+  },
 })
 export default class Config extends Vue {
-  public configApp:any; //global configApp (store)
-  public $store:any; //references vuex store
-  public $modal:any; //references modalPlugin
+  public configApp:any; // global configApp (store)
+
+  public $store:any; // references vuex store
+
+  public $modal:any; // references modalPlugin
+
   public navigationList:any = [
     {
-      title:"Home", route:"/"
+      title: 'Home', route: '/',
     },
     {
-      title:"Config", route:""
+      title: 'Config', route: '',
     },
   ];
 
-  public beforeMount(){
+  public beforeMount() {
     this.configApp = this.$store.getters['configApp/getConfigApp'];
   }
 
-  public mounted(){
-    this.$modal = <any> this.$refs.modalPlugin; //reference the modal plugin
+  public mounted() {
+    // reference the modal plugin
+    this.$modal = this.$refs.modalPlugin;
   }
 
-  public discoverModels(){
+  public discoverModels() {
     const modelFiles = require.context('@/assets/js/custom_models', true, /\.ts$/);
     const modelFilesKeys = modelFiles.keys();
-    let listOfModels:string[] = [];
+    const listOfModels:string[] = [];
     for (let i = 0; i < modelFilesKeys.length; i++) {
-      let modelSplit = modelFilesKeys[i].split("/");
-      if(modelSplit.length == 3){
+      const modelSplit = modelFilesKeys[i].split('/');
+      if (modelSplit.length == 3) {
         if (listOfModels.indexOf(modelSplit[1]) == -1) {
           listOfModels.push(modelSplit[1]);
         }
       }
     }
     this.configApp.setInstalledModels(listOfModels);
-    this.$store.commit("configApp/setConfigApp",this.configApp);
-    this.$modal.setData("success", "Success", "List of installed models updated");
+    this.$store.commit('configApp/setConfigApp', this.configApp);
+    this.$modal.setData('success', 'Success', 'List of installed models updated');
     this.$modal.click();
   }
 
-  public saveConfig(){
-    this.$store.commit("configApp/setConfigApp",this.configApp);
-    this.$modal.setData("success", "Success", "Config set successfully");
+  public saveConfig() {
+    this.$store.commit('configApp/setConfigApp', this.configApp);
+    this.$modal.setData('success', 'Success', 'Config set successfully');
     this.$modal.click();
   }
-} 
+}
 </script>

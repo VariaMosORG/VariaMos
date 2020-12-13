@@ -6,19 +6,19 @@ export abstract class Model {
 
   private elementClassNames:string[];
 
-  private elements:any = Array(); // ModelElement[]
+  private elements:any = []; // ModelElement[]
 
   private elementClones:any = {}; // element clones
 
-  private constraints?:any = Array(); // list of constraints between elements
+  private constraints?:any = []; // list of constraints between elements
 
   private modelUtil?:any; // ModelUtil
 
   private customElementTexts?:any; // custom element texts to be displayed
 
-  private relationProperties:any = Array(); // list of relation properties between elements
+  private relationProperties:any = []; // list of relation properties between elements
 
-  private relationStyles:any = Array(); // list of relation styles between elements
+  private relationStyles:any = []; // list of relation styles between elements
 
   public constructor(type:string, elementClassNames:string[]) {
     this.type = type;

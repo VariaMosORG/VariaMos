@@ -16,7 +16,7 @@ export abstract class ModelElement {
 
   private currentModel:any; // references the current model
 
-  private properties:any = Array();
+  private properties:any = [];
 
   public constructor(icon:string, type:string, width:number, height:number,
     style:string, label:string, currentModel:any) {
