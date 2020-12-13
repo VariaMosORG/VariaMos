@@ -11,7 +11,7 @@ module.exports = {
 
   rules: {
     eqeqeq: 'off',
-    'no-unused-vars': 'off',
+    'no-unused-vars': 'off', // multiple unused var of vue methods (such as route /to /from)
     'prefer-destructuring': 'off',
     'global-require': 'off', // sometimes requires depend on method data
     'import/prefer-default-export': 'off', // not recommended

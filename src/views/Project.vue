@@ -65,7 +65,10 @@ export default class Project extends mixins(GlobalVueFunctions) {
   ];
 
   public beforeMount() {
-    this.currentProject = ProjectClass.getProjectByName(this.$store.getters['projects/getProjects'], this.$route.params.projectName);
+    this.currentProject = ProjectClass.getProjectByName(
+      this.$store.getters['projects/getProjects'],
+      this.$route.params.projectName,
+    );
     if (this.currentProject == null) { // redirect if project not found
       this.$router.push({ name: 'NotFound' });
     } else {
@@ -74,7 +77,10 @@ export default class Project extends mixins(GlobalVueFunctions) {
   }
 
   public updatePageOnRouteChange() {
-    this.currentProject = ProjectClass.getProjectByName(this.$store.getters['projects/getProjects'], this.$route.params.projectName);
+    this.currentProject = ProjectClass.getProjectByName(
+      this.$store.getters['projects/getProjects'],
+      this.$route.params.projectName,
+    );
     if (this.currentProject == null) { // redirect if project not found
       this.$router.push({ name: 'NotFound' });
     } else {
@@ -91,7 +97,11 @@ export default class Project extends mixins(GlobalVueFunctions) {
 
     pseudoelement.setAttribute('href', window.URL.createObjectURL(blob));
     pseudoelement.setAttribute('download', filename);
-    pseudoelement.dataset.downloadurl = ['application/json', pseudoelement.download, pseudoelement.href].join(':');
+    pseudoelement.dataset.downloadurl = [
+      'application/json',
+      pseudoelement.download,
+      pseudoelement.href,
+    ].join(':');
     pseudoelement.draggable = true;
     pseudoelement.classList.add('dragout');
     pseudoelement.click();
