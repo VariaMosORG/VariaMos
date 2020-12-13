@@ -178,35 +178,38 @@
 import { Vue } from 'vue-class-component';
 
 export default class App extends Vue {
-    public $store:any; //references vuex store
-    public projects:any = []; //references current projects (Project[])
-    public configApp:any; //references current configApp (ConfigApp)
-    public searchText:string = ""; //search text
+    public $store:any; // references vuex store
 
-    public beforeMount(){
-        this.projects = this.$store.getters['projects/initializeProjects']; //initialize projects for the entire app
-        this.configApp = this.$store.getters['configApp/initializeConfigApp']; //initialize configApp for the entire app
+    public projects:any = []; // references current projects (Project[])
+
+    public configApp:any; // references current configApp (ConfigApp)
+
+    public searchText:string = ''; // search text
+
+    public beforeMount() {
+      this.projects = this.$store.getters['projects/initializeProjects']; // initialize projects for the entire app
+      this.configApp = this.$store.getters['configApp/initializeConfigApp']; // initialize configApp for the entire app
     }
 
-    public hideSidebar(){
-        let body = document.querySelector('body');
-        if(body){
-            body.classList.toggle('sidebar-toggled');
-        }
+    public hideSidebar() {
+      const body = document.querySelector('body');
+      if (body) {
+        body.classList.toggle('sidebar-toggled');
+      }
 
-        let sidebar = document.querySelector('.sidebar');
-        if(sidebar){
-            sidebar.classList.toggle('toggled');
-        }
+      const sidebar = document.querySelector('.sidebar');
+      if (sidebar) {
+        sidebar.classList.toggle('toggled');
+      }
 
-        let mainIcon = document.querySelector('#main-icon');
-        if(mainIcon){
-            mainIcon.classList.toggle('display-icon-yes');
-        }
+      const mainIcon = document.querySelector('#main-icon');
+      if (mainIcon) {
+        mainIcon.classList.toggle('display-icon-yes');
+      }
     }
 
-    public search(){
-        //to be redefined in the child components
+    public search() {
+      // to be redefined in the child components
     }
 }
 </script>

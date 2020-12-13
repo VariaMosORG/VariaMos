@@ -1,64 +1,77 @@
 /**
  * @author Daniel Correa <dcorreab@eafit.edu.co>
  */
-export abstract class ModelElement { 
-    private icon:string;
-    private type:string; 
-    private width:number; 
-    private height:number;
-    private style:string;
-    private label:string;
-    private currentModel:any; //references the current model
-    private properties:any = Array();
+export abstract class ModelElement {
+  private icon:string;
 
-    public constructor(icon:string, type:string, width:number, height:number, 
-        style:string, label:string, currentModel:any) {
-        this.icon = icon;
-        this.type = type; 
-        this.width = width; 
-        this.height = height;
-        this.style = style; 
-        this.label = label;
-        this.currentModel = currentModel;
-        this.properties = [
-            { id:"label", label: "Label", defValue:this.type, inputType:"text", disabled:"false", display:"true"},
-            { id:"type", label: "Type", defValue:this.type, inputType:"text", disabled:"true", display:"true"},
-        ]
-    }
+  private type:string;
 
-    public getIcon(){
-        return this.icon;
-    }
+  private width:number;
 
-    public getType(){
-        return this.type;
-    }
+  private height:number;
 
-    public getWidth(){
-        return this.width;
-    }
+  private style:string;
 
-    public getHeight(){
-        return this.height;
-    }
+  private label:string;
 
-    public getStyle(){
-        return this.style;
-    }
+  private currentModel:any; // references the current model
 
-    public getLabel(){
-        return this.label;
-    }
+  private properties:any = Array();
 
-    public getProperties(){
-        return this.properties;
-    }
+  public constructor(icon:string, type:string, width:number, height:number,
+    style:string, label:string, currentModel:any) {
+    this.icon = icon;
+    this.type = type;
+    this.width = width;
+    this.height = height;
+    this.style = style;
+    this.label = label;
+    this.currentModel = currentModel;
+    this.properties = [
+      {
+        id: 'label', label: 'Label', defValue: this.type, 
+        inputType: 'text', disabled: 'false', display: 'true',
+      },
+      {
+        id: 'type', label: 'Type', defValue: this.type, 
+        inputType: 'text', disabled: 'true', display: 'true',
+      },
+    ];
+  }
 
-    public getCurrentModel(){
-        return this.currentModel;
-    }
+  public getIcon() {
+    return this.icon;
+  }
 
-    public setProperties(properties:any){
-        this.properties = properties;
-    }
+  public getType() {
+    return this.type;
+  }
+
+  public getWidth() {
+    return this.width;
+  }
+
+  public getHeight() {
+    return this.height;
+  }
+
+  public getStyle() {
+    return this.style;
+  }
+
+  public getLabel() {
+    return this.label;
+  }
+
+  public getProperties() {
+    return this.properties;
+  }
+
+  public getCurrentModel() {
+    return this.currentModel;
+  }
+
+  public setProperties(properties:any) {
+    this.properties = properties;
+  }
 }

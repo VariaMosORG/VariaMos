@@ -2,107 +2,118 @@
  * @author Daniel Correa <dcorreab@eafit.edu.co>
  */
 export abstract class Model {
-    private type:string; //for example feature
-    private elementClassNames:string[];
-    private elements:any = Array(); // ModelElement[]
-    private elementClones:any = {}; // element clones
-    private constraints?:any = Array(); //list of constraints between elements
-    private modelUtil?:any; // ModelUtil
-    private customElementTexts?:any; // custom element texts to be displayed
-    private relationProperties:any = Array(); //list of relation properties between elements
-    private relationStyles:any = Array(); //list of relation styles between elements
-    
-    public constructor(type:string, elementClassNames:string[]) {
-        this.type = type;
-        this.elementClassNames = elementClassNames;
-        this.relationProperties = [
-            { id:"type", label: "Type", defValue:"relation", inputType:"text", disabled:"true", display:"true"},
-        ];
-    }
+  private type:string; // for example feature
 
-    public getType(){
-        return this.type;
-    }
+  private elementClassNames:string[];
 
-    public getElementClassNames(){
-        return this.elementClassNames;
-    }
+  private elements:any = Array(); // ModelElement[]
 
-    public getElements(){
-        return this.elements;
-    }
+  private elementClones:any = {}; // element clones
 
-    public getElementClones(){
-        return this.elementClones;
-    }
+  private constraints?:any = Array(); // list of constraints between elements
 
-    public getConstraints(){
-        return this.constraints;
-    }
+  private modelUtil?:any; // ModelUtil
 
-    public getModelUtil(){
-        return this.modelUtil;
-    }
+  private customElementTexts?:any; // custom element texts to be displayed
 
-    public getCustomElementTexts(){
-        return this.customElementTexts;
-    }
+  private relationProperties:any = Array(); // list of relation properties between elements
 
-    public getRelationProperties(){
-        return this.relationProperties;
-    }
+  private relationStyles:any = Array(); // list of relation styles between elements
 
-    public getRelationStyles(){
-        return this.relationStyles;
-    }
+  public constructor(type:string, elementClassNames:string[]) {
+    this.type = type;
+    this.elementClassNames = elementClassNames;
+    this.relationProperties = [
+      {
+        id: 'type', label: 'Type', defValue: 'relation',
+        inputType: 'text', disabled: 'true', display: 'true',
+      },
+    ];
+  }
 
-    public setCustomElementTexts(customElementTexts:any){
-        this.customElementTexts = customElementTexts;
-    }
+  public getType() {
+    return this.type;
+  }
 
-    public setConstraints(constraints:any){
-        this.constraints = constraints;
-    }
+  public getElementClassNames() {
+    return this.elementClassNames;
+  }
 
-    public setRelationProperties(relationProperties:any){
-        this.relationProperties = relationProperties;
-    }
+  public getElements() {
+    return this.elements;
+  }
 
-    public setRelationStyles(relationStyles:any){
-        this.relationStyles = relationStyles;
-    }
+  public getElementClones() {
+    return this.elementClones;
+  }
 
-    public setElementClones(elementClones:any){
-        this.elementClones = elementClones;
-    }
+  public getConstraints() {
+    return this.constraints;
+  }
 
-    public setModelUtil(modelUtil:any){
-        this.modelUtil = modelUtil;
-    }
+  public getModelUtil() {
+    return this.modelUtil;
+  }
 
-    public addElement(element:any){
-        this.elements.push(element);
-    }
+  public getCustomElementTexts() {
+    return this.customElementTexts;
+  }
 
-    public setElements(elements:any){
-        this.elements = elements;
-    }
+  public getRelationProperties() {
+    return this.relationProperties;
+  }
 
-    public overlayStart(){
-        //implemented in subclasses
-    }
+  public getRelationStyles() {
+    return this.relationStyles;
+  }
 
-    public customGraphConfig(){
-        //implemented in subclasses
-    }
+  public setCustomElementTexts(customElementTexts:any) {
+    this.customElementTexts = customElementTexts;
+  }
 
-    public customConstraintsRelations(graph:any, source:any, target:any){
-        //implemented in subclasses
-        return {};
-    }
+  public setConstraints(constraints:any) {
+    this.constraints = constraints;
+  }
 
-    public customConstraintsElementCreation(graph:any, vertexToClone:any){
-        //implemented in subclasses
-        return {};
-    }
+  public setRelationProperties(relationProperties:any) {
+    this.relationProperties = relationProperties;
+  }
+
+  public setRelationStyles(relationStyles:any) {
+    this.relationStyles = relationStyles;
+  }
+
+  public setElementClones(elementClones:any) {
+    this.elementClones = elementClones;
+  }
+
+  public setModelUtil(modelUtil:any) {
+    this.modelUtil = modelUtil;
+  }
+
+  public addElement(element:any) {
+    this.elements.push(element);
+  }
+
+  public setElements(elements:any) {
+    this.elements = elements;
+  }
+
+  public overlayStart() {
+    // implemented in subclasses
+  }
+
+  public customGraphConfig() {
+    // implemented in subclasses
+  }
+
+  public customConstraintsRelations(graph:any, source:any, target:any) {
+    // implemented in subclasses
+    return {};
+  }
+
+  public customConstraintsElementCreation(graph:any, vertexToClone:any) {
+    // implemented in subclasses
+    return {};
+  }
 }
