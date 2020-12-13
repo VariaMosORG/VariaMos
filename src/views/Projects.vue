@@ -252,8 +252,9 @@ export default class Projects extends mixins(GlobalVueFunctions) {
         const textFromFileLoaded = fileLoadedEvent.target.result;
         const jsonText = JSON.parse(textFromFileLoaded);
         for (let i = 0; i < jsonText.length; i += 1) { // import new projects
-          if (jsonText[i].hasOwnProperty('name') && jsonText[i].hasOwnProperty('xml')
-            && jsonText[i].hasOwnProperty('availableModels')) {
+          if (Object.prototype.hasOwnProperty.call(jsonText[i], 'name')
+            && Object.prototype.hasOwnProperty.call(jsonText[i], 'xml')
+            && Object.prototype.hasOwnProperty.call(jsonText[i], 'availableModels')) {
             const project = new ProjectClass(
               jsonText[i].name,
               jsonText[i].xml,
@@ -282,8 +283,9 @@ export default class Projects extends mixins(GlobalVueFunctions) {
       fileReader.onload = function anonymousLoader(fileLoadedEvent:any) {
         const textFromFileLoaded = fileLoadedEvent.target.result;
         const jsonText = JSON.parse(textFromFileLoaded);
-        if (jsonText.hasOwnProperty('name') && jsonText.hasOwnProperty('xml')
-          && jsonText.hasOwnProperty('availableModels')) {
+        if (Object.prototype.hasOwnProperty.call(jsonText, 'name')
+            && Object.prototype.hasOwnProperty.call(jsonText, 'xml')
+            && Object.prototype.hasOwnProperty.call(jsonText, 'availableModels')) {
           const newProjectName = jsonText.name;
           if (ProjectClass.checkIfProjectExists(projects, newProjectName)) {
             modal.setData(

@@ -13,7 +13,6 @@ module.exports = {
     eqeqeq: 'off',
     'no-unused-vars': 'off',
     'prefer-destructuring': 'off',
-    'no-prototype-builtins': 'off',
     'global-require': 'off', // sometimes requires depend on method data
     'import/prefer-default-export': 'off', // not recommended
     'new-cap': 'off', // because of ts-mxgraph classes
