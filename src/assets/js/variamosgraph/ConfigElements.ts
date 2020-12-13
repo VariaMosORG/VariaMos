@@ -23,7 +23,7 @@ export class ConfigElements {
   public initializeElements() {
     this.toolbar = new mxToolbar(this.vGraph.getDivElements());
     const currentModel = this.vGraph.getCurrentModel();
-    for (let i = 0; i < currentModel.elements.length; i++) {
+    for (let i = 0; i < currentModel.elements.length; i += 1) {
       this.addVertex(currentModel.elements[i]);
     }
   }
@@ -33,7 +33,7 @@ export class ConfigElements {
     const node = doc.createElement(element.type);
 
     if (element.properties.length > 0) {
-      for (let i = 0; i < element.properties.length; i++) {
+      for (let i = 0; i < element.properties.length; i += 1) {
         node.setAttribute(element.properties[i].id, element.properties[i].defValue);
       }
     }

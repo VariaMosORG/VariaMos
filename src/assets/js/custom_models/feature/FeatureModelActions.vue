@@ -37,7 +37,7 @@ export default class FeatureModelActions extends Vue {
   public clearErrors() {
     const { errorCells } = this.variaMosGraph.getCustomData();
     const { errorOverlays } = this.variaMosGraph.getCustomData();
-    for (let i = 0; i < errorCells.length; i++) {
+    for (let i = 0; i < errorCells.length; i += 1) {
       this.variaMosGraph.getGraph().removeCellOverlay(errorCells[i], errorOverlays[i]);
     }
     const errorDict = {
@@ -57,7 +57,7 @@ export default class FeatureModelActions extends Vue {
     const childs = graph.getModel().getChildVertices(featureRoot);
     const labels = [];
     let result = '';
-    for (let i = 0; i < childs.length; i++) {
+    for (let i = 0; i < childs.length; i += 1) {
       const label = childs[i].getAttribute('label');
       if (labels.indexOf(label) > -1) {
         result += `- Duplicated Feature label: ${label}<br />`;

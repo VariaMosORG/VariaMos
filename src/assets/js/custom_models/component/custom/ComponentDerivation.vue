@@ -256,7 +256,7 @@ export default class ComponentDerivation extends Vue {
               startNext.disabled = false;
             });
         }
-        this.customizationCusPos++;
+        this.customizationCusPos += 1;
       } else {
         const customizedArea = document.getElementById('customized') as any;
         const notificationTextArea = document.getElementById('notification') as any;
@@ -290,7 +290,7 @@ export default class ComponentDerivation extends Vue {
         defaultTextArea.value = '';
         notificationTextArea.value = 'Component succesfully customized, click Start/Next to continue with another component';
         this.customizationCusPos = 0;
-        this.customizationCompPos++;
+        this.customizationCompPos += 1;
       }
     } else {
       const modal = this.variaMosGraph.getModal();
@@ -303,7 +303,7 @@ export default class ComponentDerivation extends Vue {
     const componentRoot = this.variaMosGraph.getModel().getCell('component');
     const componentRelations = this.variaMosGraph.getModel().getChildEdges(componentRoot);
     const destination = '';
-    for (let i = 0; i < componentRelations.length; i++) {
+    for (let i = 0; i < componentRelations.length; i += 1) {
       const source = componentRelations[i].source.getAttribute('label');
       if (source == id) {
         return componentRelations[i].source.getAttribute('destination');
@@ -314,7 +314,7 @@ export default class ComponentDerivation extends Vue {
 
   public modalCustomization(texts:any, inputs:any, defaultVals:any) {
     const table = document.createElement('table');
-    for (let i = 0; i < texts.length; i++) {
+    for (let i = 0; i < texts.length; i += 1) {
       const tr = document.createElement('tr');
       if (i == 3) {
         tr.id = 'filetouploadtr';

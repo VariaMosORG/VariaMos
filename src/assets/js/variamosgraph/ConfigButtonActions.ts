@@ -22,7 +22,7 @@ export class ConfigButtonActions {
 
   // initialize button actions (onclick)
   public initializeActions() {
-    for (let i = 0; i < this.buttons.length; i++) {
+    for (let i = 0; i < this.buttons.length; i += 1) {
       const functionToExecute = this.buttons[i].getId();
       if ((this as any)[functionToExecute]) { // Verify if the function exists
         const currentButton = document.getElementById(functionToExecute);
@@ -33,7 +33,7 @@ export class ConfigButtonActions {
 
   // remove all event listeners from all the buttons
   public removeAllEventListeners() {
-    for (let i = 0; i < this.buttons.length; i++) {
+    for (let i = 0; i < this.buttons.length; i += 1) {
       const buttonId = this.buttons[i].getId();
       const oldButton = document.getElementById(buttonId);
       if (oldButton) {
@@ -64,7 +64,7 @@ export class ConfigButtonActions {
           } else {
             // remove clons if exist
             const removedCells = graph.removeCells(graph.getChildVertices(graph.getDefaultParent()));
-            for (let i = 0; i < removedCells.length; i++) {
+            for (let i = 0; i < removedCells.length; i += 1) {
               if (removedCells[i].isVertex()) {
                 const clon = graph.getModel().getCell(`clon${removedCells[i].getId()}`);
                 if (clon) {
@@ -217,7 +217,7 @@ export class ConfigButtonActions {
         let validRemove = true;
         // avoid removing cloned elements directly
         const cells = graph.getSelectionCells();
-        for (let i = 0; i < cells.length; i++) {
+        for (let i = 0; i < cells.length; i += 1) {
           if (cells[i].isVertex()) {
             if (cells[i].getId().includes('clon')) {
               modal.setData('error', 'Error', 'Cloned elements cannot be removed directly');
@@ -230,7 +230,7 @@ export class ConfigButtonActions {
         if (validRemove) {
           // remove clons if exist
           const removedCells = graph.removeCells();
-          for (let i = 0; i < removedCells.length; i++) {
+          for (let i = 0; i < removedCells.length; i += 1) {
             if (removedCells[i].isVertex()) {
               const clon = graph.getModel().getCell(`clon${removedCells[i].getId()}`);
               if (clon) {

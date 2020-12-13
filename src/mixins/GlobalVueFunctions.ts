@@ -10,7 +10,7 @@ export default class GlobalVueFunctions extends Vue {
     if (name.includes('_')) {
       const parts = name.split('_');
       let completeName = '';
-      for (let i = 0; i < parts.length; i++) {
+      for (let i = 0; i < parts.length; i += 1) {
         completeName = completeName + parts[i].charAt(0).toUpperCase() + parts[i].slice(1);
       }
       completeName = `${completeName}Model`;

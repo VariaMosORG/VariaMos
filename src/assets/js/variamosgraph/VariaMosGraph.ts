@@ -152,14 +152,14 @@ export class VariaMosGraph {
       const dec = new mxCodec(node.ownerDocument);
       dec.decode(node, this.model);
       this.layers = [];
-      for (let i = 0; i < modelsInfo.length; i++) {
+      for (let i = 0; i < modelsInfo.length; i += 1) {
         const layer = this.model.getCell(modelsInfo[i]);
         this.layers[modelsInfo[i]] = layer;
       }
     } else { // create a new model structure
       const root = new mxCell();
       this.layers = [];
-      for (let i = 0; i < modelsInfo.length; i++) {
+      for (let i = 0; i < modelsInfo.length; i += 1) {
         const mCell = new mxCell();
         mCell.setId(modelsInfo[i]);
         this.layers[modelsInfo[i]] = root.insert(mCell);
@@ -206,7 +206,7 @@ export class VariaMosGraph {
     if (name.includes('_')) {
       const parts = name.split('_');
       let completeName = '';
-      for (let i = 0; i < parts.length; i++) {
+      for (let i = 0; i < parts.length; i += 1) {
         completeName = completeName + parts[i].charAt(0).toUpperCase() + parts[i].slice(1);
       }
       completeName += 'Model';
@@ -363,7 +363,7 @@ export class VariaMosGraph {
     this.currentModel = new modelModule[this.className]();
     this.currentModel.setModelUtil(this.modelUtil);
 
-    for (let i = 0; i < this.currentModel.elementClassNames.length; i++) {
+    for (let i = 0; i < this.currentModel.elementClassNames.length; i += 1) {
       // load current model element classes
       /* eslint no-await-in-loop: "off" */
       const elementModule = await this.loadModules(`custom_models/${this.modelType}/elements/${this.currentModel.elementClassNames[i]}`);
@@ -385,7 +385,7 @@ export class VariaMosGraph {
   // establish the constraints between the model elements
   public setConstraints() {
     this.graph.multiplicities = [];
-    for (let i = 0; i < this.currentModel.constraints.length; i++) {
+    for (let i = 0; i < this.currentModel.constraints.length; i += 1) {
       this.graph.multiplicities.push(new mxMultiplicity(
         this.currentModel.constraints[i].source,
         this.currentModel.constraints[i].type,

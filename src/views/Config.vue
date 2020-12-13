@@ -95,7 +95,7 @@ export default class Config extends Vue {
     const modelFiles = require.context('@/assets/js/custom_models', true, /\.ts$/);
     const modelFilesKeys = modelFiles.keys();
     const listOfModels:string[] = [];
-    for (let i = 0; i < modelFilesKeys.length; i++) {
+    for (let i = 0; i < modelFilesKeys.length; i += 1) {
       const modelSplit = modelFilesKeys[i].split('/');
       if (modelSplit.length == 3) {
         if (listOfModels.indexOf(modelSplit[1]) == -1) {

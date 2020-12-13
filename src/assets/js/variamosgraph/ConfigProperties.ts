@@ -41,7 +41,7 @@ export class ConfigProperties {
         const attrs = cell.value.attributes;
 
         if (cell.isVertex()) { // get properties for current vertex
-          for (let i = 0; i < elements.length; i++) {
+          for (let i = 0; i < elements.length; i += 1) {
             if (elements[i].type == currentType) {
               currentProperties = elements[i].properties;
             }
@@ -54,8 +54,8 @@ export class ConfigProperties {
 
         configPropertiesObject.setIdProperty(cell);
 
-        for (let i = 0; i < attrs.length; i++) {
-          for (let j = 0; j < currentProperties.length; j++) {
+        for (let i = 0; i < attrs.length; i += 1) {
+          for (let j = 0; j < currentProperties.length; j += 1) {
             if (currentProperties[j].id == attrs[i].nodeName) {
               switch (currentProperties[j].inputType) {
                 case 'text':
@@ -112,7 +112,7 @@ export class ConfigProperties {
     const input = document.createElement('select');
     input.id = `property-${attribute.nodeName}`;
 
-    for (let i = 0; i < values.length; i++) {
+    for (let i = 0; i < values.length; i += 1) {
       const option = document.createElement('option');
       option.setAttribute('value', values[i]);
       option.innerText = values[i];

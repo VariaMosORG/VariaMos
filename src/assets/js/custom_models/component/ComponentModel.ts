@@ -85,7 +85,7 @@ export class ComponentModel extends Model {
     if (target.getAttribute('type') == 'component' && source.getAttribute('type') == 'custom') {
       const targetId = target.getId();
       const incoEgdes = graph.getModel().getIncomingEdges(graph.getModel().getCell(targetId));
-      for (let j = 0; j < incoEgdes.length; j++) {
+      for (let j = 0; j < incoEgdes.length; j += 1) {
         if (incoEgdes[j].source.getAttribute('type') == 'custom') {
           returnConstraintRelations = {
             message: 'Invalid connection only one Custom. File can be linked for this component',
@@ -99,7 +99,7 @@ export class ComponentModel extends Model {
     if (target.getAttribute('type') == 'component' && source.getAttribute('type') == 'fragment') {
       const sourceId = source.getId();
       const outEgdes = graph.getModel().getOutgoingEdges(graph.getModel().getCell(sourceId));
-      for (let j = 0; j < outEgdes.length; j++) {
+      for (let j = 0; j < outEgdes.length; j += 1) {
         if (outEgdes[j].target.getAttribute('type') == 'component') {
           returnConstraintRelations = {
             message: 'Invalid connection one Fragment can be only linked with one component',

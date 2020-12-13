@@ -34,7 +34,7 @@ export default class ComponentModelActions extends Vue {
     const componentRoot = graph.getModel().getCell('component');
     const childs = graph.getModel().getChildEdges(componentRoot);
 
-    for (let i = 0; i < childs.length; i++) {
+    for (let i = 0; i < childs.length; i += 1) {
       if (childs[i].getValue().nodeName == 'rel_fragment_file') {
         childs[i].setVisible(false);
       }
@@ -47,7 +47,7 @@ export default class ComponentModelActions extends Vue {
     const componentRoot = graph.getModel().getCell('component');
     const childs = graph.getModel().getChildEdges(componentRoot);
 
-    for (let i = 0; i < childs.length; i++) {
+    for (let i = 0; i < childs.length; i += 1) {
       if (childs[i].getValue().nodeName == 'rel_fragment_file') {
         childs[i].setVisible(true);
       }
@@ -69,14 +69,14 @@ export default class ComponentModelActions extends Vue {
       const componentRoot = graph.getModel().getCell('component');
       const childs = graph.getModel().getChildEdges(componentRoot);
 
-      for (let i = 0; i < childs.length; i++) {
+      for (let i = 0; i < childs.length; i += 1) {
         if (childs[i].getValue().nodeName == 'rel_fragment_file') {
           childs[i].setVisible(false);
         }
       }
 
       const childsCurrent = graph.getModel().getOutgoingEdges(cell);
-      for (let i = 0; i < childsCurrent.length; i++) {
+      for (let i = 0; i < childsCurrent.length; i += 1) {
         if (childsCurrent[i].getValue().nodeName == 'rel_fragment_file') {
           childsCurrent[i].setVisible(true);
         }

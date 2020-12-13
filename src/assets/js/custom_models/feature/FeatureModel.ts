@@ -70,7 +70,7 @@ export class FeatureModel extends Model {
   // display overlay (green check) of selected concrete features
   public overlayStart() {
     const cells = this.getModelUtil().searchCellsByType(this.getType(), 'concrete');
-    for (let i = 0; i < cells.length; i++) {
+    for (let i = 0; i < cells.length; i += 1) {
       const sel = cells[i].getAttribute('selected');
       if (sel == 'true') {
         const overlay = new mxCellOverlay(new mxImage('/img/check.png', 16, 16), 'Overlay tooltip');
@@ -87,7 +87,7 @@ export class FeatureModel extends Model {
       const featureRoot = graph.getModel().getCell('feature');
       const featureVertices = graph.getModel().getChildVertices(featureRoot);
 
-      for (let i = 0; i < featureVertices.length; i++) {
+      for (let i = 0; i < featureVertices.length; i += 1) {
         if (featureVertices[i].getAttribute('type') == 'root') {
           returnConstraintElementCreation = {
             message: 'Only one Root element allowed in this model',

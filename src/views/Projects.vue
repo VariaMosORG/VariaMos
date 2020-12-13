@@ -231,7 +231,7 @@ export default class Projects extends mixins(GlobalVueFunctions) {
       fileReader.onload = function anonymousLoader(fileLoadedEvent:any) {
         const textFromFileLoaded = fileLoadedEvent.target.result;
         const jsonText = JSON.parse(textFromFileLoaded);
-        for (let i = 0; i < jsonText.length; i++) { // import new projects
+        for (let i = 0; i < jsonText.length; i += 1) { // import new projects
           if (jsonText[i].hasOwnProperty('name') && jsonText[i].hasOwnProperty('xml') && jsonText[i].hasOwnProperty('availableModels')) {
             const project = new ProjectClass(jsonText[i].name, jsonText[i].xml, jsonText[i].availableModels);
             store.commit('projects/addProject', project);

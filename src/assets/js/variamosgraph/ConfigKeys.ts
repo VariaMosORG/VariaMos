@@ -24,7 +24,7 @@ export class ConfigKeys {
         let validRemove = true;
         // avoid removing cloned elements directly
         const cells = graph.getSelectionCells();
-        for (let i = 0; i < cells.length; i++) {
+        for (let i = 0; i < cells.length; i += 1) {
           if (cells[i].isVertex()) {
             if (cells[i].getId().includes('clon')) {
               modal.setData('error', 'Error', 'Cloned elements cannot be removed directly');
@@ -37,7 +37,7 @@ export class ConfigKeys {
         // remove clons if exist
         if (validRemove) {
           const removedCells = graph.removeCells();
-          for (let i = 0; i < removedCells.length; i++) {
+          for (let i = 0; i < removedCells.length; i += 1) {
             if (removedCells[i].isVertex()) {
               const clon = graph.getModel().getCell(`clon${removedCells[i].getId()}`);
               if (clon) {

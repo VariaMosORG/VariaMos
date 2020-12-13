@@ -9,7 +9,7 @@ export class ComponentFunctions {
 
     const customizations = [];
 
-    for (let i = 0; i < bindingRelations.length; i++) {
+    for (let i = 0; i < bindingRelations.length; i += 1) {
       const { source } = bindingRelations[i];
       const { target } = bindingRelations[i];
       if (source.getAttribute('selected') == 'true') { // only selected concrete features are analyzed
@@ -17,7 +17,7 @@ export class ComponentFunctions {
         const clonId = target.getId();
         const id = clonId.replace('clon', '');
         const incoEgdes = graph.getModel().getIncomingEdges(graph.getModel().getCell(id));
-        for (let j = 0; j < incoEgdes.length; j++) {
+        for (let j = 0; j < incoEgdes.length; j += 1) {
           const fileSource = incoEgdes[j].source;
           if (fileSource.getAttribute('type') == 'custom') {
             customizations.push(label);
@@ -36,7 +36,7 @@ export class ComponentFunctions {
 
     const destinations = [];
 
-    for (let i = 0; i < bindingRelations.length; i++) {
+    for (let i = 0; i < bindingRelations.length; i += 1) {
       const { source } = bindingRelations[i];
       const { target } = bindingRelations[i];
       if (source.getAttribute('selected') == 'true') { // only selected concrete features are analyzed
@@ -44,7 +44,7 @@ export class ComponentFunctions {
         const clonId = target.getId();
         const id = clonId.replace('clon', '');
         const incoEgdes = graph.getModel().getIncomingEdges(graph.getModel().getCell(id));
-        for (let j = 0; j < incoEgdes.length; j++) {
+        for (let j = 0; j < incoEgdes.length; j += 1) {
           const fileSource = incoEgdes[j].source;
           if (fileSource.getAttribute('type') == 'file') {
             const data = { destination: '' };
@@ -63,7 +63,7 @@ export class ComponentFunctions {
     const bindingRoot = graph.getModel().getCell('binding_feature_component');
     const bindingRelations = graph.getModel().getChildEdges(bindingRoot);
     const files = [];
-    for (let i = 0; i < bindingRelations.length; i++) {
+    for (let i = 0; i < bindingRelations.length; i += 1) {
       let source:any;
       let target:any;
       try {
@@ -74,7 +74,7 @@ export class ComponentFunctions {
           const clonId = target.getId();
           const id = clonId.replace('clon', '');
           const incoEgdes = graph.getModel().getIncomingEdges(graph.getModel().getCell(id));
-          for (let j = 0; j < incoEgdes.length; j++) {
+          for (let j = 0; j < incoEgdes.length; j += 1) {
             const fileSource = incoEgdes[j].source;
             if (fileSource.getAttribute('type') != 'custom') {
               const data = {

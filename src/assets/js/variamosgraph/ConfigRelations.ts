@@ -22,7 +22,7 @@ export class ConfigRelations {
 
       // by default bidirectional edges are not allowed (disjoint)
       if (target.edges != null && target.edges.length > 0) {
-        for (let i = 0; i < target.edges.length; i++) {
+        for (let i = 0; i < target.edges.length; i += 1) {
           if (target.edges[i].target.getId() == source.getId()) {
             modal.setData('error', 'Error', 'Bidirectional connections not allowed');
             modal.click();
@@ -41,7 +41,7 @@ export class ConfigRelations {
 
       // set properties to the edge
       const currentRelProperties = currentModel.relationProperties;
-      for (let i = 0; i < currentRelProperties.length; i++) {
+      for (let i = 0; i < currentRelProperties.length; i += 1) {
         if (currentRelProperties[i].conditions) { // check if the property has conditions
           if (currentRelProperties[i].conditions.type == 'and') {
             if ((currentRelProperties[i].conditions.source.indexOf(source.getAttribute('type')) > -1) && (currentRelProperties[i].conditions.target.indexOf(target.getAttribute('type')) > -1)) {
@@ -59,7 +59,7 @@ export class ConfigRelations {
 
       // set custom relation styles
       const currentRelStyles = currentModel.relationStyles;
-      for (let i = 0; i < currentRelStyles.length; i++) {
+      for (let i = 0; i < currentRelStyles.length; i += 1) {
         if (currentRelStyles[i].type == 'and') {
           if ((currentRelStyles[i].source.indexOf(source.getAttribute('type')) > -1) && (currentRelStyles[i].target.indexOf(target.getAttribute('type')) > -1)) {
             currentStyle = currentRelStyles[i].style;

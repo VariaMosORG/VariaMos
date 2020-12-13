@@ -32,7 +32,7 @@ export class Project {
 
   public static objectToThisClass(objects:any) {
     const objectsToReturn = [];
-    for (let i = 0; i < objects.length; i++) {
+    for (let i = 0; i < objects.length; i += 1) {
       const object = new Project(objects[i].name, objects[i].xml, objects[i].availableModels);
       objectsToReturn.push(object);
     }
@@ -40,7 +40,7 @@ export class Project {
   }
 
   public static checkIfProjectExists(projects:any, newName:any) {
-    for (let i = 0; i < projects.length; i++) {
+    for (let i = 0; i < projects.length; i += 1) {
       if (projects[i].getName() == newName) {
         return true;
       }
@@ -49,7 +49,7 @@ export class Project {
   }
 
   public static getProjectIndexByName(projects:any, name:any) {
-    for (let i = 0; i < projects.length; i++) {
+    for (let i = 0; i < projects.length; i += 1) {
       if (projects[i].getName() == name) {
         return i;
       }
@@ -58,7 +58,7 @@ export class Project {
   }
 
   public static getProjectByName(projects:any, name:any) {
-    for (let i = 0; i < projects.length; i++) {
+    for (let i = 0; i < projects.length; i += 1) {
       if (projects[i].getName() == name) {
         return projects[i];
       }
@@ -67,7 +67,7 @@ export class Project {
   }
 
   public static getProjectModelsByName(projects:any, name:any) {
-    for (let i = 0; i < projects.length; i++) {
+    for (let i = 0; i < projects.length; i += 1) {
       if (projects[i].getName() == name) {
         return projects[i].getAvailableModels();
       }
