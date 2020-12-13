@@ -1,6 +1,9 @@
 import { mxgraphFactory } from 'ts-mxgraph';
 
-const { mxEvent, mxCellAttributeChange } = mxgraphFactory({ mxLoadResources: false, mxLoadStylesheets: false });
+const {
+  mxEvent,
+  mxCellAttributeChange,
+} = mxgraphFactory({ mxLoadResources: false, mxLoadStylesheets: false });
 
 /**
  * @author Daniel Correa <dcorreab@eafit.edu.co>
@@ -59,16 +62,36 @@ export class ConfigProperties {
             if (currentProperties[j].id == attrs[i].nodeName) {
               switch (currentProperties[j].inputType) {
                 case 'text':
-                  configPropertiesObject.createTextField(configPropertiesObject.vGraph.getGraph(), attrs[i], cell, currentProperties[j]);
+                  configPropertiesObject.createTextField(
+                    configPropertiesObject.vGraph.getGraph(),
+                    attrs[i],
+                    cell,
+                    currentProperties[j],
+                  );
                   break;
                 case 'select':
-                  configPropertiesObject.createSelectField(configPropertiesObject.vGraph.getGraph(), attrs[i], cell, currentProperties[j]);
+                  configPropertiesObject.createSelectField(
+                    configPropertiesObject.vGraph.getGraph(),
+                    attrs[i],
+                    cell,
+                    currentProperties[j],
+                  );
                   break;
                 case 'checkbox':
-                  configPropertiesObject.createCheckboxField(configPropertiesObject.vGraph.getGraph(), attrs[i], cell, currentProperties[j]);
+                  configPropertiesObject.createCheckboxField(
+                    configPropertiesObject.vGraph.getGraph(),
+                    attrs[i],
+                    cell,
+                    currentProperties[j],
+                  );
                   break;
                 default:
-                  configPropertiesObject.createTextField(configPropertiesObject.vGraph.getGraph(), attrs[i], cell, currentProperties[j]);
+                  configPropertiesObject.createTextField(
+                    configPropertiesObject.vGraph.getGraph(),
+                    attrs[i],
+                    cell,
+                    currentProperties[j],
+                  );
                   break;
               }
             }
@@ -102,7 +125,8 @@ export class ConfigProperties {
 
     input.className = 'form-control';
     input.value = attribute.nodeValue;
-    this.createField(attribute, input, currentProperties.label, currentProperties.disabled, currentProperties.display);
+    this.createField(attribute, input, currentProperties.label,
+      currentProperties.disabled, currentProperties.display);
     this.executeApplyHandler(graph, input, cell, attribute.nodeName, currentProperties);
   }
 
@@ -123,7 +147,8 @@ export class ConfigProperties {
     }
 
     input.className = 'form-control';
-    this.createField(attribute, input, currentProperties.label, currentProperties.disabled, currentProperties.display);
+    this.createField(attribute, input, currentProperties.label,
+      currentProperties.disabled, currentProperties.display);
     this.executeApplyHandler(graph, input, cell, attribute.nodeName, currentProperties);
   }
 
@@ -135,7 +160,8 @@ export class ConfigProperties {
     input.className = 'form-control';
     input.value = attribute.nodeValue;
     const display = this.checkCustomDisplay(cell, currentProperties);
-    this.createField(attribute, input, currentProperties.label, currentProperties.disabled, display);
+    this.createField(attribute, input, currentProperties.label,
+      currentProperties.disabled, display);
     this.executeApplyHandler(graph, input, cell, attribute.nodeName, currentProperties);
   }
 
@@ -143,7 +169,8 @@ export class ConfigProperties {
   public checkCustomDisplay(cell:any, currentProperties:any) {
     if (currentProperties.display) {
       if (currentProperties.display == 'basedOnPropertyValue') {
-        if (currentProperties.displayIfValue == cell.getAttribute(currentProperties.displayCheckProperty)) {
+        if (currentProperties.displayIfValue
+          == cell.getAttribute(currentProperties.displayCheckProperty)) {
           return 'true';
         }
         return 'false';
@@ -179,7 +206,8 @@ export class ConfigProperties {
   }
 
   // execute actions if the content of the input is changed
-  public executeApplyHandler(graph:any, input:any, cell:any, attributeNodeName:any, currentProperties:any) {
+  public executeApplyHandler(graph:any, input:any, cell:any,
+    attributeNodeName:any, currentProperties:any) {
     this.applyCustomFunctions(input, cell, currentProperties);
     const applyHandler = function anonymousApplyHandler() {
       const oldValue = cell.getAttribute(attributeNodeName, '');
@@ -195,7 +223,8 @@ export class ConfigProperties {
       if (newValue != oldValue) { // verify value modified from the form
         graph.getModel().beginUpdate();
         try {
-          const edit = new mxCellAttributeChange(cell, attributeNodeName, newValue); // change to newValue
+          // change to newValue
+          const edit = new mxCellAttributeChange(cell, attributeNodeName, newValue);
           graph.getModel().execute(edit);
 
           // update clon cell if exists

@@ -3,14 +3,29 @@
 -->
 <template>
   <div class="btn-group" role="group">
-    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" id="btnGroupActions1">Derivation</button>
+    <button class="btn btn-secondary dropdown-toggle" type="button"
+      data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" id="btnGroupActions1">
+      Derivation
+    </button>
     <div id="divDropdownActions" class="dropdown-menu" aria-labelledby="btnGroupActions1">
-      <a class="dropdown-item dropdown-pointer" v-on:click="testComponentBackend">Test Component Management Backend</a>
-      <a class="dropdown-item dropdown-pointer" v-on:click="showFileCode">Show File Code</a>
-      <a class="dropdown-item dropdown-pointer" v-on:click="executeDerivation">Execute Derivation</a>
-      <a class="dropdown-item dropdown-pointer" v-on:click="customizeDerivation">Customize Derivation</a>
-      <a class="dropdown-item dropdown-pointer" v-on:click="verifyDerivation">Verify Derivation</a>
-      <a class="dropdown-item dropdown-pointer" v-on:click="obtainProduct">Obtain product (.zip)</a>
+      <a class="dropdown-item dropdown-pointer" v-on:click="testComponentBackend">
+        Test Component Management Backend
+      </a>
+      <a class="dropdown-item dropdown-pointer" v-on:click="showFileCode">
+        Show File Code
+      </a>
+      <a class="dropdown-item dropdown-pointer" v-on:click="executeDerivation">
+        Execute Derivation
+      </a>
+      <a class="dropdown-item dropdown-pointer" v-on:click="customizeDerivation">
+        Customize Derivation
+      </a>
+      <a class="dropdown-item dropdown-pointer" v-on:click="verifyDerivation">
+        Verify Derivation
+      </a>
+      <a class="dropdown-item dropdown-pointer" v-on:click="obtainProduct">
+        Obtain product (.zip)
+      </a>
     </div>
   </div>
 </template>

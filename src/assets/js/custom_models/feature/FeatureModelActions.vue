@@ -3,10 +3,18 @@
 -->
 <template>
   <div class="btn-group flex-wrap show" role="group">
-    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" id="btnGroupActions1">Model Actions</button>
+    <button class="btn btn-secondary dropdown-toggle" type="button"
+      data-toggle="dropdown" aria-expanded="false" aria-haspopup="true"
+      id="btnGroupActions1">
+      Model Actions
+    </button>
     <div id="divDropdownActions" class="dropdown-menu" aria-labelledby="btnGroupActions1">
-      <a class="dropdown-item dropdown-pointer" v-on:click="clearErrors">Clear Errors</a>
-      <a class="dropdown-item dropdown-pointer" v-on:click="checkUniqueLabels">Check Unique Feature labels</a>
+      <a class="dropdown-item dropdown-pointer" v-on:click="clearErrors">
+        Clear Errors
+      </a>
+      <a class="dropdown-item dropdown-pointer" v-on:click="checkUniqueLabels">
+        Check Unique Feature labels
+      </a>
     </div>
   </div>
 </template>
@@ -15,7 +23,10 @@
 import { Vue, Options } from 'vue-class-component';
 import { mxgraphFactory } from 'ts-mxgraph';
 
-const { mxImage, mxCellOverlay } = mxgraphFactory({ mxLoadResources: false, mxLoadStylesheets: false });
+const {
+  mxImage,
+  mxCellOverlay,
+} = mxgraphFactory({ mxLoadResources: false, mxLoadStylesheets: false });
 
 @Options({
   props: ['variaMosGraph'],
@@ -61,7 +72,12 @@ export default class FeatureModelActions extends Vue {
       const label = childs[i].getAttribute('label');
       if (labels.indexOf(label) > -1) {
         result += `- Duplicated Feature label: ${label}<br />`;
-        const overlay = new mxCellOverlay(new mxImage('img/error.gif', 16, 16), 'Overlay tooltip', 'right', 'top');
+        const overlay = new mxCellOverlay(
+          new mxImage('img/error.gif', 16, 16),
+          'Overlay tooltip',
+          'right',
+          'top',
+        );
         graph.addCellOverlay(childs[i], overlay);
 
         // insert overlay and error info in the custom data

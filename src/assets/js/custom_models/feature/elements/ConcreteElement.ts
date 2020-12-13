@@ -1,7 +1,10 @@
 import { mxgraphFactory } from 'ts-mxgraph';
 import { ModelElement } from '../../../model/ModelElement';
 
-const { mxImage, mxCellOverlay } = mxgraphFactory({ mxLoadResources: false, mxLoadStylesheets: false });
+const {
+  mxImage,
+  mxCellOverlay,
+} = mxgraphFactory({ mxLoadResources: false, mxLoadStylesheets: false });
 
 /**
  * @author Daniel Correa <dcorreab@eafit.edu.co>

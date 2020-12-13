@@ -73,12 +73,28 @@ export default class NotFound extends Vue {
 </script>
 
 <style>
-@-moz-keyframes rocket-movement { 100% {-moz-transform: translate(1200px,-600px);} }
-@-webkit-keyframes rocket-movement {100% {-webkit-transform: translate(1200px,-600px); } }
-@keyframes rocket-movement { 100% {transform: translate(1200px,-600px);} }
-@-moz-keyframes spin-earth { 100% { -moz-transform: rotate(-360deg); transition: transform 20s;  } }
-@-webkit-keyframes spin-earth { 100% { -webkit-transform: rotate(-360deg); transition: transform 20s;  } }
-@keyframes spin-earth{ 100% { -webkit-transform: rotate(-360deg); transform:rotate(-360deg); transition: transform 20s; } }
+@-moz-keyframes rocket-movement {
+  100% {-moz-transform: translate(1200px,-600px);}
+}
+@-webkit-keyframes rocket-movement {
+  100% {-webkit-transform: translate(1200px,-600px); }
+}
+@keyframes rocket-movement {
+  100% {transform: translate(1200px,-600px);}
+}
+@-moz-keyframes spin-earth {
+  100% { -moz-transform: rotate(-360deg); transition: transform 20s;  }
+}
+@-webkit-keyframes spin-earth {
+  100% { -webkit-transform: rotate(-360deg); transition: transform 20s;  }
+}
+@keyframes spin-earth{
+  100% {
+    -webkit-transform: rotate(-360deg);
+    transform:rotate(-360deg);
+    transition: transform 20s;
+  }
+}
 
 @-moz-keyframes move-astronaut {
   100% { -moz-transform: translate(-160px, -160px);}

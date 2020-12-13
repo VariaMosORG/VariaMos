@@ -4,11 +4,20 @@
 <template>
   <div class="btn-group flex-wrap" role="group">
     <div class="btn-group" role="group">
-      <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" id="btnGroupActions1">Model Actions</button>
+      <button class="btn btn-secondary dropdown-toggle" type="button"
+        data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" id="btnGroupActions1">
+        Model Actions
+      </button>
       <div id="divDropdownActions" class="dropdown-menu" aria-labelledby="btnGroupActions1">
-        <a class="dropdown-item dropdown-pointer" v-on:click="hideFragmentRelations">Hide all fragment alter relations</a>
-        <a class="dropdown-item dropdown-pointer" v-on:click="showFragmentRelations">Show all fragment alter relations</a>
-        <a class="dropdown-item dropdown-pointer" v-on:click="showFragmentRelationsSelected">Show alter relations for current fragments</a>
+        <a class="dropdown-item dropdown-pointer" v-on:click="hideFragmentRelations">
+          Hide all fragment alter relations
+        </a>
+        <a class="dropdown-item dropdown-pointer" v-on:click="showFragmentRelations">
+          Show all fragment alter relations
+        </a>
+        <a class="dropdown-item dropdown-pointer" v-on:click="showFragmentRelationsSelected">
+          Show alter relations for current fragments
+        </a>
       </div>
     </div>
 

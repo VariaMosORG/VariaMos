@@ -9,8 +9,15 @@
     <div class="card-header py-3 nopad">
       <ul class="tab">
         <li v-for="availableModel in availableModels" :key="availableModel">
-          <router-link v-if="availableModel == this.$route.params.modelType" :to="'/projects/'+this.$route.params.projectName+'/'+availableModel" class="tablinks active">{{ getBeautyModelName(availableModel) }}</router-link>
-          <router-link v-else :to="'/projects/'+this.$route.params.projectName+'/'+availableModel" class="tablinks">{{ getBeautyModelName(availableModel) }}</router-link>
+          <router-link v-if="availableModel == this.$route.params.modelType"
+            :to="'/projects/'+this.$route.params.projectName+'/'+availableModel"
+            class="tablinks active">
+            {{ getBeautyModelName(availableModel) }}
+          </router-link>
+          <router-link v-else :to="'/projects/'+this.$route.params.projectName+'/'+availableModel"
+            class="tablinks">
+            {{ getBeautyModelName(availableModel) }}
+          </router-link>
         </li>
       </ul>
     </div>
@@ -20,7 +27,8 @@
       <div class="row main_area">
         <div id="left-draw" class="col-sm-9 left-area">
           <div id="vgraph-buttons" class="btn-group flex-wrap" role="group">
-            <button class="btn btn-info btn-title csstooltip" v-for="button in buttonsArea" :key="button" :id="button.getId()">
+            <button class="btn btn-info btn-title csstooltip" v-for="button in buttonsArea"
+              :key="button" :id="button.getId()">
               <i :class="'fas fa-'+button.getIcon()"></i>
               <span class="csstooltiptext">{{ button.getButtonTitle() }}</span>
             </button>
@@ -31,7 +39,9 @@
 
           <div class="card bg-light text-black shadow mtop">
             <div class="card-body">
-              <div id="vgraph-container" class="model-area" v-bind:style="{ height: configApp.getModelAreaHeight() }"></div>
+              <div id="vgraph-container" class="model-area"
+                v-bind:style="{ height: configApp.getModelAreaHeight() }">
+              </div>
             </div>
           </div>
         </div>
@@ -98,7 +108,8 @@ import GlobalVueFunctions from '../mixins/GlobalVueFunctions';
       if (this.$route.name === 'ProjectModel') {
         this.updatePageOnRouteChange();
       } else {
-        this.$root.search = function anonymousSearch() {}; // restart the search function of the App.vue instance
+        // restart the search function of the App.vue instance
+        this.$root.search = function anonymousSearch() {};
       }
     },
   },
@@ -146,7 +157,10 @@ export default class ProjectModels extends mixins(GlobalVueFunctions) {
   public beforeMount() {
     this.loadCustomComponentModelActions();
     this.configApp = this.$store.getters['configApp/getConfigApp'];
-    this.currentProject = Project.getProjectByName(this.$store.getters['projects/getProjects'], this.$route.params.projectName);
+    this.currentProject = Project.getProjectByName(
+      this.$store.getters['projects/getProjects'],
+      this.$route.params.projectName,
+    );
     this.availableModels = this.currentProject.getAvailableModels();
     this.navigationList.push(
       {
@@ -171,7 +185,8 @@ export default class ProjectModels extends mixins(GlobalVueFunctions) {
   public implementSearchBarFunction() {
     const root = this.$route.params.modelType;
     const modelUtil = this.variaMosGraph.getModelUtil();
-    this.$root.search = function anonymousSearch() { // modify search function of the App.vue instance
+    // modify search function of the App.vue instance
+    this.$root.search = function anonymousSearch() {
       modelUtil.searchFirstCellByLabel(root, this.$root.searchText);
     };
   }
@@ -196,7 +211,8 @@ export default class ProjectModels extends mixins(GlobalVueFunctions) {
 
   // load the custom component model action (if available for current model)
   public loadCustomComponentModelActions() {
-    const fileToImport = `assets/js/custom_models/${this.$route.params.modelType}/${this.getBeautyModelName(this.$route.params.modelType)}`;
+    const beautyName = this.getBeautyModelName(this.$route.params.modelType);
+    const fileToImport = `assets/js/custom_models/${this.$route.params.modelType}/${beautyName}`;
     const customComponent = defineAsyncComponent({
       loader: () => import(`@/${fileToImport}Actions.vue`),
       onError(error, retry, fail, attempts) {

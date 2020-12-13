@@ -21,7 +21,6 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'new-cap': 'off',
     'class-methods-use-this': 'off',
-    'max-len': 'off',
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
   },

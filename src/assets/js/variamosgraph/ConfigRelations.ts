@@ -16,7 +16,9 @@ export class ConfigRelations {
     const graph = this.vGraph.getGraph();
     const currentModel = this.vGraph.getCurrentModel();
     const modal = this.vGraph.getModal();
-    graph.connectionHandler.insertEdge = function anonymousInsertEdge(parent:any, id:any, value:any, source:any, target:any, style:any) {
+    graph.connectionHandler.insertEdge = function anonymousInsertEdge(
+      parent:any, id:any, value:any, source:any, target:any, style:any,
+    ) {
       const doc = mxUtils.createXmlDocument();
       const node = doc.createElement(`rel_${source.getAttribute('type')}_${target.getAttribute('type')}`);
 
@@ -32,7 +34,11 @@ export class ConfigRelations {
       }
 
       // check custom constraints relations
-      const customConstraintRelations = currentModel.customConstraintsRelations(graph, source, target);
+      const customConstraintRelations = currentModel.customConstraintsRelations(
+        graph,
+        source,
+        target,
+      );
       if (customConstraintRelations.message) {
         modal.setData('error', 'Error', customConstraintRelations.message);
         modal.click();
@@ -44,10 +50,16 @@ export class ConfigRelations {
       for (let i = 0; i < currentRelProperties.length; i += 1) {
         if (currentRelProperties[i].conditions) { // check if the property has conditions
           if (currentRelProperties[i].conditions.type == 'and') {
-            if ((currentRelProperties[i].conditions.source.indexOf(source.getAttribute('type')) > -1) && (currentRelProperties[i].conditions.target.indexOf(target.getAttribute('type')) > -1)) {
+            if (
+              (currentRelProperties[i].conditions.source.indexOf(source.getAttribute('type')) > -1)
+              && (currentRelProperties[i].conditions.target.indexOf(target.getAttribute('type')) > -1)
+            ) {
               node.setAttribute(currentRelProperties[i].id, currentRelProperties[i].defValue);
             }
-          } else if ((currentRelProperties[i].conditions.source.indexOf(source.getAttribute('type')) > -1) || (currentRelProperties[i].conditions.target.indexOf(target.getAttribute('type')) > -1)) {
+          } else if (
+            (currentRelProperties[i].conditions.source.indexOf(source.getAttribute('type')) > -1)
+              || (currentRelProperties[i].conditions.target.indexOf(target.getAttribute('type')) > -1)
+          ) {
             node.setAttribute(currentRelProperties[i].id, currentRelProperties[i].defValue);
           }
         } else {
@@ -61,10 +73,16 @@ export class ConfigRelations {
       const currentRelStyles = currentModel.relationStyles;
       for (let i = 0; i < currentRelStyles.length; i += 1) {
         if (currentRelStyles[i].type == 'and') {
-          if ((currentRelStyles[i].source.indexOf(source.getAttribute('type')) > -1) && (currentRelStyles[i].target.indexOf(target.getAttribute('type')) > -1)) {
+          if (
+            (currentRelStyles[i].source.indexOf(source.getAttribute('type')) > -1)
+              && (currentRelStyles[i].target.indexOf(target.getAttribute('type')) > -1)
+          ) {
             currentStyle = currentRelStyles[i].style;
           }
-        } else if ((currentRelStyles[i].source.indexOf(source.getAttribute('type')) > -1) || (currentRelStyles[i].target.indexOf(target.getAttribute('type')) > -1)) {
+        } else if (
+          (currentRelStyles[i].source.indexOf(source.getAttribute('type')) > -1)
+            || (currentRelStyles[i].target.indexOf(target.getAttribute('type')) > -1)
+        ) {
           currentStyle = currentRelStyles[i].style;
         }
       }

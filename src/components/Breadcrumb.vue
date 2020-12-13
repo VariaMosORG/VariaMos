@@ -4,7 +4,8 @@
 <template>
   <nav aria-label="breadcrumb" class="breadcrumb-font">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item" v-for="navigation in navigationList" :key="navigation" aria-current="page">
+      <li class="breadcrumb-item" v-for="navigation in navigationList"
+        :key="navigation" aria-current="page">
         <template v-if="navigation.route != ''">
           <router-link :to="navigation.route">
             {{ navigation.title }}

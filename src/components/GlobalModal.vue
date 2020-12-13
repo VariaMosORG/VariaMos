@@ -3,7 +3,8 @@
 -->
 <template>
   <!-- Modal -->
-  <div class="modal fade" id="gmodal" tabindex="-1" role="dialog" aria-labelledby="gmodal-label" aria-hidden="true">
+  <div class="modal fade" id="gmodal" tabindex="-1" role="dialog"
+    aria-labelledby="gmodal-label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div id="gmodal-header">
@@ -16,14 +17,17 @@
         <div class="modal-body" id="gmodal-body"></div>
 
         <div class="modal-footer">
-          <button id="gmodal-button-close" v-on:click="closeAction" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button id="gmodal-button-confirm" v-on:click="confirmAction" class="btn btn-primary gmodal-button-confirm" type="button">Confirm</button>
+          <button id="gmodal-button-close" v-on:click="closeAction" type="button"
+            class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button id="gmodal-button-confirm" v-on:click="confirmAction"
+            class="btn btn-primary gmodal-button-confirm" type="button">Confirm</button>
         </div>
       </div>
     </div>
 
     <!-- Button trigger modal -->
-    <button id="gmodal-button" style="display:none" data-toggle="modal" data-target="#gmodal"></button>
+    <button id="gmodal-button" style="display:none" data-toggle="modal" data-target="#gmodal">
+    </button>
   </div>
 </template>
 
@@ -57,7 +61,8 @@ export default class AppModal extends Vue {
       // set content
       if (modalBody) {
         modalBody.innerHTML = '';
-        if (content instanceof HTMLElement) { // if content is an HTMLElement, it is appended inside the modalbody
+        // if content is an HTMLElement, it is appended inside the modalbody
+        if (content instanceof HTMLElement) {
           modalBody.appendChild(content);
         } else { // if content is text, the text is applied to the modalbody
           modalBody.innerHTML = content;

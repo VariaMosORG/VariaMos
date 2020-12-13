@@ -35,7 +35,8 @@ export class ModelUtil {
       label = label.toLowerCase();
       const currentLabelToSearch = labelToSearch.toLowerCase();
       if (label.includes(currentLabelToSearch)) {
-        // this.vGraph.getGraph().getView().setTranslate(-cell.getGeometry().x, -cell.getGeometry().y);
+        // this.vGraph.getGraph().getView().setTranslate(
+        //  -cell.getGeometry().x, -cell.getGeometry().y);
         this.vGraph.getGraph().getSelectionModel().setCell(cell);
         break;
       }

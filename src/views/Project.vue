@@ -11,7 +11,8 @@
     </div>
 
     <div class="card-body">
-      <router-link v-for="model in currentProject.getAvailableModels()" :key="model" :to="'/projects/'+currentProject.getName()+'/'+model" class="btn btn-info marr20">
+      <router-link v-for="model in currentProject.getAvailableModels()" :key="model"
+        :to="'/projects/'+currentProject.getName()+'/'+model" class="btn btn-info marr20">
         {{ getBeautyModelName(model) }}
       </router-link>
     </div>

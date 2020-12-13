@@ -63,7 +63,9 @@ export class ConfigButtonActions {
             modal.setSecondaryMessage(true);
           } else {
             // remove clons if exist
-            const removedCells = graph.removeCells(graph.getChildVertices(graph.getDefaultParent()));
+            const removedCells = graph.removeCells(graph.getChildVertices(
+              graph.getDefaultParent(),
+            ));
             for (let i = 0; i < removedCells.length; i += 1) {
               if (removedCells[i].isVertex()) {
                 const clon = graph.getModel().getCell(`clon${removedCells[i].getId()}`);

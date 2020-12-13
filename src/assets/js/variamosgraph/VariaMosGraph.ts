@@ -169,8 +169,9 @@ export class VariaMosGraph {
   }
 
   // initialize the VariaMosGraph and call the main functions
-  public async initializeGraph(modelType:string, currentProject:any, divContainer:any, divNavigator:any,
-    divElements:any, divProperties:any, configApp:any, modal:any, store:any, caseLoad:any) {
+  public async initializeGraph(modelType:string, currentProject:any, divContainer:any,
+    divNavigator:any, divElements:any, divProperties:any, configApp:any, modal:any,
+    store:any, caseLoad:any) {
     this.modelType = modelType;
     this.className = this.getClassModelName(this.modelType);
     this.divElements = divElements;
@@ -190,7 +191,7 @@ export class VariaMosGraph {
     this.setConfigModel(); // some graph configs
     this.setButtonActions(); // implement button actions
     this.setKeys(); // implement key actions
-    await this.loadCurrentModelClasses(); // wait to load model class and model elements, and then continue
+    await this.loadCurrentModelClasses(); // wait to load model class and model elements
     this.setElements(); // load model elements (palette)
     this.setConstraints(); // set model elements constraints
     this.setProperties(); // set model element properties
@@ -239,7 +240,8 @@ export class VariaMosGraph {
   // set the keyboard key actions
   public async setKeys() {
     this.keyHandler = new mxKeyHandler(this.graph);
-    const modelModule = await this.loadModules(`custom_models/${this.modelType}/config/ConfigKeys`); // load custom config if available
+    // load custom config if available
+    const modelModule = await this.loadModules(`custom_models/${this.modelType}/config/ConfigKeys`);
     if (modelModule != null) {
       this.configKeys = new modelModule.ConfigKeys(this);
     } else {
@@ -260,7 +262,8 @@ export class VariaMosGraph {
 
   // configure the relations between the current model elements
   public async setRelations() {
-    const modelModule = await this.loadModules(`custom_models/${this.modelType}/config/ConfigRelations`); // load custom config if available
+    // load custom config if available
+    const modelModule = await this.loadModules(`custom_models/${this.modelType}/config/ConfigRelations`);
     if (modelModule != null) {
       this.configRelations = new modelModule.ConfigRelations(this);
     } else {
@@ -294,7 +297,8 @@ export class VariaMosGraph {
 
   // set the current layer and unhide the current layer
   public setCurrentLayer() {
-    const currentLayer = this.layers[this.modelType]; // current layer to be displayed (feature, component, etc)
+    // current layer to be displayed (feature, component, etc)
+    const currentLayer = this.layers[this.modelType];
     this.graph.setDefaultParent(currentLayer);
     this.model.setVisible(currentLayer, true); // unhide current layer
   }
@@ -346,7 +350,8 @@ export class VariaMosGraph {
   // establish the main mxgraph configuration
   public setConfigModel() {
     this.graph.setConnectable(true); // Enables new connections in the graph
-    this.graph.setMultigraph(false); // Multiple edges in the same direction between the same pair of vertices are not allowed
+    // Multiple edges in the same direction between the same pair of vertices are not allowed
+    this.graph.setMultigraph(false);
     this.graph.setAllowDanglingEdges(false);// Avoid disconnect egdes
     this.graph.setCellsDisconnectable(false); // Avoid disconnect egdes
     this.graph.setDisconnectOnMove(false); // Avoid disconnect egdes
@@ -366,14 +371,20 @@ export class VariaMosGraph {
     for (let i = 0; i < this.currentModel.elementClassNames.length; i += 1) {
       // load current model element classes
       /* eslint no-await-in-loop: "off" */
-      const elementModule = await this.loadModules(`custom_models/${this.modelType}/elements/${this.currentModel.elementClassNames[i]}`);
-      this.currentModel.addElement(new elementModule[this.currentModel.elementClassNames[i]](this.currentModel));
+      const elementModule = await this.loadModules(
+        `custom_models/${this.modelType}/elements/${this.currentModel.elementClassNames[i]}`,
+      );
+      this.currentModel.addElement(
+        new elementModule[this.currentModel.elementClassNames[i]](this.currentModel),
+      );
     }
   }
 
   // configure each element of the current model
   public async setElements() {
-    const modelModule = await this.loadModules(`custom_models/${this.modelType}/config/ConfigElements`); // load custom config if available
+    const modelModule = await this.loadModules(
+      `custom_models/${this.modelType}/config/ConfigElements`,
+    ); // load custom config if available
     if (modelModule != null) {
       this.configElements = new modelModule.ConfigElements(this);
     } else {

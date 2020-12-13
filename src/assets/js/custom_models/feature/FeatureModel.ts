@@ -1,7 +1,10 @@
 import { mxgraphFactory } from 'ts-mxgraph';
 import { Model } from '../../model/Model';
 
-const { mxImage, mxCellOverlay } = mxgraphFactory({ mxLoadResources: false, mxLoadStylesheets: false });
+const {
+  mxImage,
+  mxCellOverlay,
+} = mxgraphFactory({ mxLoadResources: false, mxLoadStylesheets: false });
 
 /**
  * @author Daniel Correa <dcorreab@eafit.edu.co>
@@ -58,10 +61,12 @@ export class FeatureModel extends Model {
     );
     this.setRelationProperties(relationProperties);
 
-    const customElementTexts = { bundle: 'bundleType' }; // default element to be shown in drawing area is bundleType (for bundle elements)
+    // default element to be shown in drawing area is bundleType (for bundle elements)
+    const customElementTexts = { bundle: 'bundleType' };
     this.setCustomElementTexts(customElementTexts);
 
-    const elementClones = { // clone concrete cells in binding_feature_component model if available
+    // clone concrete cells in binding_feature_component model if available
+    const elementClones = {
       concrete: 'binding_feature_component',
     };
     this.setElementClones(elementClones);
@@ -73,7 +78,10 @@ export class FeatureModel extends Model {
     for (let i = 0; i < cells.length; i += 1) {
       const sel = cells[i].getAttribute('selected');
       if (sel == 'true') {
-        const overlay = new mxCellOverlay(new mxImage('/img/check.png', 16, 16), 'Overlay tooltip');
+        const overlay = new mxCellOverlay(
+          new mxImage('/img/check.png', 16, 16),
+          'Overlay tooltip',
+        );
         this.getModelUtil().getVGraph().getGraph().addCellOverlay(cells[i], overlay);
       }
     }
@@ -102,7 +110,7 @@ export class FeatureModel extends Model {
 
   // example of custom graph config
   /* public customGraphConfig(){
-        let graph = this.getModelUtil().getVGraph().getGraph();
-        graph.setSplitEnabled(false);
-    } */
+    let graph = this.getModelUtil().getVGraph().getGraph();
+    graph.setSplitEnabled(false);
+  } */
 }

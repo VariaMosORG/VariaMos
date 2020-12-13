@@ -44,12 +44,15 @@
     </div>
     <div class="card-body">
       <ul class="list-group">
-        <li class="list-group-item" v-for="installedModel in configApp.installedModels" v-bind:key="installedModel">
+        <li class="list-group-item" v-for="installedModel in configApp.installedModels"
+          v-bind:key="installedModel">
           {{ installedModel }}
         </li>
       </ul>
       <br />
-      <button v-on:click="discoverModels" class="btn btn-info marr20">Discover installed models</button>
+      <button v-on:click="discoverModels" class="btn btn-info marr20">
+        Discover installed models
+      </button>
     </div>
   </div>
 

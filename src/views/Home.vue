@@ -12,10 +12,10 @@
     <div class="card-body">
       <p>A product line tool for variability modeling and reasoning.</p>
 
-      <p>VariaMos Web was designed as a modeling tool which incorporates different modeling languages
-        to specify and analyze families of systems, for instance (self) adaptive systems and (dynamic)
-        product lines supporting several types of models and frameworks in a graphically-oriented application
-        available from any web browser.</p>
+      <p>VariaMos Web was designed as a modeling tool which incorporates different modeling
+        languages to specify and analyze families of systems, for instance (self) adaptive
+        systems and (dynamic) product lines supporting several types of models and frameworks
+        in a graphically-oriented application available from any web browser.</p>
 
       <p>VariaMos is suppose to be a new way to model the life cycle of (dynamic) product
         lines and families of systems, through the use of a high level constraint language

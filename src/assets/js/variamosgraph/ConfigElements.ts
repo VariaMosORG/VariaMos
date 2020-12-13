@@ -38,7 +38,9 @@ export class ConfigElements {
       }
     }
 
-    const vertex = new mxCell(node, new mxGeometry(0, 0, element.width, element.height), element.style);
+    const vertex = new mxCell(node,
+      new mxGeometry(0, 0, element.width, element.height),
+      element.style);
     vertex.setConnectable(true);
     vertex.setVertex(true);
     this.addToolbarItem(vertex, element);
@@ -51,7 +53,10 @@ export class ConfigElements {
     const dragAndDropCreation = function anonymousDragAndDrop(graph:any, evt:any, cell:any) {
       let validDragAndDrop = true;
       // check custom model constraints in element creation
-      const customConstraintsElementCreation = currentModel.customConstraintsElementCreation(graph, vertexToClone);
+      const customConstraintsElementCreation = currentModel.customConstraintsElementCreation(
+        graph,
+        vertexToClone,
+      );
       if (customConstraintsElementCreation.message) {
         modal.setData('error', 'Error', customConstraintsElementCreation.message);
         modal.click();
@@ -69,15 +74,18 @@ export class ConfigElements {
 
         // start cloning feature
         const clonesInfo = currentModel.getElementClones();
-        if (clonesInfo[vertex.getAttribute('type')]) { // check if clone is defined for current element
+        // check if clone is defined for current element
+        if (clonesInfo[vertex.getAttribute('type')]) {
           const clonDestinationModel = clonesInfo[vertex.getAttribute('type')];
-          if (graph.getModel().getCell(clonDestinationModel)) { // if the destination model is available
+          // if the destination model is available
+          if (graph.getModel().getCell(clonDestinationModel)) {
             /* eslint no-param-reassign: "off" */
             graph.getModel().prefix = 'clon'; // cloned cell contains clon prefix
             graph.getModel().nextId = graph.getModel().nextId - 1;
             const vertex2 = graph.getModel().cloneCell(newCells[0]);
             const parent2 = graph.getModel().getCell(clonDestinationModel);
-            graph.setCellStyles(mxConstants.STYLE_FILLCOLOR, '#DCDCDC', [vertex2]); // different background for a cloned cell
+            // different background for a cloned cell
+            graph.setCellStyles(mxConstants.STYLE_FILLCOLOR, '#DCDCDC', [vertex2]);
             graph.importCells([vertex2], 0, 0, parent2);
             graph.getModel().prefix = ''; // restart prefix
           }
@@ -90,7 +98,8 @@ export class ConfigElements {
     const mdiv = document.createElement('div');
     const mspan = document.createElement('span'); // tooltip
     mspan.classList.add('csstooltiptext2');
-    const imgSrc = require(`@/assets/js/custom_models/${this.vGraph.getCurrentModel().type}/img/${element.icon}`);
+    const typeG = this.vGraph.getCurrentModel().type;
+    const imgSrc = require(`@/assets/js/custom_models/${typeG}/img/${element.icon}`);
     const img = this.toolbar.addMode(element.label, imgSrc, dragAndDropCreation);
     mspan.innerText = img.getAttribute('title');
     img.removeAttribute('title');
