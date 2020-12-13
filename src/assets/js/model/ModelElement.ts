@@ -29,12 +29,20 @@ export abstract class ModelElement {
     this.currentModel = currentModel;
     this.properties = [
       {
-        id: 'label', label: 'Label', defValue: this.type, 
-        inputType: 'text', disabled: 'false', display: 'true',
+        id: 'label',
+        label: 'Label',
+        defValue: this.type,
+        inputType: 'text',
+        disabled: 'false',
+        display: 'true',
       },
       {
-        id: 'type', label: 'Type', defValue: this.type, 
-        inputType: 'text', disabled: 'true', display: 'true',
+        id: 'type',
+        label: 'Type',
+        defValue: this.type,
+        inputType: 'text',
+        disabled: 'true',
+        display: 'true',
       },
     ];
   }

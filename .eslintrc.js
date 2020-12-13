@@ -16,6 +16,9 @@ module.exports = {
 
   rules: {
     eqeqeq: 'off',
+    'import/prefer-default-export': 'off',
+    'new-cap': 'off',
+    'class-methods-use-this': 'off',
     'max-len': 'off',
     'no-plusplus': 'off',
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',

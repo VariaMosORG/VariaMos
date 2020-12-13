@@ -351,7 +351,7 @@ export class VariaMosGraph {
     this.graph.setDisconnectOnMove(false); // Avoid disconnect egdes
     this.graph.setSplitEnabled(false); // Avoid a cell can split an edge is placed above it
     this.graph.setCellsEditable(false); // Avoid double click cells
-    new mxRubberband(this.graph); // Enables rectangular selection
+    let mxrubber = new mxRubberband(this.graph); // Enables rectangular selection
     this.graph.maximumGraphBounds = new mxRectangle(0, 0, 4000, 4000);
   }
 

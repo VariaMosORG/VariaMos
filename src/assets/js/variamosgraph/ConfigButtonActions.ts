@@ -154,7 +154,7 @@ export class ConfigButtonActions {
       const inputFunction = function (e:any) {
         const files = e.target.files || e.dataTransfer.files;
         if (!files.length) {
-
+          // nothing
         } else {
           const fileToLoad = files[0];
           const fileReader = new FileReader();
