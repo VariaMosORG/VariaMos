@@ -161,7 +161,7 @@
           <div class="col-lg-12 mb-12">
             <router-view></router-view> <!-- content to be displayed in each route -->
           </div>
-        </div> 
+        </div>
 
       </div>
       <!-- /.container-fluid -->
