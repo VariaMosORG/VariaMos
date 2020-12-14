@@ -29,3 +29,8 @@ npm run build
 ```
 npm run lint
 ```
+
+### Unit tests
+```
+npm run test:unit
+```
