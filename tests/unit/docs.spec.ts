@@ -8,10 +8,10 @@ const router = createRouter({
     {
       path: '/',
       component: {
-        template: 'Mocked route'
-      }
-    }
-  ]
+        template: 'Mocked route',
+      },
+    },
+  ],
 });
 
 test('Check access to Docs', async () => {
@@ -19,8 +19,8 @@ test('Check access to Docs', async () => {
   await router.isReady();
   const wrapper = mount(DocsView, {
     global: {
-      plugins: [router]
-    }
+      plugins: [router],
+    },
   });
   // docs route should contain a 'VariaMos wiki' text
   expect(wrapper.html()).toContain('VariaMos wiki');
