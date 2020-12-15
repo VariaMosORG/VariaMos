@@ -13,7 +13,8 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Model Area Height (400px):</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="input-model-area" v-model="configApp.modelAreaHeight">
+          <input type="text" class="form-control" id="input-model-area"
+            v-model="configApp.modelAreaHeight">
         </div>
       </div>
       <div class="form-group row">
