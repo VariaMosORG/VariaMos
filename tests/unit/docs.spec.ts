@@ -14,7 +14,7 @@ const router = createRouter({
   ]
 });
 
-test('Access to Docs', async () => {
+test('Check access to Docs', async () => {
   router.push('/');
   await router.isReady();
   const wrapper = mount(DocsView, {
