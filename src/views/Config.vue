@@ -13,7 +13,7 @@
       <div class="form-group row">
         <label class="col-sm-4 col-form-label">Model Area Height (400px):</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" v-model="configApp.modelAreaHeight">
+          <input type="text" class="form-control" id="input-model-area" v-model="configApp.modelAreaHeight">
         </div>
       </div>
       <div class="form-group row">
@@ -34,7 +34,7 @@
           <textarea class="form-control" rows="3" v-model="configApp.customConfig"></textarea>
         </div>
       </div>
-      <button v-on:click="saveConfig" class="btn btn-info marr20">Save</button>
+      <button v-on:click="saveConfig" id="save-config" class="btn btn-info marr20">Save</button>
     </div>
   </div>
 
