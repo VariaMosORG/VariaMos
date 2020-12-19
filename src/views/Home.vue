@@ -10,7 +10,7 @@
       <h6 class="m-0 font-weight-bold text-primary">VariaMos</h6>
     </div>
     <div class="card-body">
-      <p>VariaMos a is modeling tool and a framework,
+      <p>VariaMos is a modeling tool and a framework,
         that can be easily extended, and that allows you to define your
         own models. </p>
 
