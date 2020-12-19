@@ -11,6 +11,9 @@
       <a class="dropdown-item dropdown-pointer" v-on:click="testComponentBackend">
         Test Component Management Backend
       </a>
+      <a class="dropdown-item dropdown-pointer" v-on:click="uploadComponentPool">
+        Upload Component Pool (.zip)
+      </a>
       <a class="dropdown-item dropdown-pointer" v-on:click="showFileCode">
         Show File Code
       </a>
@@ -24,7 +27,7 @@
         Verify Derivation
       </a>
       <a class="dropdown-item dropdown-pointer" v-on:click="obtainProduct">
-        Obtain product (.zip)
+        Obtain Product (.zip)
       </a>
     </div>
   </div>
@@ -365,6 +368,48 @@ export default class ComponentDerivation extends Vue {
       table.appendChild(tr);
     }
     return table;
+  }
+
+  public uploadComponentPool() {
+    const modal = this.variaMosGraph.getModal();
+    if (this.customConfig.backendURL != '' && this.customConfig.backendPoolFolder && this.customConfig.backendDerivationFolder) {
+      const self = this;
+      const inputFunction = function anonymousInput(e:any) {
+        const files = e.target.files || e.dataTransfer.files;
+        if (!files.length) {
+          // nothing
+        } else {
+          const fileToLoad = files[0];
+          let formData = new FormData();
+          formData.append("file", files[0]);
+          let route = `${self.customConfig.backendURL}ComponentImplementation/uploadpool?`;
+          route += `pool=${self.customConfig.backendPoolFolder}`;
+          axios.post(route, formData,
+          {
+            headers: {
+              "Content-Type": undefined,
+            },
+          })
+            .then((response) => {
+              modal.setData('success', 'Success', response.data);
+              modal.click();
+            })
+            .catch((error) => {
+              modal.setData('error', 'Error', `Wrong backend connection. ${error}`);
+              modal.click();
+            });
+        }
+      };
+
+      const div = document.createElement('div');
+      div.innerHTML = 'Be careful, once the file is uploaded, it will remove the previous component pool folder.<br /><br />';
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.onchange = inputFunction;
+      div.appendChild(input);
+      modal.setData('', 'Upload Component Pool (.zip)', div);
+      modal.click();
+    }
   }
 
   public verifyDerivation() {
