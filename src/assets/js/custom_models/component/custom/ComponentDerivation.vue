@@ -380,16 +380,16 @@ export default class ComponentDerivation extends Vue {
           // nothing
         } else {
           const fileToLoad = files[0];
-          let formData = new FormData();
-          formData.append("file", files[0]);
+          const formData = new FormData();
+          formData.append('file', files[0]);
           let route = `${self.customConfig.backendURL}ComponentImplementation/uploadpool?`;
           route += `pool=${self.customConfig.backendPoolFolder}`;
           axios.post(route, formData,
-          {
-            headers: {
-              "Content-Type": undefined,
-            },
-          })
+            {
+              headers: {
+                'Content-Type': undefined,
+              },
+            })
             .then((response) => {
               modal.setData('success', 'Success', response.data);
               modal.click();

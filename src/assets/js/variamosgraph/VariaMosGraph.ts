@@ -68,6 +68,7 @@ export class VariaMosGraph {
     buttonArea: [
       new Button('save', 'Save Models', 'save', 'Save all models'),
       new Button('img', 'Img', 'print', 'Download model in PNG format'),
+      new Button('organize', 'Organize', 'sitemap', 'Organize model hierarchical'),
       new Button('delete', 'Delete', 'eraser', 'Delete selected cells'),
       new Button('resetCurrent', 'Delete this Model', 'eraser', 'Delete current model'),
       new Button('resetAll', 'Delete Models', 'eraser', 'Delete all models'),

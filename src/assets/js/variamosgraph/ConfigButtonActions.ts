@@ -1,6 +1,8 @@
 import { mxgraphFactory } from 'ts-mxgraph';
 
-const { mxCodec, mxUtils } = mxgraphFactory({ mxLoadResources: false, mxLoadStylesheets: false });
+const {
+  mxCodec, mxUtils, mxHierarchicalLayout,
+} = mxgraphFactory({ mxLoadResources: false, mxLoadStylesheets: false });
 const saveSVG = require('save-svg-as-png');
 
 /**
@@ -273,5 +275,87 @@ export class ConfigButtonActions {
         saveSVG.saveSvgAsPng(svg, `Model-${graph.getDefaultParent().getId()}.png`);
       }
     });
+  }
+
+  // organize model hierarchical
+  public organize(currentButton:HTMLElement) {
+    const graph = this.vGraph.getGraph();
+    const self = this;
+    const modal = this.vGraph.getModal();
+    currentButton.addEventListener('click', () => {
+      const div = document.createElement('div');
+      div.innerHTML = 'Select the layout direction.<br /><br />';
+      const select = document.createElement('select');
+      const directions = [
+        '-- Select --',
+        'north',
+        'south',
+        'west',
+        'east',
+      ];
+      for (let i = 0; i < directions.length; i += 1) {
+        const option = document.createElement('option');
+        option.setAttribute('value', directions[i]);
+        const innerText = directions[i].charAt(0).toUpperCase() + directions[i].slice(1);
+        option.innerText = innerText;
+        select.appendChild(option);
+      }
+
+      const selectFunction = function anonymousSelect() {
+        const selectInput = document.getElementById('select-organize') as any;
+        if (selectInput.value == '-- Select --') {
+          // nothing
+        } else {
+          const layout = new mxHierarchicalLayout(graph, selectInput.value);
+          const parent = graph.getDefaultParent();
+          layout.execute(parent);
+          if (selectInput.value == 'south') {
+            const mostNegativeY = self.getMostNegativeCoordinateY(graph);
+            const children = graph.getChildCells();
+            graph.moveCells(children, undefined, Math.abs(mostNegativeY));
+          } else if (selectInput.value == 'east') {
+            const mostNegativeX = self.getMostNegativeCoordinateX(graph);
+            const children = graph.getChildCells();
+            graph.moveCells(children, Math.abs(mostNegativeX), undefined);
+          }
+          modal.click();
+        }
+      };
+
+      select.id = 'select-organize';
+      select.onchange = selectFunction;
+      select.className = 'form-control';
+      div.appendChild(select);
+      modal.setData('', 'Organize model hierarchical', div);
+      modal.click();
+    });
+  }
+
+  // used in organize model hierarchical
+  public getMostNegativeCoordinateX(graph:any) {
+    const children = graph.getChildCells();
+    let mostNegative = 10000;
+    for (let i = 0; i < children.length; i += 1) {
+      if (children[i].geometry != undefined) {
+        if (children[i].geometry.x < mostNegative) {
+          mostNegative = children[i].geometry.x;
+        }
+      }
+    }
+    return mostNegative;
+  }
+
+  // used in organize model hierarchical
+  public getMostNegativeCoordinateY(graph:any) {
+    const children = graph.getChildCells();
+    let mostNegative = 10000;
+    for (let i = 0; i < children.length; i += 1) {
+      if (children[i].geometry != undefined) {
+        if (children[i].geometry.y < mostNegative) {
+          mostNegative = children[i].geometry.y;
+        }
+      }
+    }
+    return mostNegative;
   }
 }
