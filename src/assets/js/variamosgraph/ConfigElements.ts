@@ -104,6 +104,7 @@ export class ConfigElements {
     const img = this.toolbar.addMode(element.label, imgSrc, dragAndDropCreation);
     mspan.innerText = img.getAttribute('title');
     img.removeAttribute('title');
+    img.id = `dragAndDrop-${element.type}`;
 
     mxUtils.makeDraggable(img, graph, dragAndDropCreation);
 

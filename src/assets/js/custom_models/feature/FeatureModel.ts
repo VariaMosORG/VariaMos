@@ -54,7 +54,7 @@ export class FeatureModel extends Model {
         display: 'true',
         conditions: {
           type: 'and',
-          source: ['abstract', 'concrete', 'bundle'],
+          source: ['abstract', 'concrete'],
           target: ['abstract', 'concrete', 'root'],
         },
       },

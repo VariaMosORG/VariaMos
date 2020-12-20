@@ -37,5 +37,5 @@ npm run test:unit
 
 ### End-to-End tests
 ```
-npm run cypress open
+npm run cypress:open
 ```
