@@ -115,12 +115,7 @@ export class SplotTransformer {
     const edit2 = new mxCellAttributeChange(source, 'lowRange', rangeValues[0]);
     SplotTransformer.graph.getModel().execute(edit2);
     let edit3;
-    if (rangeValues[1] == '*') {
-      const countChilds = SplotTransformer.featureTreeText.split(`${dataUnion}_`).length - 1;
-      edit3 = new mxCellAttributeChange(source, 'highRange', countChilds);
-    } else {
-      edit3 = new mxCellAttributeChange(source, 'highRange', rangeValues[1]);
-    }
+    edit3 = new mxCellAttributeChange(source, 'highRange', rangeValues[1]);
     SplotTransformer.graph.getModel().execute(edit3);
 
     SplotTransformer.createRelation('bundle', targetType, '', source, target);
