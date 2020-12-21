@@ -158,6 +158,12 @@ export class SplotTransformer {
     // modify label
     const edit = new mxCellAttributeChange(newCell, 'label', label);
     SplotTransformer.graph.getModel().execute(edit);
+    // update clon cell if exists
+    const clon = SplotTransformer.graph.getModel().getCell(`clon${newCell.getId()}`);
+    if (clon) {
+      const edit2 = new mxCellAttributeChange(clon, 'label', label);
+      SplotTransformer.graph.getModel().execute(edit2);
+    }
     // add the new cell to the list
     SplotTransformer.ids[id] = newCell;
     return newCell;
