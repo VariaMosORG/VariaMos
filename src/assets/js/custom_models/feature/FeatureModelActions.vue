@@ -15,6 +15,9 @@
       <a class="dropdown-item dropdown-pointer" v-on:click="checkUniqueLabels">
         Check Unique Feature labels
       </a>
+      <a class="dropdown-item dropdown-pointer" v-on:click="importSplotModel">
+        Import Splot Model
+      </a>
     </div>
   </div>
 </template>
@@ -22,6 +25,7 @@
 <script lang="ts">
 import { Vue, Options } from 'vue-class-component';
 import { mxgraphFactory } from 'ts-mxgraph';
+import { SplotTransformer } from './custom/SplotTransformer';
 
 const {
   mxImage,
@@ -96,6 +100,24 @@ export default class FeatureModelActions extends Vue {
       modal.setData('success', 'Success', 'No errors found');
       modal.click();
     }
+  }
+
+  // import models from SPLOT format
+  public importSplotModel() {
+    const self = this;
+    const confirmAction = async function anonymousConfirm() {
+      const textArea = document.getElementById('splotModelCode') as any;
+      await SplotTransformer.init(self.variaMosGraph, textArea.value);
+      setTimeout(() => {
+        const organizeButton = document.getElementById('organize') as any;
+        organizeButton.click();
+      }, 500);
+    };
+    const modal = this.variaMosGraph.getModal();
+    const stringBody = `<div>Please enter the SPLOT XML model code in the next textarea:
+      <br /><br /><textarea class='form-control' id='splotModelCode'></textarea></div>`;
+    modal.setData('', 'Splot Model Code', stringBody, 'confirm', confirmAction);
+    modal.click();
   }
 }
 </script>

@@ -41,10 +41,10 @@ export class BundleElement extends ModelElement {
         label: 'High Range',
         defValue: '1',
         inputType: 'text',
-        customTypeText: 'number',
         display: 'basedOnPropertyValue',
         displayCheckProperty: 'bundleType',
         displayIfValue: 'RANGE',
+        onChangeRestrictive: this.restrictedHighRange,
       },
     );
     this.setProperties(properties);
@@ -65,5 +65,18 @@ export class BundleElement extends ModelElement {
       }
     };
     return OnChangeBundleTypeFunction;
+  }
+
+  // high range allowed values are numbers or *
+  public restrictedHighRange() {
+    const highRange = document.getElementById('property-highRange') as any;
+    const highRangeValue = highRange.value;
+    const isNum = /^\d+$/.test(highRangeValue);
+    if (!isNum) {
+      if (highRangeValue != '*') {
+        return false;
+      }
+    }
+    return true;
   }
 }
