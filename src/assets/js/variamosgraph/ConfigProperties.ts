@@ -222,13 +222,13 @@ export class ConfigProperties {
 
       let onChangeAllowed = true;
 
-      //check custom changes that are not allowed
-			if (currentProperties["onChangeRestrictive"] != null) {
-				onChangeAllowed = currentProperties["onChangeRestrictive"]();
-				if (!onChangeAllowed) {
-					input.value = oldValue;
-				}
-			}
+      // check custom changes that are not allowed
+      if (currentProperties.onChangeRestrictive != null) {
+        onChangeAllowed = currentProperties.onChangeRestrictive();
+        if (!onChangeAllowed) {
+          input.value = oldValue;
+        }
+      }
 
       if (newValue != oldValue && onChangeAllowed) { // verify value modified from the form
         graph.getModel().beginUpdate();

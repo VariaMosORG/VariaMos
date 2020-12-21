@@ -67,13 +67,13 @@ export class BundleElement extends ModelElement {
     return OnChangeBundleTypeFunction;
   }
 
-  // high range permitted values are numbers or *
-  public restrictedHighRange(){
-    const highRange = document.getElementById("property-highRange") as any;
+  // high range allowed values are numbers or *
+  public restrictedHighRange() {
+    const highRange = document.getElementById('property-highRange') as any;
     const highRangeValue = highRange.value;
-    let isNum = /^\d+$/.test(highRangeValue);
-    if(!isNum){
-      if(highRangeValue != "*"){
+    const isNum = /^\d+$/.test(highRangeValue);
+    if (!isNum) {
+      if (highRangeValue != '*') {
         return false;
       }
     }

@@ -17,22 +17,37 @@ export class SplotTransformer {
 
   public static featureTreeText:string = '';
 
+  public static constraintsTreeText:string = '';
+
   public static ids: { [id: string] : Object; } = {};
 
   public static init(variaMosGraph:any, textAreaValue:string) {
     SplotTransformer.variaMosGraph = variaMosGraph;
     SplotTransformer.graph = SplotTransformer.variaMosGraph.getGraph();
+
+    // obtain feature tree xml
     const baseFeatureString = '<feature_tree>';
     const initPos = textAreaValue.indexOf(baseFeatureString);
     const finPos = textAreaValue.indexOf('</feature_tree>');
     SplotTransformer.featureTreeText = textAreaValue.substring(
       initPos + baseFeatureString.length, finPos,
     );
-    SplotTransformer.importSplotModel();
+
     SplotTransformer.parent = SplotTransformer.graph.getModel().getCell('feature');
+    SplotTransformer.importFeatureSplotModel();
+
+    // obtain constraints tree xml
+    const baseConstraintsString = '<constraints>';
+    const initCPos = textAreaValue.indexOf(baseConstraintsString);
+    const finCPos = textAreaValue.indexOf('</constraints>');
+    SplotTransformer.constraintsTreeText = textAreaValue.substring(
+      initCPos + baseConstraintsString.length, finCPos,
+    );
+
+    SplotTransformer.importConstraintsSplotModel();
   }
 
-  public static importSplotModel() {
+  public static importFeatureSplotModel() {
     const features:string[] = SplotTransformer.featureTreeText.trim().split(':');
     features.shift();
     // start to create features and relations
@@ -110,12 +125,10 @@ export class SplotTransformer {
     const iniRangePos = data.indexOf('[');
     const finRangePos = data.indexOf(']');
     const dataRange = data.substring(iniRangePos + 1, finRangePos);
-    console.log();
     const rangeValues:string[] = dataRange.split(',');
     const edit2 = new mxCellAttributeChange(source, 'lowRange', rangeValues[0]);
     SplotTransformer.graph.getModel().execute(edit2);
-    let edit3;
-    edit3 = new mxCellAttributeChange(source, 'highRange', rangeValues[1]);
+    const edit3 = new mxCellAttributeChange(source, 'highRange', rangeValues[1]);
     SplotTransformer.graph.getModel().execute(edit3);
 
     SplotTransformer.createRelation('bundle', targetType, '', source, target);
@@ -171,5 +184,56 @@ export class SplotTransformer {
     SplotTransformer.graph.insertEdge(
       SplotTransformer.parent, null, node, source, target, '',
     );
+  }
+
+  public static importConstraintsSplotModel() {
+    const constraints:string[] = SplotTransformer.constraintsTreeText.trim().split(':');
+    constraints.shift();
+    // start to create requires and excludes relations
+    for (let i = 0; i < constraints.length; i += 1) {
+      const currentConstraint = constraints[i].trim().split('or');
+      const partA = currentConstraint[0].trim();
+      let partB = '';
+      const initConst = currentConstraint[1].indexOf('const');
+      if (initConst != -1) {
+        partB = currentConstraint[1].substring(0, initConst).trim();
+      } else {
+        partB = currentConstraint[1].trim();
+      }
+      const partAType = partA.charAt(0);
+      const partBType = partB.charAt(0);
+
+      const partAIds = partA.split('_');
+      const partAId = partAIds[partAIds.length - 1];
+      const partAElement = SplotTransformer.ids[partAId] as any;
+
+      const partBIds = partB.split('_');
+      const partBId = partBIds[partBIds.length - 1];
+      const partBElement = SplotTransformer.ids[partBId] as any;
+
+      let source;
+      let target;
+      let typeOfRelation = 'requires';
+
+      if (partAType == '~' && partBType == '~') {
+        source = partAElement;
+        target = partBElement;
+        typeOfRelation = 'excludes';
+      } else if (partAType == '~') {
+        source = partBElement;
+        target = partAElement;
+      } else {
+        source = partAElement;
+        target = partBElement;
+      }
+
+      SplotTransformer.createRelation(
+        source.getAttribute('type'),
+        target.getAttribute('type'),
+        typeOfRelation,
+        source,
+        target,
+      );
+    }
   }
 }
