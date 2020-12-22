@@ -16,6 +16,12 @@
 
         <div class="modal-body" id="gmodal-body"></div>
 
+        <div id="modal-spinner" class="justify-content-center v-display mbottom20">
+          <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+
         <div class="modal-footer">
           <button id="gmodal-button-close" v-on:click="closeAction" type="button"
             class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -45,14 +51,19 @@ export default class AppModal extends Vue {
 
     public secondaryMessage:boolean = false;
 
+    public spinnerActive:boolean = true;
+
     public setData(type:string, title:string, content:any, buttonType:string = 'normal',
       mainAction:any = null, secondaryAction:any = null) {
       this.secondaryMessage = false;
       this.confirm = false;
       this.mainAction = null;
       this.secondaryAction = null;
+      this.spinnerActive = true;
       const confirmButton = document.getElementById('gmodal-button-confirm');
       const modalBody = document.getElementById('gmodal-body');
+      const spinner = document.getElementById('modal-spinner') as any;
+      spinner.style.display = 'none';
 
       if (confirmButton) {
         confirmButton.innerHTML = 'Confirm';
@@ -88,6 +99,10 @@ export default class AppModal extends Vue {
       this.title = title;
     }
 
+    public setSpinnerActive(spinner:boolean) {
+      this.spinnerActive = spinner;
+    }
+
     public setSecondaryMessage(secondary:boolean) {
       this.secondaryMessage = secondary;
     }
@@ -116,17 +131,29 @@ export default class AppModal extends Vue {
 
     public closeAction() {
       if (this.secondaryAction) {
-        this.secondaryAction();
-        this.click();
+        const spinner = document.getElementById('modal-spinner') as any;
+        if (this.spinnerActive) {
+          spinner.style.display = 'flex';
+        }
+        setTimeout(() => {
+          this.secondaryAction();
+          this.click();
+        }, 100);
       }
     }
 
     public confirmAction() {
       if (this.mainAction) {
-        this.mainAction();
-        if (!this.secondaryMessage) {
-          this.click();
+        const spinner = document.getElementById('modal-spinner') as any;
+        if (this.spinnerActive) {
+          spinner.style.display = 'flex';
         }
+        setTimeout(() => {
+          this.mainAction();
+          if (!this.secondaryMessage) {
+            this.click();
+          }
+        }, 100);
       }
     }
 
@@ -146,5 +173,13 @@ export default class AppModal extends Vue {
 
 .modal-content{
   border: 0px !important;
+}
+
+.mbottom20{
+  margin-bottom: 20px;
+}
+
+.v-display{
+  display: none;
 }
 </style>

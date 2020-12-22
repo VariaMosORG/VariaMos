@@ -126,19 +126,31 @@ export default class ComponentDerivation extends Vue {
     const modal = this.variaMosGraph.getModal();
     if (this.customConfig.backendURL != '' && this.customConfig.backendPoolFolder && this.customConfig.backendDerivationFolder) {
       const modelData = JSON.stringify(ComponentFunctions.execute(this.variaMosGraph.getGraph()));
-      axios.post(`${this.customConfig.backendURL}ComponentImplementation/execute`, {
-        data: modelData,
-        p_pool: this.customConfig.backendPoolFolder,
-        p_derived: this.customConfig.backendDerivationFolder,
-      })
-        .then((response) => {
-          modal.setData('success', 'Success', response.data);
-          modal.click();
+      const self = this;
+      const confirmAction = function anonymousConfirm() {
+        axios.post(`${self.customConfig.backendURL}ComponentImplementation/execute`, {
+          data: modelData,
+          p_pool: self.customConfig.backendPoolFolder,
+          p_derived: self.customConfig.backendDerivationFolder,
         })
-        .catch((error) => {
-          modal.setData('error', 'Error', `Wrong backend connection. ${error}`);
-          modal.click();
-        });
+          .then((response) => {
+            modal.setData('success', 'Success', response.data);
+          })
+          .catch((error) => {
+            modal.setData('error', 'Error', `Wrong backend connection. ${error}`);
+          });
+      };
+
+      const stringBody = '<div>Click confirm button to execute the derivation process</div>';
+      modal.setData(
+        '',
+        'Confirm Execute Derivation',
+        stringBody,
+        'confirm',
+        confirmAction,
+      );
+      modal.setSecondaryMessage(true);
+      modal.click();
     }
   }
 
@@ -179,9 +191,9 @@ export default class ComponentDerivation extends Vue {
               'notification',
             ];
             const body = modalCustomization(texts, inputs, defaultVals);
-            // let confirmAction = function(){console.log("oli");};
             const confirmAction = self.executeCustomization;
             modal.setData('', 'Customization process', body, 'confirm', confirmAction);
+            modal.setSpinnerActive(false);
             modal.setConfirmButtonText('Start/Next');
             modal.setSecondaryMessage(true);
             modal.click();
@@ -416,18 +428,29 @@ export default class ComponentDerivation extends Vue {
     const modal = this.variaMosGraph.getModal();
     if (this.customConfig.backendURL != '' && this.customConfig.backendPoolFolder && this.customConfig.backendDerivationFolder) {
       const modelData = JSON.stringify(ComponentFunctions.verify(this.variaMosGraph.getGraph()));
-      axios.post(`${this.customConfig.backendURL}ComponentImplementation/verify`, {
-        data: modelData,
-        p_derived: this.customConfig.backendDerivationFolder,
-      })
-        .then((response) => {
-          modal.setData('success', 'Success', response.data);
-          modal.click();
+      const self = this;
+      const confirmAction = function anonymousConfirm() {
+        axios.post(`${self.customConfig.backendURL}ComponentImplementation/verify`, {
+          data: modelData,
+          p_derived: self.customConfig.backendDerivationFolder,
         })
-        .catch((error) => {
-          modal.setData('error', 'Error', `Wrong backend connection. ${error}`);
-          modal.click();
-        });
+          .then((response) => {
+            modal.setData('success', 'Success', response.data);
+          })
+          .catch((error) => {
+            modal.setData('error', 'Error', `Wrong backend connection. ${error}`);
+          });
+      };
+      const stringBody = '<div>Click confirm button to execute the verification process</div>';
+      modal.setData(
+        '',
+        'Confirm Verification',
+        stringBody,
+        'confirm',
+        confirmAction,
+      );
+      modal.setSecondaryMessage(true);
+      modal.click();
     }
   }
 
@@ -438,22 +461,36 @@ export default class ComponentDerivation extends Vue {
 
   public obtainProduct() {
     const modal = this.variaMosGraph.getModal();
-    axios.post(`${this.customConfig.backendURL}ComponentImplementation/getDerivedProduct`, {
-      p_derived: this.customConfig.backendDerivationFolder,
-    }, { responseType: 'blob' })
-      .then((response) => {
-        const blob = new Blob([response.data], { type: 'application/zip' });
-        const downloadUrl = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = downloadUrl;
-        a.download = 'product.zip';
-        document.body.appendChild(a);
-        a.click();
-      })
-      .catch((error) => {
-        modal.setData('error', 'Error', `Wrong backend connection. ${error}`);
-        modal.click();
-      });
+    const self = this;
+    const confirmAction = function anonymousConfirm() {
+      axios.post(`${self.customConfig.backendURL}ComponentImplementation/getDerivedProduct`, {
+        p_derived: self.customConfig.backendDerivationFolder,
+      }, { responseType: 'blob' })
+        .then((response) => {
+          const blob = new Blob([response.data], { type: 'application/zip' });
+          const downloadUrl = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = downloadUrl;
+          a.download = 'product.zip';
+          document.body.appendChild(a);
+          a.click();
+          modal.click();
+        })
+        .catch((error) => {
+          modal.setData('error', 'Error', `Wrong backend connection. ${error}`);
+        });
+    };
+
+    const stringBody = '<div>Click confirm button to obtain the product</div>';
+    modal.setData(
+      '',
+      'Obtain Product',
+      stringBody,
+      'confirm',
+      confirmAction,
+    );
+    modal.setSecondaryMessage(true);
+    modal.click();
   }
 }
 </script>
