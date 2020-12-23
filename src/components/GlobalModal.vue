@@ -43,8 +43,6 @@ import { Vue } from 'vue-class-component';
 export default class AppModal extends Vue {
     public title:string = '';
 
-    public confirm:boolean = false;
-
     public mainAction:any = null;
 
     public secondaryAction:any = null;
@@ -56,7 +54,6 @@ export default class AppModal extends Vue {
     public setData(type:string, title:string, content:any, buttonType:string = 'normal',
       mainAction:any = null, secondaryAction:any = null) {
       this.secondaryMessage = false;
-      this.confirm = false;
       this.mainAction = null;
       this.secondaryAction = null;
       this.spinnerActive = true;
