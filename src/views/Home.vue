@@ -14,7 +14,9 @@
         that can be easily extended, and that allows you to define your
         own models. </p>
 
-      <p><img alt="VariaMos logo" id="logo" src="@/assets/img/logo.png"></p>
+      <p class="width-400">
+        <img alt="VariaMos logo" class="img-fluid" id="logo" src="@/assets/img/logo.png">
+      </p>
     </div>
   </div>
 </template>
@@ -38,7 +40,7 @@ export default class Home extends Vue {
 </script>
 
 <style>
-#logo{
+.width-400{
   max-width: 400px;
 }
 
