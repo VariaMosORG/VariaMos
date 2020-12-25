@@ -403,12 +403,10 @@ export default class ComponentDerivation extends Vue {
               },
             })
             .then((response) => {
-              modal.setData('success', 'Success', response.data);
-              modal.click();
+              modal.setData('success', 'Success', 'File Uploaded!');
             })
             .catch((error) => {
               modal.setData('error', 'Error', `Wrong backend connection. ${error}`);
-              modal.click();
             });
         }
       };
