@@ -12,10 +12,10 @@
     <div class="card-body">
       <p>VariaMos is a modeling tool and a framework,
         that can be easily extended, and that allows you to define your
-        own models. </p>
+        own models.</p>
 
       <p class="width-400">
-        <img alt="VariaMos logo" class="img-fluid" id="logo" src="@/assets/img/logo.png">
+        <img alt="VariaMos logo" class="img-fluid" id="logo" src="@/assets/img/logo.png" />
       </p>
     </div>
   </div>

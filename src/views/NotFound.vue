@@ -6,16 +6,16 @@
 <div class="master404">
   <div class="stars">
     <div class="central-body">
-      <img id="image_404" class="image-404" :src="errorSVG">
+      <img id="image_404" class="image-404" :src="errorSVG" />
     </div>
     <div class="objects">
-      <img id="object_rocket" class="object_rocket" :src="rocketSVG">
+      <img id="object_rocket" class="object_rocket" :src="rocketSVG" />
       <div class="earth-moon">
-        <img id="object_earth" class="object_earth" :src="earthSVG">
-        <img id="object_moon" class="object_moon" :src="moonSVG">
+        <img id="object_earth" class="object_earth" :src="earthSVG" />
+        <img id="object_moon" class="object_moon" :src="moonSVG" />
       </div>
       <div class="box_astronaut">
-        <img id="object_astronaut" class="object_astronaut" :src="astronautSVG">
+        <img id="object_astronaut" class="object_astronaut" :src="astronautSVG" />
       </div>
     </div>
   </div>

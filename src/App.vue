@@ -4,7 +4,7 @@
 <template>
   <!-- Sidebar -->
   <ul v-bind:style="{ background: configApp.getSidebarBackgroundColor() }"
-    class="navbar-nav sidebar sidebar-dark accordion"  id="accordionSidebar">
+    class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
     <router-link to="/">
@@ -49,7 +49,7 @@
     </li>
 
     <!-- Divider -->
-    <hr class="sidebar-divider">
+    <hr class="sidebar-divider" />
 
     <!-- Heading -->
     <div class="sidebar-heading">
@@ -145,7 +145,7 @@
           <li class="nav-item dropdown no-arrow">
             <router-link to="/config" class="nav-link" id="userDropdown">
               <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
-              <img class="img-profile rounded-circle" src="/img/undraw_profile.svg">
+              <img class="img-profile rounded-circle" src="/img/undraw_profile.svg" />
             </router-link>
           </li>
         </ul>
