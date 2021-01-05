@@ -1,6 +1,9 @@
-name: Cypress tests
+name: Integration Tests
 
-on: [push]
+on:
+  push:
+    branches:
+      - development
 
 jobs:
   cypress-run:
@@ -13,6 +16,5 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          build: npm install
           start: npm run serve
           wait-on: 'http://localhost:8080'
