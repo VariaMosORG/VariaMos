@@ -59,8 +59,10 @@ export default class AppModal extends Vue {
       this.spinnerActive = true;
       const confirmButton = document.getElementById('gmodal-button-confirm');
       const modalBody = document.getElementById('gmodal-body');
-      const spinner = document.getElementById('modal-spinner') as any;
-      spinner.style.display = 'none';
+      const spinner = document.getElementById('modal-spinner');
+      if(spinner){
+        spinner.style.display = 'none';
+      }
 
       if (confirmButton) {
         confirmButton.innerHTML = 'Confirm';
