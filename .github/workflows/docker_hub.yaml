@@ -17,3 +17,4 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: danielgara/variamos
+          tags: danielgara/variamos:latest
