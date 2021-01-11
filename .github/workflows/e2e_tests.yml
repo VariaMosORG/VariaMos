@@ -1,4 +1,4 @@
-name: Integration Tests
+name: End-to-end Tests
 
 on:
   push:
