@@ -6,7 +6,7 @@ VariaMos is a modeling tool and a framework, that can be easily extended, and th
 
 ![Unit Tests](https://github.com/danielgara/VariaMos/workflows/Unit%20Tests/badge.svg?branch=main)
 
-![Integration Tests](https://github.com/danielgara/VariaMos/workflows/Integration%20Tests/badge.svg?branch=main)
+![End-to-end Tests](https://github.com/danielgara/VariaMos/workflows/End-to-end%20Tests/badge.svg?branch=main)
 
 ![Publish Docker Images](https://github.com/danielgara/VariaMos/workflows/Publish%20Docker%20Images/badge.svg)
 
