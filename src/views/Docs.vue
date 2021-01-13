@@ -11,7 +11,7 @@
     </div>
     <div class="card-body">
       <p>Get the latest documentation in the VariaMos wiki.</p>
-      <a target="_blank" rel="nofollow" href="https://github.com/danielgara/VariaMos/wiki">VariaMos wiki</a>
+      <a target="_blank" rel="nofollow" href="https://github.com/VariaMosORG/VariaMos/wiki">VariaMos wiki</a>
     </div>
   </div>
 
