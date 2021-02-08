@@ -176,12 +176,18 @@ export default class FeatureModelActions extends Vue {
         for (let i = 0; i < checkboxes.length; i += 1) {
           arraySelections.push(checkboxes[i].value);
         }
-        axios.post(`${self.customConfig.backendURL}transform/execute-solver`, {
+        const headers = {
+          'Content-Type': 'text/plain',
+        };
+        //selectedActions: arraySelections,
+        axios.post(`${self.customConfig.backendURL}mini-zinc/chuffed/validate`,
           modelData,
-          selectedActions: arraySelections,
-        })
+          {
+            headers: { headers },
+          })
           .then((response) => {
-            modal.setData('success', 'Success', response.data);
+            const JsonCode = JSON.stringify(response.data, undefined, 2);
+            modal.setData('success', 'Success', JsonCode);
           })
           .catch((error) => {
             modal.setData('error', 'Error', `Wrong backend connection. ${error}`);
