@@ -179,9 +179,11 @@ export default class FeatureModelActions extends Vue {
         const headers = {
           'Content-Type': 'text/plain',
         };
-        //selectedActions: arraySelections,
         axios.post(`${self.customConfig.backendURL}mini-zinc/chuffed/validate`,
-          modelData,
+          {
+            "mx_graph": modelData,
+            "operations": arraySelections
+          },
           {
             headers: { headers },
           })
@@ -196,13 +198,13 @@ export default class FeatureModelActions extends Vue {
 
       const stringBody = `<div>Click confirm button to execute the solver process</div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="type" value="dead" />
+        <input class="form-check-input" type="checkbox" name="type" value="dead_features" />
         <label class="form-check-label">Get Dead Features</label><br />
-        <input class="form-check-input" type="checkbox" name="type" value="optional" />
+        <input class="form-check-input" type="checkbox" name="type" value="fake_optionals" />
         <label class="form-check-label">Get Fake Optional Features</label><br />
-        <input class="form-check-input" type="checkbox" name="type" value="void" />
+        <input class="form-check-input" type="checkbox" name="type" value="is_void" />
         <label class="form-check-label">Is Void Model?</label><br />
-        <input class="form-check-input" type="checkbox" name="type" value="fake" />
+        <input class="form-check-input" type="checkbox" name="type" value="is_fake_product_line" />
         <label class="form-check-label">Is Fake Product Line?</label>
       </div>
         `;
