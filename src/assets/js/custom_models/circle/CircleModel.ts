@@ -1,19 +1,18 @@
-import { Model } from "../../model/Model";
+import { Model } from '../../model/Model';
 
 /**
  * @author Daniel Correa <dcorreab@eafit.edu.co>
  */
 export class CircleModel extends Model {
-
   public constructor() {
     super(
-      "circle",
-      ["CircleElement", "ContainerElement"]
+      'circle',
+      ['CircleElement', 'ContainerElement'],
     );
   }
 
   public customGraphConfig() {
-    let graph = this.getModelUtil().getVGraph().getGraph();
+    const graph = this.getModelUtil().getVGraph().getGraph();
     graph.setDropEnabled(true);
   }
 }

@@ -1,4 +1,4 @@
-import { ModelElement } from "../../../model/ModelElement";
+import { ModelElement } from '../../../model/ModelElement';
 
 /**
  * @author Daniel Correa <dcorreab@eafit.edu.co>
