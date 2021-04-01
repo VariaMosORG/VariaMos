@@ -181,8 +181,8 @@ export default class FeatureModelActions extends Vue {
         };
         axios.post(`${self.customConfig.backendURL}mini-zinc/chuffed/validate`,
           {
-            "mx_graph": modelData,
-            "operations": arraySelections
+            mx_graph: modelData,
+            operations: arraySelections,
           },
           {
             headers: { headers },
