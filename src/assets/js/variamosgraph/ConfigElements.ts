@@ -16,8 +16,16 @@ export class ConfigElements {
     this.vGraph = vGraph;
   }
 
+  public getGraph(){
+    return this.vGraph;
+  }
+
   public getToolbar() {
     return this.toolbar;
+  }
+
+  public setToolbar(toolbar: any) {
+    this.toolbar = toolbar;
   }
 
   public initializeElements() {

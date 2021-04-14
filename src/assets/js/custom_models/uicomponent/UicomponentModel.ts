@@ -3,11 +3,11 @@ import { Model } from '../../model/Model';
 /**
  * @author Daniel Correa <dcorreab@eafit.edu.co>
  */
-export class CircleModel extends Model {
+export class UicomponentModel extends Model {
   public constructor() {
     super(
-      'circle',
-      ['CircleElement', 'ContainerElement'],
+      'uicomponent',
+      ['ComponentElement'],
     );
   }
 
