@@ -14,6 +14,7 @@ export class ConfigElements {
 
   public constructor(vGraph:any) {
     this.vGraph = vGraph;
+    this.toolbar = new mxToolbar(this.vGraph.getDivElements());
   }
 
   public getVGraph() {
@@ -29,7 +30,6 @@ export class ConfigElements {
   }
 
   public initializeElements() {
-    this.toolbar = new mxToolbar(this.vGraph.getDivElements());
     const currentModel = this.vGraph.getCurrentModel();
     for (let i = 0; i < currentModel.elements.length; i += 1) {
       this.addVertex(currentModel.elements[i]);
