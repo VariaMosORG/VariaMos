@@ -18,6 +18,10 @@ export class ConfigButtonActions {
     this.buttons = buttons;
   }
 
+  public getVGraph() {
+    return this.vGraph;
+  }
+
   public getButtons() {
     return this.buttons;
   }
