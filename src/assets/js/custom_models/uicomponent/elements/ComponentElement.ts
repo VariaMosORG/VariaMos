@@ -21,7 +21,28 @@ export class ComponentElement extends ModelElement {
         id: 'code',
         label: 'Code',
         defValue: '',
-        inputType: 'text',
+        inputType: 'textarea',
+        disabled: 'false',
+        display: 'true',
+      },
+    );
+
+    properties.push(
+      {
+        id: 'props',
+        label: 'Props',
+        defValue: '',
+        inputType: 'textarea',
+        disabled: 'false',
+        display: 'true',
+      },
+    );
+    properties.push(
+      {
+        id: 'container',
+        label: 'Container',
+        defValue: 'false',
+        inputType: 'checkbox',
         disabled: 'false',
         display: 'true',
       },

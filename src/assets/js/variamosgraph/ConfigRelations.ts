@@ -12,6 +12,10 @@ export class ConfigRelations {
     this.vGraph = vGraph;
   }
 
+  public getVGraph() {
+    return this.vGraph;
+  }
+
   public initializeRelations() {
     const graph = this.vGraph.getGraph();
     const currentModel = this.vGraph.getCurrentModel();

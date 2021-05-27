@@ -18,7 +18,7 @@ export class ConfigElements extends CE {
   }
 
   public initializeElements() {
-    const graph = this.getGraph();
+    const graph = this.getVGraph();
     this.setToolbar(new mxToolbar(graph.getDivElements()));
     const uicomponentRoot = graph.getModel().getCell('uicomponent');
     const childs = graph.getModel().getChildVertices(uicomponentRoot);
