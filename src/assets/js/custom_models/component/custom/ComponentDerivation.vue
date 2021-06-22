@@ -23,6 +23,9 @@
       <a class="dropdown-item dropdown-pointer" v-on:click="customizeDerivation">
         Customize Derivation
       </a>
+      <a class="dropdown-item dropdown-pointer" v-on:click="cleanComments">
+        Clean comments
+      </a>
       <a class="dropdown-item dropdown-pointer" v-on:click="verifyDerivation">
         Verify Derivation
       </a>
@@ -119,6 +122,41 @@ export default class ComponentDerivation extends Vue {
           modal.setData('error', 'Error', `Wrong backend connection. ${error}`);
           modal.click();
         });
+    }
+  }
+
+  public cleanComments() {
+    const modal = this.variaMosGraph.getModal();
+    if (this.customConfig.backendURL != '' && this.customConfig.backendPoolFolder && this.customConfig.backendDerivationFolder) {
+      const modelData = JSON.stringify(ComponentFunctions.execute(this.variaMosGraph.getGraph()));
+      const self = this;
+      const confirmAction = function anonymousConfirm() {
+        const textArea = document.getElementById('cleanCommentFiles') as any;
+        const filesToBeCleaned = textArea.value;
+        axios.post(`${self.customConfig.backendURL}ComponentImplementation/cleanComments`, {
+          data: filesToBeCleaned,
+          p_pool: self.customConfig.backendPoolFolder,
+          p_derived: self.customConfig.backendDerivationFolder,
+        })
+          .then((response) => {
+            modal.setData('success', 'Success', response.data);
+          })
+          .catch((error) => {
+            modal.setData('error', 'Error', `Wrong backend connection. ${error}`);
+          });
+      };
+
+      const stringBody = `<div>Please enter the paths of the derived files to be cleaned (comments will be removed) in the next textarea (separated by a comma):
+      <br /><br /><textarea class='form-control' id='cleanCommentFiles'>path/fileExample.java, path/fileExample2.java</textarea></div>`;
+      modal.setData(
+        '',
+        'Confirm Clean Comments',
+        stringBody,
+        'confirm',
+        confirmAction,
+      );
+      modal.setSecondaryMessage(true);
+      modal.click();
     }
   }
 
