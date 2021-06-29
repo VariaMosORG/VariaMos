@@ -15,6 +15,10 @@ export class ConfigProperties {
     this.vGraph = vGraph;
   }
 
+  public getVGraph() {
+    return this.vGraph;
+  }
+
   // initialize element properties
   public initializeProperties() {
     const configPropertiesObject = this;
@@ -63,6 +67,14 @@ export class ConfigProperties {
               switch (currentProperties[j].inputType) {
                 case 'text':
                   configPropertiesObject.createTextField(
+                    configPropertiesObject.vGraph.getGraph(),
+                    attrs[i],
+                    cell,
+                    currentProperties[j],
+                  );
+                  break;
+                case 'textarea':
+                  configPropertiesObject.createTextAreaField(
                     configPropertiesObject.vGraph.getGraph(),
                     attrs[i],
                     cell,
@@ -156,6 +168,19 @@ export class ConfigProperties {
   public createTextField(graph:any, attribute:any, cell:any, currentProperties:any) {
     const input = document.createElement('input');
     input.setAttribute('type', 'text');
+    input.id = `property-${attribute.nodeName}`;
+    input.className = 'form-control';
+    input.value = attribute.nodeValue;
+    const display = this.checkCustomDisplay(cell, currentProperties);
+    this.createField(attribute, input, currentProperties.label,
+      currentProperties.disabled, display);
+    this.executeApplyHandler(graph, input, cell, attribute.nodeName, currentProperties);
+  }
+
+  // create a textarea field
+  public createTextAreaField(graph:any, attribute:any, cell:any, currentProperties:any) {
+    const input = document.createElement('textarea');
+    input.setAttribute('type', 'textarea');
     input.id = `property-${attribute.nodeName}`;
     input.className = 'form-control';
     input.value = attribute.nodeValue;
