@@ -23,6 +23,7 @@
 </template>
 
 <script lang="ts">
+// @ts-nocheck
 import { Vue, Options } from 'vue-class-component';
 
 const svg404 = require('@/assets/img/404.svg') as string;

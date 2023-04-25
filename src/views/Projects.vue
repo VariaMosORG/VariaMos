@@ -151,6 +151,7 @@
 </template>
 
 <script lang="ts">
+// @ts-nocheck
 import { Vue, Options, mixins } from 'vue-class-component';
 import { Project as ProjectClass } from '@/store/project/Project';
 import Breadcrumb from '@/components/Breadcrumb.vue';

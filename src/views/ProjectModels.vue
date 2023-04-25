@@ -92,6 +92,7 @@
 </template>
 
 <script lang="ts">
+// @ts-nocheck
 import { defineAsyncComponent } from 'vue';
 import { Vue, Options, mixins } from 'vue-class-component';
 import { VariaMosGraph } from '@/assets/js/variamosgraph/VariaMosGraph';

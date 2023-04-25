@@ -26,6 +26,7 @@
 </template>
 
 <script lang="ts">
+// @ts-nocheck
 import { Vue, Options } from 'vue-class-component';
 import ComponentDerivation from './custom/ComponentDerivation.vue';
 

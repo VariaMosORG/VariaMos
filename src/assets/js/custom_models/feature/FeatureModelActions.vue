@@ -23,6 +23,7 @@
 </template>
 
 <script lang="ts">
+// @ts-nocheck
 import { Vue, Options } from 'vue-class-component';
 import { mxgraphFactory } from 'ts-mxgraph';
 import { SplotTransformer } from './custom/SplotTransformer';

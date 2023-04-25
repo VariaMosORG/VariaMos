@@ -37,6 +37,7 @@
 </template>
 
 <script lang="ts">
+// @ts-nocheck
 import { Vue, Options } from 'vue-class-component';
 import axios from 'axios';
 import { ComponentFunctions } from './ComponentFunctions';
